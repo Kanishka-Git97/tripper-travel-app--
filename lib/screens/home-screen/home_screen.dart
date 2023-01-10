@@ -10,6 +10,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         iconTheme: IconThemeData(color: Colors.grey),
         toolbarHeight: 60,
         backgroundColor: Colors.transparent,
@@ -42,6 +43,7 @@ class HomeScreen extends StatelessWidget {
               ]),
         ),
       ),
+      
       body: SingleChildScrollView(
         child: Container(
           color: Color(0xF9F9F9),
