@@ -67,8 +67,12 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         ListTile(
                           leading: SizedBox(
-                            height: 120,
-                            width: 120,
+                            height: 200,
+                            child: new Image(
+                              image: new AssetImage(
+                                  'assets/images/Home/img-1-ella.jpg'),
+                              fit: BoxFit.fill,
+                            ),
                           ),
                           title: Text('Discover',
                               style: TextStyle(color: Colors.white)),
@@ -124,10 +128,15 @@ class HomeScreen extends StatelessWidget {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    RegularTravelCard(),
-                    RegularTravelCard(),
-                    RegularTravelCard(),
-                    RegularTravelCard()
+                    RegularTravelCard(
+                      imageUrl: 'assets/images/img-1.jpeg',
+                    ),
+                    RegularTravelCard(
+                      imageUrl: 'assets/images/img-2.jpeg',
+                    ),
+                    RegularTravelCard(
+                      imageUrl: 'assets/images/img-3.jpeg',
+                    ),
                   ],
                 ),
               ),
@@ -141,10 +150,15 @@ class HomeScreen extends StatelessWidget {
                 child: ListView(
                   padding: const EdgeInsets.all(8),
                   children: <Widget>[
-                    ExtendedTravelCard(),
-                    ExtendedTravelCard(),
-                    ExtendedTravelCard(),
-                    ExtendedTravelCard()
+                    ExtendedTravelCard(
+                      imageUrl: ('assets/images/img-1f.jpeg'),
+                    ),
+                    ExtendedTravelCard(
+                      imageUrl: ('assets/images/img-2f.jpeg'),
+                    ),
+                    ExtendedTravelCard(
+                      imageUrl: ('assets/images/img-3f.jpeg'),
+                    ),
                   ],
                 ),
               ),

@@ -148,10 +148,18 @@ class DiscoverScreen extends StatelessWidget {
                           mainAxisSpacing: 20,
                           mainAxisExtent: 300),
                       children: [
-                        DiscoverTravelCard(),
-                        DiscoverTravelCard(),
-                        DiscoverTravelCard(),
-                        DiscoverTravelCard(),
+                        DiscoverTravelCard(
+                          imageUrl: 'assets/images/img-1d.jpeg',
+                        ),
+                        DiscoverTravelCard(
+                          imageUrl: 'assets/images/img-2d.jpeg',
+                        ),
+                        DiscoverTravelCard(
+                          imageUrl: 'assets/images/img-3d.jpeg',
+                        ),
+                        DiscoverTravelCard(
+                          imageUrl: 'assets/images/img-4d.jpeg',
+                        )
                       ],
                     ),
                   )

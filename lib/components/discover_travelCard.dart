@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class DiscoverTravelCard extends StatelessWidget {
-  const DiscoverTravelCard({super.key});
+  String imageUrl;
+  DiscoverTravelCard({
+    required this.imageUrl,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +26,8 @@ class DiscoverTravelCard extends StatelessWidget {
                 width: 170,
                 height: 152,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.black12,
-                    boxShadow: [
-                      BoxShadow(
-                          color: Color.fromARGB(28, 0, 0, 0), spreadRadius: 2),
-                    ]),
-                child: SizedBox(),
+                    borderRadius: BorderRadius.circular(10), boxShadow: []),
+                child: Image.asset(imageUrl),
               ),
               Positioned(
                   top: 10,

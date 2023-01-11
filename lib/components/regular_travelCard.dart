@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class RegularTravelCard extends StatelessWidget {
-  const RegularTravelCard({super.key});
+  String imageUrl;
+  RegularTravelCard({super.key, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,10 @@ class RegularTravelCard extends StatelessWidget {
                       BoxShadow(
                           color: Color.fromARGB(28, 0, 0, 0), spreadRadius: 2),
                     ]),
-                child: SizedBox(),
+                child: Image.asset(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
               Positioned(
                   top: 10,
