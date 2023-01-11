@@ -6,7 +6,6 @@ class DiscoverTravelCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
@@ -14,15 +13,14 @@ class DiscoverTravelCard extends StatelessWidget {
             BoxShadow(color: Color.fromARGB(28, 0, 0, 0), spreadRadius: 1),
           ]),
       width: 200,
-      height: 500,
       child: Column(
         children: [
           Stack(
             children: [
               Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
-                width: 140,
-                height: 102,
+                margin: EdgeInsets.all(10),
+                width: 170,
+                height: 152,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.black12,
@@ -34,12 +32,12 @@ class DiscoverTravelCard extends StatelessWidget {
               ),
               Positioned(
                   top: 10,
-                  left: 10,
+                  left: 20,
                   child: Container(
                     height: 30,
-                    width: 30,
+                    width: 70,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(10),
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
@@ -47,9 +45,16 @@ class DiscoverTravelCard extends StatelessWidget {
                               spreadRadius: 2),
                         ]),
                     margin: EdgeInsets.symmetric(vertical: 10),
-                    child: Icon(
-                      Icons.favorite,
-                      color: Colors.amber,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        Text('4.8')
+                      ],
                     ),
                   ))
             ],
@@ -62,9 +67,8 @@ class DiscoverTravelCard extends StatelessWidget {
                 Text('BEACH'),
                 Row(
                   children: [
-                    Text('4.9'),
                     Icon(
-                      Icons.star,
+                      Icons.favorite,
                       color: Colors.amber,
                     )
                   ],
@@ -72,6 +76,24 @@ class DiscoverTravelCard extends StatelessWidget {
               ],
             ),
           ),
+          Container(
+              margin: EdgeInsets.symmetric(horizontal: 15),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text('Location Name'),
+              )),
+          Container(
+              margin: EdgeInsets.symmetric(horizontal: 15),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text('Location'),
+              )),
+          Container(
+              margin: EdgeInsets.symmetric(horizontal: 15),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text('230/Person'),
+              )),
         ],
       ),
     );

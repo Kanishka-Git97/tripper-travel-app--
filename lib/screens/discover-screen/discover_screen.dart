@@ -7,6 +7,9 @@ class DiscoverScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    final double itemHeight = (size.height) / 2;
+    final double itemWidth = size.width / 2;
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -137,15 +140,14 @@ class DiscoverScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    height: 600,
-                    child: GridView.count(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
+                    height: 500,
+                    child: GridView(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20,
+                          mainAxisExtent: 300),
                       children: [
-                        DiscoverTravelCard(),
-                        DiscoverTravelCard(),
-                        DiscoverTravelCard(),
                         DiscoverTravelCard(),
                         DiscoverTravelCard(),
                         DiscoverTravelCard(),
