@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app_v1/screens/mybooked-screen/mybooked_screen.dart';
+import 'package:travel_app_v1/screens/profile-screen/ProfileScreen.dart';
 
 import '../home-screen/home_screen.dart';
 
@@ -16,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
     const HomeScreen(),
     const HomeScreen(),
     const MyBookedScreen(),
-    const HomeScreen(),
+    const ProfileScreen(),
   ];
 
   /*---current page number-----*/
