@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app_v1/components/custom_btn.dart';
 import 'package:travel_app_v1/components/rating_panel.dart';
+import 'package:travel_app_v1/components/rating_view.dart';
 import 'package:travel_app_v1/constant/constant.dart';
 
 class HistoryCard extends StatelessWidget {
@@ -58,17 +59,16 @@ class HistoryCard extends StatelessWidget {
                 ],
               ),
               Center(
-                child: CustomBtn(
-                    text: "RATING",
-                    width: 100.0,
-                    height: 40.0,
-                    txtColor: primaryColor,
-                    bgColor: Colors.white,
-                    radius: 50,
-                    borderColor: primaryColor,
-                    onPress: () => Navigator.of(context)
-                        .pushNamed('/reviews', arguments: {'id': 1})),
-              )
+                  child: CustomBtn(
+                text: "RATING",
+                width: 100.0,
+                height: 40.0,
+                txtColor: primaryColor,
+                bgColor: Colors.white,
+                radius: 50,
+                borderColor: primaryColor,
+                onPress: () => _showMyDialog(context),
+              ))
             ],
           ),
           Row(
@@ -95,5 +95,16 @@ class HistoryCard extends StatelessWidget {
 
   openRating(BuildContext ctx) {
     Navigator.of(ctx).pushNamed('/reviews');
+  }
+
+  Future<void> _showMyDialog(BuildContext context) async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return Dialog(
+            child: RatingView(),
+          );
+        });
   }
 }

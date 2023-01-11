@@ -21,6 +21,13 @@ class MyApp extends StatelessWidget {
         '/map': (context) => const MapScreen(),
         '/reviews': (context) => const ReviewScreen()
       },
+
+      theme: ThemeData(
+          // Dialog Box Design
+          dialogTheme: DialogTheme(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)))),
     );
   }
 }

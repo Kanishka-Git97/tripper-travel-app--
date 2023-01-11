@@ -11,7 +11,9 @@ class ReviewScreen extends StatelessWidget {
 
     return Scaffold(
       body: Column(
-        children: [Text(id.toString())],
+        children: [
+          // Header Section
+        ],
       ),
     );
   }

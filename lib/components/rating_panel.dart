@@ -16,4 +16,3 @@ class RatingPanel extends StatelessWidget {
     );
   }
 }
-
