@@ -43,7 +43,6 @@ class HomeScreen extends StatelessWidget {
               ]),
         ),
       ),
-      
       body: SingleChildScrollView(
         child: Container(
           color: Color(0xF9F9F9),

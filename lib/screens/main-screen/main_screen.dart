@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app_v1/screens/discover-screen/discover_screen.dart';
 
 import '../home-screen/home_screen.dart';
 
@@ -13,7 +14,7 @@ class _MainScreenState extends State<MainScreen> {
   /*----added new pages related to bootm navigationbar here-----*/
   final List<Widget> _pages = [
     const HomeScreen(),
-    const HomeScreen(),
+    const DiscoverScreen(),
     const HomeScreen(),
     const HomeScreen(),
   ];
