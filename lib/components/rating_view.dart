@@ -124,6 +124,9 @@ class _RatingViewState extends State<RatingView> {
                   backgroundImage: NetworkImage(
                       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80")),
             ),
+            SizedBox(
+              height: 10,
+            ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 15, vertical: 8.0),

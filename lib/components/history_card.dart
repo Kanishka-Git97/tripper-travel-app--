@@ -5,8 +5,10 @@ import 'package:travel_app_v1/components/rating_view.dart';
 import 'package:travel_app_v1/constant/constant.dart';
 
 class HistoryCard extends StatelessWidget {
-  const HistoryCard({Key? key, required this.ctx}) : super(key: key);
+  const HistoryCard({Key? key, required this.ctx, required this.img})
+      : super(key: key);
   final BuildContext ctx;
+  final String img;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,9 +34,10 @@ class HistoryCard extends StatelessWidget {
                 height: 100,
                 width: 100,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.greenAccent,
-                ),
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.greenAccent,
+                    image: DecorationImage(
+                        image: NetworkImage(img), fit: BoxFit.cover)),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

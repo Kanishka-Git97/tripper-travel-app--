@@ -22,7 +22,16 @@ class MapScreen extends StatelessWidget {
               height: 160,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: const [LocationCard(), LocationCard()],
+                children: const [
+                  LocationCard(
+                    img:
+                        "https://www.boredpanda.com/blog/wp-content/uuuploads/unbelievable-places/unbelievable-places-8.jpg",
+                  ),
+                  LocationCard(
+                    img:
+                        "https://imageio.forbes.com/blogs-images/trevornace/files/2015/11/ta-prohm-cambodia-1200x798.jpg?height=472&width=711&fit=bounds",
+                  )
+                ],
               ),
             ),
           ),

@@ -45,7 +45,12 @@ class MyBookedScreen extends StatelessWidget {
                       // Todo: Booked Item Card Loading
                       child: SingleChildScrollView(
                           child: Column(
-                        children: [BookedCard()],
+                        children: [
+                          BookedCard(
+                            img:
+                                "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Torre_Bel%C3%A9m_April_2009-4a.jpg/800px-Torre_Bel%C3%A9m_April_2009-4a.jpg",
+                          )
+                        ],
                       )),
                     ),
                     Container(
@@ -54,9 +59,13 @@ class MyBookedScreen extends StatelessWidget {
                           child: Column(children: [
                         HistoryCard(
                           ctx: context,
+                          img:
+                              "https://globalgrasshopper.com/wp-content/uploads/2012/01/10-of-the-most-beautiful-places-to-visit-in-Laos.jpg",
                         ),
                         HistoryCard(
                           ctx: context,
+                          img:
+                              "https://www.actual-adventure.com/public/uploads/srilankasirigya.jpg",
                         )
                       ])),
                     ),

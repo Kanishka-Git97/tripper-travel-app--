@@ -4,8 +4,8 @@ import 'package:travel_app_v1/components/rating_panel.dart';
 import 'package:travel_app_v1/constant/constant.dart';
 
 class LocationCard extends StatelessWidget {
-  const LocationCard({Key? key}) : super(key: key);
-
+  const LocationCard({Key? key, required this.img}) : super(key: key);
+  final String img;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,6 +29,11 @@ class LocationCard extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 color: Colors.redAccent,
+                image: DecorationImage(
+                  image: NetworkImage(
+                      img),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Padding(
@@ -43,13 +48,16 @@ class LocationCard extends StatelessWidget {
                   ),
                   Text("Sparkels", style: smallText),
                   RatingPanel(),
+                  SizedBox(
+                    height: 10,
+                  ),
                   CustomBtn(
                     width: 130.0,
                     text: "More Details",
-                    height: 50.0,
+                    height: 40.0,
                     txtColor: Colors.blueAccent,
                     bgColor: Colors.white,
-                    radius: 10.0,
+                    radius: 50.0,
                     borderColor: primaryColor,
                   )
                 ],
