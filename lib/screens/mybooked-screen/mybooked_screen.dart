@@ -50,8 +50,14 @@ class MyBookedScreen extends StatelessWidget {
                   Container(
                     // Todo: History Item Card Loading
                     child: SingleChildScrollView(
-                        child:
-                            Column(children: [HistoryCard(), HistoryCard()])),
+                        child: Column(children: [
+                      HistoryCard(
+                        ctx: context,
+                      ),
+                      HistoryCard(
+                        ctx: context,
+                      )
+                    ])),
                   ),
                 ]),
               )

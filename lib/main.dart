@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app_v1/screens/main-screen/main_screen.dart';
 import 'package:travel_app_v1/screens/map-screen/map_screen.dart';
+import 'package:travel_app_v1/screens/review-screen/review_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const MainScreen(),
         '/map': (context) => const MapScreen(),
+        '/reviews': (context) => const ReviewScreen()
       },
     );
   }

@@ -68,9 +68,7 @@ class BookedCard extends StatelessWidget {
                   RatingPanel()
                 ],
               ),
-              SizedBox(
-                width: 70,
-              ),
+              Spacer(),
               Center(
                   child:
                       IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)))

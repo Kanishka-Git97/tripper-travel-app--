@@ -4,8 +4,8 @@ import 'package:travel_app_v1/components/rating_panel.dart';
 import 'package:travel_app_v1/constant/constant.dart';
 
 class HistoryCard extends StatelessWidget {
-  const HistoryCard({Key? key}) : super(key: key);
-
+  const HistoryCard({Key? key, required this.ctx}) : super(key: key);
+  final BuildContext ctx;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -59,14 +59,15 @@ class HistoryCard extends StatelessWidget {
               ),
               Center(
                 child: CustomBtn(
-                  text: "RATING",
-                  width: 100.0,
-                  height: 40.0,
-                  txtColor: primaryColor,
-                  bgColor: Colors.white,
-                  radius: 50,
-                  borderColor: primaryColor,
-                ),
+                    text: "RATING",
+                    width: 100.0,
+                    height: 40.0,
+                    txtColor: primaryColor,
+                    bgColor: Colors.white,
+                    radius: 50,
+                    borderColor: primaryColor,
+                    onPress: () => Navigator.of(context)
+                        .pushNamed('/reviews', arguments: {'id': 1})),
               )
             ],
           ),
@@ -90,5 +91,9 @@ class HistoryCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  openRating(BuildContext ctx) {
+    Navigator.of(ctx).pushNamed('/reviews');
   }
 }
