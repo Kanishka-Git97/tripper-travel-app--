@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app_v1/screens/current-booking-details-screen/current_booking_details_screen.dart';
 import 'package:travel_app_v1/screens/main-screen/main_screen.dart';
 
 void main() {
@@ -12,8 +13,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      initialRoute: '/',
-      routes: {'/': (context) => const MainScreen()},
+      initialRoute: '/trip_details',
+      routes: {
+        '/': (context) => const MainScreen(),
+        '/trip_details' :(context) => const CurrentBookingDetailsScreen()
+        },
     );
   }
 }
