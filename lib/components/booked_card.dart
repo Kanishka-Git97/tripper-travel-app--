@@ -68,17 +68,12 @@ class BookedCard extends StatelessWidget {
                   RatingPanel()
                 ],
               ),
+              SizedBox(
+                width: 70,
+              ),
               Center(
-                child: CustomBtn(
-                  text: "MORE",
-                  width: 100.0,
-                  height: 40.0,
-                  txtColor: primaryColor,
-                  bgColor: Colors.white,
-                  radius: 50,
-                  borderColor: primaryColor,
-                ),
-              )
+                  child:
+                      IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)))
             ],
           ),
           Row(

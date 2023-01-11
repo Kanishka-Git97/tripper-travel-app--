@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app_v1/components/booked_card.dart';
 import 'package:travel_app_v1/components/history_card.dart';
+import 'package:travel_app_v1/constant/constant.dart';
 
 class MyBookedScreen extends StatelessWidget {
   const MyBookedScreen({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class MyBookedScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(5.0),
                   child: TabBar(
                       indicator: BoxDecoration(
-                        color: Colors.blueAccent,
+                        color: primaryColor,
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       tabs: const [

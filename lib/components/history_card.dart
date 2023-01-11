@@ -13,9 +13,15 @@ class HistoryCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "17 July 2022, Mon",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "17 July 2022, Mon",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              IconButton(onPressed: () {}, icon: Icon(Icons.more_vert_outlined))
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,15 +87,6 @@ class HistoryCard extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          CustomBtn(
-            width: double.infinity,
-            text: "DETAILS",
-            height: 40.0,
-            txtColor: Colors.white,
-            bgColor: primaryColor,
-            radius: 15.0,
-            borderColor: primaryColor,
-          )
         ],
       ),
     );
