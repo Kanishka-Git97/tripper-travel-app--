@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app_v1/components/extended_travelCard.dart';
+import 'package:travel_app_v1/components/location_card.dart';
 import 'package:travel_app_v1/components/map_box.dart';
 
 class MapScreen extends StatelessWidget {
@@ -21,12 +22,7 @@ class MapScreen extends StatelessWidget {
               height: 160,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: [
-                  Container(
-                      margin: EdgeInsets.all(4.0), child: ExtendedTravelCard()),
-                  Container(
-                      margin: EdgeInsets.all(4.0), child: ExtendedTravelCard()),
-                ],
+                children: const [LocationCard(), LocationCard()],
               ),
             ),
           ),

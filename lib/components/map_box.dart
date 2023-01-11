@@ -34,6 +34,17 @@ class MapBox extends StatelessWidget {
                       size: 50,
                       color: primaryColor,
                     ),
+                  )),
+          Marker(
+              width: 100.0,
+              height: 100.0,
+              point: LatLng(51.51, -0.89),
+              builder: (ctx) => Container(
+                    child: const Icon(
+                      Icons.location_on_sharp,
+                      size: 50,
+                      color: primaryColor,
+                    ),
                   ))
         ])
       ],
