@@ -46,6 +46,11 @@ class LocationCard extends StatelessWidget {
                   CustomBtn(
                     width: 130.0,
                     text: "More Details",
+                    height: 50.0,
+                    txtColor: Colors.blueAccent,
+                    bgColor: Colors.white,
+                    radius: 10.0,
+                    borderColor: primaryColor,
                   )
                 ],
               ),

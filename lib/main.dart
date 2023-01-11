@@ -13,8 +13,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      // initialRoute: '/',
-      initialRoute: '/map',
+      initialRoute: '/',
+      // initialRoute: '/map',
       routes: {
         '/': (context) => const MainScreen(),
         '/map': (context) => const MapScreen(),
