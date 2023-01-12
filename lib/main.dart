@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app_v1/screens/comments_review/all_comments_screen.dart';
 import 'package:travel_app_v1/screens/current-booking-details-screen/current_booking_details_screen.dart';
 import 'package:travel_app_v1/screens/main-screen/main_screen.dart';
 import 'package:travel_app_v1/screens/map-screen/map_screen.dart';
@@ -16,12 +17,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
 
-      initialRoute: '/trip_details',
+      initialRoute: '/reviews',
       routes: {
         '/': (context) => const MainScreen(),
         '/trip_details' :(context) => const CurrentBookingDetailsScreen(),
          '/map': (context) => const MapScreen(),
-        '/reviews': (context) => const ReviewScreen()
+        '/reviews':(context) => const AllCommentsScreen()
         },
 
       theme: ThemeData(
