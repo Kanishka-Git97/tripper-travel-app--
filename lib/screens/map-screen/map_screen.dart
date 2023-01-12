@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travel_app_v1/components/extended_travelCard.dart';
 import 'package:travel_app_v1/components/location_card.dart';
 import 'package:travel_app_v1/components/map_box.dart';
+import 'package:travel_app_v1/constant/constant.dart';
 
 class MapScreen extends StatelessWidget {
   const MapScreen({Key? key}) : super(key: key);
@@ -35,6 +36,24 @@ class MapScreen extends StatelessWidget {
               ),
             ),
           ),
+          Positioned(
+              top: 35,
+              left: 15,
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: Colors.blueGrey[700],
+                    borderRadius: BorderRadius.circular(50)),
+                child: Center(
+                  child: InkWell(
+                    child: Center(
+                        child: Icon(
+                      Icons.arrow_back_ios_new_outlined,
+                      color: Colors.white,
+                    )),
+                  ),
+                ),
+              )),
         ],
       ),
     );
