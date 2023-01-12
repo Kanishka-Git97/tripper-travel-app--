@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app_v1/components/custom_btn.dart';
+import 'package:travel_app_v1/components/map_box.dart';
 import 'package:travel_app_v1/components/review_details_card.dart';
 import '../../Constant/constant.dart';
 
@@ -165,6 +167,8 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                               color: const Color.fromARGB(255, 221, 236, 243),
                             ),
+                            child: MapBox(),
+                            clipBehavior: Clip.antiAlias,
                           ),
                           const SizedBox(
                             height: 20,
@@ -245,11 +249,13 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: const[
                         Text("LKR 8000", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500, color: Color(0xff2687A4)),),
                         Text("Per Person", style: text,)
                       ],
                     ),
+                    const SizedBox(width: 10,),
+                    const Align(alignment: Alignment.centerRight, child: CustomBtn(width: 278, text: "JOIN TRIP", radius: 24, height: 48, txtColor: Colors.white, bgColor: primaryColor, borderColor: primaryColor)),
                   ],
                 )
               ),
