@@ -255,7 +255,7 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(width: 10,),
-                    const Align(alignment: Alignment.centerRight, child: CustomBtn(width: 278, text: "BOOK NOW", radius: 24, height: 48, txtColor: Colors.white, bgColor: primaryColor, borderColor: primaryColor)),
+                    const Align(alignment: Alignment.centerRight, child: CustomBtn(width: 278, text: "JOIN TRIP", radius: 24, height: 48, txtColor: Colors.white, bgColor: primaryColor, borderColor: primaryColor)),
                   ],
                 )
               ),
