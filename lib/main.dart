@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+
+import 'package:travel_app_v1/screens/imageview-screen/imageview_screen.dart';
+
 import 'package:travel_app_v1/screens/current-booking-details-screen/current_booking_details_screen.dart';
+
 import 'package:travel_app_v1/screens/main-screen/main_screen.dart';
 import 'package:travel_app_v1/screens/map-screen/map_screen.dart';
 import 'package:travel_app_v1/screens/review-screen/review_screen.dart';
@@ -16,13 +20,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
 
-      initialRoute: '/trip_details',
+      initialRoute: '/',
+      // initialRoute: '/image',
       routes: {
         '/': (context) => const MainScreen(),
         '/trip_details' :(context) => const CurrentBookingDetailsScreen(),
-         '/map': (context) => const MapScreen(),
-        '/reviews': (context) => const ReviewScreen()
-        },
+        '/map': (context) => const MapScreen(),
+        '/reviews': (context) => const ReviewScreen(),
+        '/image': (context) => ImageViewScreen()
+      },
 
       theme: ThemeData(
           // Dialog Box Design
