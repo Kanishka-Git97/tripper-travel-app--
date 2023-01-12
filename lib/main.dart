@@ -11,6 +11,7 @@ import 'package:travel_app_v1/screens/current-booking-details-screen/current_boo
 import 'package:travel_app_v1/screens/main-screen/main_screen.dart';
 import 'package:travel_app_v1/screens/map-screen/map_screen.dart';
 import 'package:travel_app_v1/screens/payment_screen/payment_screen.dart';
+import 'package:travel_app_v1/screens/splash/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,15 +26,16 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
 
 
-      initialRoute: '/',
+      initialRoute: '/register',
       //  initialRoute: '/payments',
       routes: {
         '/': (context) => const MainScreen(),
         '/trip_details' :(context) => const CurrentBookingDetailsScreen(),
         '/map': (context) => const MapScreen(),
-        '/reviews': (context) => const ReviewScreen(),
+        '/reviews': (context) => const AllCommentsScreen(),
         '/image': (context) => ImageViewScreen(),
-        '/payments':(context) => const PaymentScreen()
+        '/payments':(context) => const PaymentScreen(),
+        '/register':(context) => const SplashScreen()
       },
 
       theme: ThemeData(
