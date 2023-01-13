@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travel_app_v1/components/custom_btn.dart';
 import 'package:travel_app_v1/components/map_box.dart';
 import 'package:travel_app_v1/components/review_details_card.dart';
-import '../../Constant/constant.dart';
+import 'package:travel_app_v1/constant/constant.dart';
 
 class CurrentBookingDetailsScreen extends StatelessWidget {
   const CurrentBookingDetailsScreen({Key? key}) : super(key: key);
@@ -39,14 +39,16 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          
                         ],
                       ),
                     ),
-                    actions: const[
+                    actions: const [
                       Padding(
                         padding: EdgeInsets.only(right: 20),
-                        child: Icon(Icons.favorite, color: Color(0xffE89343) ,),
+                        child: Icon(
+                          Icons.favorite,
+                          color: Color(0xffE89343),
+                        ),
                       ),
                     ],
                     pinned: true,
@@ -79,8 +81,9 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                               child: Column(
                                 children: [
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: const [
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
                                       Text(
                                         "Santa Justa Elevator",
                                         style: TextStyle(
@@ -88,18 +91,22 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                                             color: Color(0xff3C4143),
                                             fontWeight: FontWeight.w600),
                                       ),
-                                      SizedBox(
-                                        width: 180,
-                                      ),
-                                      Text(
-                                        "4",
-                                        style: text,
-                                      ),
-                                      Icon(
-                                        Icons.star,
-                                        color: Color(0xffFFAE00),
-                                        size: 18,
-                                      ),
+                                      Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "4",
+                                              style: text,
+                                            ),
+                                            Icon(
+                                              Icons.star,
+                                              color: Color(0xffFFAE00),
+                                              size: 18,
+                                            ),
+                                          ]),
                                     ],
                                   ),
                                   const SizedBox(
@@ -131,7 +138,8 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                   SliverToBoxAdapter(
                     child: Container(
                       color: Colors.white,
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 15),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,11 +181,11 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                           Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: const [
                               Text(
-                                "Reviews",
+                                "Gallery",
                                 style: subHeading,
                               ),
                               SizedBox(
@@ -189,14 +197,31 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                               )
                             ],
                           ),
-                          const SizedBox(height: 10,),
+                          const SizedBox(
+                            height: 10,
+                          ),
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
-                              children: List.generate(3, (index) => Container(margin: const EdgeInsets.only(right: 5), child: const Image(image: NetworkImage('https://charlieswanderings.com/wp-content/uploads/2020/05/BEAUTIFUL-CASTLES-IN-GERMANY-26-scaled.jpg'), fit: BoxFit.cover,), width: 150, height: 100, decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(14)),),)),
+                              children: List.generate(
+                                  3,
+                                  (index) => Container(
+                                        margin: const EdgeInsets.only(right: 5),
+                                        child: const Image(
+                                          image: NetworkImage(
+                                              'https://charlieswanderings.com/wp-content/uploads/2020/05/BEAUTIFUL-CASTLES-IN-GERMANY-26-scaled.jpg'),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        width: 150,
+                                        height: 100,
+                                        decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(14)),
+                                        ),
+                                      )),
                             ),
                           ),
-                           const SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Row(
@@ -241,25 +266,80 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Container(
                 padding: const EdgeInsets.only(bottom: 10, left: 20, right: 20),
-                decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(12), boxShadow: const [BoxShadow(color: Color.fromARGB(28, 179, 179, 179), spreadRadius: 3)]),
-                width: double.infinity, 
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: const [
+                      BoxShadow(
+                          color: Color.fromARGB(28, 179, 179, 179),
+                          spreadRadius: 3)
+                    ]),
+                width: double.infinity,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const[
-                        Text("LKR 8000", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500, color: Color(0xff2687A4)),),
-                        Text("Per Person", style: text,)
+                      children: const [
+                        Text(
+                          "LKR 8000",
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xff2687A4)),
+                        ),
+                        Text(
+                          "Per Person",
+                          style: text,
+                        )
                       ],
                     ),
-                    const SizedBox(width: 10,),
-                    const Align(alignment: Alignment.centerRight, child: CustomBtn(width: 278, text: "JOIN TRIP", radius: 24, height: 48, txtColor: Colors.white, bgColor: primaryColor, borderColor: primaryColor)),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    // const Align(
+                    //     alignment: Alignment.centerRight,
+                    //     child: CustomBtn(
+                    //         width: 278,
+                    //         text: "JOIN TRIP",
+                    //         radius: 24,
+                    //         height: 48,
+                    //         txtColor: Colors.white,
+                    //         bgColor: primaryColor,
+                    //         borderColor: primaryColor)),
+                    Spacer(),
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                        decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              "JOIN TRIP",
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Icon(Icons.hail_rounded, color: Colors.white)
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
-                )
+                ),
               ),
-            ),)
+            ),
+          )
         ],
       ),
     );

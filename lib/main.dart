@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:travel_app_v1/screens/imageview-screen/imageview_screen.dart';
 
 import 'package:travel_app_v1/screens/current-booking-details-screen/current_booking_details_screen.dart';
+import 'package:travel_app_v1/screens/login-screen/login_screen.dart';
 import 'package:travel_app_v1/screens/main-screen/main_screen.dart';
 import 'package:travel_app_v1/screens/map-screen/map_screen.dart';
 import 'package:travel_app_v1/screens/payment-screen/payment_screen.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       // initialRoute: '/',
       // initialRoute: '/payments',
 
-      initialRoute: '/register',
+      initialRoute: '/payments',
       //  initialRoute: '/payments',
 
       routes: {
@@ -36,11 +37,10 @@ class MyApp extends StatelessWidget {
         '/map': (context) => const MapScreen(),
         // '/reviews': (context) => const AllCommentsScreen(),
         '/image': (context) => ImageViewScreen(),
-
         '/payments': (context) => const PaymentScreen(),
-
         '/splash': (context) => const SplashScreen(),
-        '/register': (context) => const RegisterScreen()
+        '/register': (context) => const RegisterScreen(),
+        '/login': (context) => const LoginScreen()
       },
 
       theme: ThemeData(

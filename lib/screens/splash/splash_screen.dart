@@ -14,7 +14,7 @@ class SplashScreen extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/images/bg1.jpg'), fit: BoxFit.cover),
+              image: AssetImage('assets/images/bg.webp'), fit: BoxFit.cover),
         ),
         child: Container(
           padding: const EdgeInsets.all(20),
@@ -23,24 +23,58 @@ class SplashScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Trip",
+                    style: TextStyle(
+                        fontSize: 35,
+                        fontWeight: FontWeight.w900,
+                        color: primaryColor),
+                  ),
+                  Text("per.",
+                      style: TextStyle(
+                        fontSize: 35,
+                        fontWeight: FontWeight.w900,
+                      ))
+                ],
+              ),
               const SizedBox(
-                height: 100,
+                height: 40,
               ),
-              const Text(
-                "Enjoy the trip \nwith me",
-                style: TextStyle(
-                  letterSpacing: 1,
-                    fontSize: 36,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white),
+              Row(
+                children: [
+                  const Text(
+                    "Trip with Us",
+                    style: TextStyle(
+                        letterSpacing: 1,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w900,
+                        color: Color.fromARGB(255, 56, 56, 56)),
+                  ),
+                  Icon(
+                    Icons.hail_rounded,
+                    color: Color.fromARGB(255, 56, 56, 56),
+                  )
+                ],
               ),
-              const SizedBox(
-                height: 400,
+              Text(
+                "Keep on the look out for new features such as ordering food and beverages before or during your travels, as we aim to improve you travel experience.",
+                style: TextStyle(fontSize: 12),
+                textAlign: TextAlign.justify,
               ),
+              Spacer(),
               GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const HomeScreen()),);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()),
+                    );
                   },
                   child: CustomBtn(
                       width: double.maxFinite,
@@ -51,13 +85,15 @@ class SplashScreen extends StatelessWidget {
                       bgColor: primaryColor.withOpacity(0.9),
                       borderColor: Colors.transparent)),
               const SizedBox(
-                height: 20,
+                height: 15,
               ),
               GestureDetector(
                 onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const HomeScreen()),);
-                  },
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  );
+                },
                 child: CustomBtn(
                     width: double.maxFinite,
                     text: "Sign in",

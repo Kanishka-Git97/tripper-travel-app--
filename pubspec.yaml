@@ -38,6 +38,7 @@ dependencies:
   latlong2: ^0.8.1
   syncfusion_flutter_datepicker: ^20.3.61
   syncfusion_flutter_signaturepad: ^20.3.61
+  image_picker: ^0.8.6
 
 dev_dependencies:
   flutter_test:
@@ -63,7 +64,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/bg1.jpg
+    - assets/images/bg.webp
  
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

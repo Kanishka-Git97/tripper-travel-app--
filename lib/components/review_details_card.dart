@@ -45,34 +45,38 @@ class ReviewDetailsCard extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
-                width: 180,
-              ),
-              Text(
-                "4",
-                style: text,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Icon(
-                Icons.star,
-                color: Color(0xffFFAE00),
-                size: 18,
-              ),
+              Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "4",
+                    style: text,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    Icons.star,
+                    color: Color(0xffFFAE00),
+                    size: 18,
+                  ),
+                ],
+              )
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Padding(
             padding: const EdgeInsets.only(left: 60),
             child: Text(
-                      "Sed egestas, velit at laoreet facilisis, nulla velit laoreet purus.",
-                      style: text,
-                    ),
+              "Sed egestas, velit at laoreet facilisis, nulla velit laoreet purus.",
+              style: text,
+            ),
           ),
         ],
       ),
-      
     );
   }
 }
