@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ExtendedTravelCard extends StatelessWidget {
-  const ExtendedTravelCard({super.key});
+  String imageUrl;
+  ExtendedTravelCard({super.key, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +23,18 @@ class ExtendedTravelCard extends StatelessWidget {
               height: 120,
               width: 120,
               child: Container(
+                  child: Image.asset(
+                    imageUrl,
+                    fit: BoxFit.cover,
+                  ),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.black12,
                       boxShadow: [
-                    BoxShadow(
-                        color: Color.fromARGB(28, 0, 0, 0), spreadRadius: 2),
-                  ])),
+                        BoxShadow(
+                            color: Color.fromARGB(28, 0, 0, 0),
+                            spreadRadius: 2),
+                      ])),
             ),
             Container(
               width: 170,
