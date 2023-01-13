@@ -24,11 +24,15 @@ class CustomInput extends StatelessWidget {
       enabled: enabled,
       style: subHeading,
       decoration: InputDecoration(
+        isDense: true,
+        contentPadding: const EdgeInsets.fromLTRB(27, 27, 27, 0),
+        labelStyle: smallText,
+        hintStyle: smallText,
         hintText: hintText,
         labelText: labelText,
         floatingLabelStyle: const TextStyle(color: primaryColor),
         border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
+          borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
       ),
       keyboardType: keyboardType,
