@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:travel_app_v1/screens/discover-screen/discover_screen.dart';
+
+import 'package:travel_app_v1/screens/mybooked-screen/mybooked_screen.dart';
+import 'package:travel_app_v1/screens/profile-screen/ProfileScreen.dart';
+
 
 import '../home-screen/home_screen.dart';
 
@@ -15,8 +20,9 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _pages = [
     const HomeScreen(),
     const DiscoverScreen(),
-    const HomeScreen(),
-    const HomeScreen(),
+    const MyBookedScreen(),
+    const ProfileScreen(),
+
   ];
 
   /*---current page number-----*/
@@ -57,7 +63,7 @@ class _MainScreenState extends State<MainScreen> {
                   ? const Icon(Icons.calendar_month)
                   : const Icon(Icons.calendar_month_outlined,
                       color: Color(0xff2687A4)),
-              label: 'Archives'),
+              label: 'Bookings'),
           BottomNavigationBarItem(
               icon: _currentPageIndex == 3
                   ? const Icon(Icons.person)
