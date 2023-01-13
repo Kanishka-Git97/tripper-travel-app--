@@ -42,274 +42,289 @@ class _PaymentScreenState extends State<PaymentScreen> {
               color: Color(0xff383D3C)),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: 20,
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    height: 100,
-                    width: 100,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        image: DecorationImage(
-                            image: NetworkImage(
-                                "https://www.actual-adventure.com/public/uploads/srilankasirigya.jpg"),
-                            fit: BoxFit.cover)),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Trip Name",
-                        style: subHeading,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      const Text(
-                        "Scheduled Dates",
-                        style: TextStyle(fontSize: 10),
-                      ),
-                      Row(
-                        children: [
-                          Wrap(
-                            children: List.generate(
-                                3,
-                                (index) => Padding(
-                                      padding: const EdgeInsets.all(2.0),
-                                      child: Chip(
-                                          label: Text(
-                                        "2023-01-27",
-                                        style: TextStyle(fontSize: 10),
-                                      )),
-                                    )),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    "Book your Date",
-                    style: subHeading,
-                  ),
-                  Container(
-                    width: double.maxFinite,
-                    height: 300,
-                    child: SfDateRangePicker(
-                      onSelectionChanged: _onSelectionChanged,
-                      selectableDayPredicate: (DateTime dateTime) {
-                        if (dateTime.isBefore(DateTime.now())) {
-                          return false;
-                        } else {
-                          return true;
-                        }
-                      },
+      body: Stack(children: [
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  "https://www.actual-adventure.com/public/uploads/srilankasirigya.jpg"),
+                              fit: BoxFit.cover)),
                     ),
-                  ),
-                  // const SizedBox(
-                  //   height: 20,
-                  // ),
-                  // const Text(
-                  //   "Member",
-                  //   style: subHeading,
-                  // ),
-                  // const SizedBox(
-                  //   height: 10,
-                  // ),
-                  // DropdownButtonFormField(
-                  //   isExpanded: false,
-                  //   value: _selectedVal,
-                  //   items: _memberList.map((e) {
-                  //     return DropdownMenuItem(
-                  //       child: Text(
-                  //         e,
-                  //         style: const TextStyle(
-                  //             fontSize: 13, color: Colors.black),
-                  //       ),
-                  //       value: e,
-                  //     );
-                  //   }).toList(),
-                  //   onChanged: (val) {
-                  //     setState(() {
-                  //       _selectedVal = val as String;
-                  //     });
-                  //   },
-                  //   icon: const Icon(
-                  //     Icons.arrow_drop_down,
-                  //     color: primaryColor,
-                  //   ),
-                  //   decoration: InputDecoration(
-                  //       border: UnderlineInputBorder(
-                  //           borderRadius: BorderRadius.circular(14))),
-                  // ),
-                  // const SizedBox(
-                  //   height: 20,
-                  // ),
-                  const Text(
-                    "Billing Information",
-                    style: subHeading,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  // Person Counter
-                  Row(
-                    children: [
-                      Text("Person Amount: "),
-                      Container(
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 10,
-                            ),
-                            GestureDetector(
-                              onTap: _personCounterDecrement,
-                              child: Icon(Icons.arrow_circle_down_sharp),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(_personCount.toString()),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            GestureDetector(
-                                onTap: _personCounterIncrement,
-                                child: Icon(
-                                  Icons.arrow_circle_up_sharp,
-                                )),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text("Per Person : ",
-                          style: TextStyle(fontSize: 13, color: Colors.black)),
-                      Text(" LKR ${_perPorsonCost}",
-                          style: const TextStyle(
-                              fontSize: 13, color: Colors.black)),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("            ",
-                          style: TextStyle(fontSize: 13, color: Colors.black)),
-                      Text("${_personCount} x ",
-                          style: TextStyle(fontSize: 13, color: Colors.black)),
-                      Text("${_perPorsonCost * _personCount}",
-                          style: TextStyle(fontSize: 13, color: Colors.black)),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Trip Cost: ",
-                          style: TextStyle(fontSize: 15, color: Colors.black)),
-                      Text("LKR ${_perPorsonCost * _personCount}",
-                          style: TextStyle(fontSize: 15, color: Colors.black)),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: _showMyDialog,
-                  child: Container(
-                    margin: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: Color(0xff7C8385),
-                      borderRadius: BorderRadius.circular(20),
+                    SizedBox(
+                      width: 20,
                     ),
-                    padding: EdgeInsets.all(8),
-                    child: Row(
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
-                          Icons.arrow_circle_left_sharp,
-                          color: Colors.white,
+                        Text(
+                          "Trip Name",
+                          style: subHeading,
                         ),
                         SizedBox(
-                          width: 10,
+                          height: 5,
                         ),
-                        Text(
-                          "Sign Here",
-                          style: TextStyle(color: Colors.white),
+                        const Text(
+                          "Scheduled Dates",
+                          style: TextStyle(fontSize: 10),
+                        ),
+                        Row(
+                          children: [
+                            Wrap(
+                              children: List.generate(
+                                  3,
+                                  (index) => Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Chip(
+                                            label: Text(
+                                          "2023-01-27",
+                                          style: TextStyle(fontSize: 10),
+                                        )),
+                                      )),
+                            ),
+                          ],
                         ),
                       ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                padding: const EdgeInsets.only(
-                    bottom: 10, left: 20, right: 20, top: 10),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: const [
-                      BoxShadow(
-                          color: Color.fromARGB(28, 179, 179, 179),
-                          spreadRadius: 3)
-                    ]),
-                width: double.infinity,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Align(
-                        alignment: Alignment.centerRight,
-                        child: CustomBtn(
-                            width: double.maxFinite,
-                            text: "PAY LKR ${_perPorsonCost * _personCount}",
-                            radius: 24,
-                            height: 48,
-                            txtColor: Colors.white,
-                            bgColor: primaryColor,
-                            borderColor: primaryColor)),
+                    )
                   ],
                 ),
               ),
-            ),
-          ],
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      "Book your Date",
+                      style: subHeading,
+                    ),
+                    Container(
+                      width: double.maxFinite,
+                      height: 300,
+                      child: SfDateRangePicker(
+                        onSelectionChanged: _onSelectionChanged,
+                        selectableDayPredicate: (DateTime dateTime) {
+                          if (dateTime.isBefore(DateTime.now())) {
+                            return false;
+                          } else {
+                            return true;
+                          }
+                        },
+                      ),
+                    ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                    // const Text(
+                    //   "Member",
+                    //   style: subHeading,
+                    // ),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
+                    // DropdownButtonFormField(
+                    //   isExpanded: false,
+                    //   value: _selectedVal,
+                    //   items: _memberList.map((e) {
+                    //     return DropdownMenuItem(
+                    //       child: Text(
+                    //         e,
+                    //         style: const TextStyle(
+                    //             fontSize: 13, color: Colors.black),
+                    //       ),
+                    //       value: e,
+                    //     );
+                    //   }).toList(),
+                    //   onChanged: (val) {
+                    //     setState(() {
+                    //       _selectedVal = val as String;
+                    //     });
+                    //   },
+                    //   icon: const Icon(
+                    //     Icons.arrow_drop_down,
+                    //     color: primaryColor,
+                    //   ),
+                    //   decoration: InputDecoration(
+                    //       border: UnderlineInputBorder(
+                    //           borderRadius: BorderRadius.circular(14))),
+                    // ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                    const Text(
+                      "Billing Information",
+                      style: subHeading,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    // Person Counter
+                    Row(
+                      children: [
+                        Text("Person Amount: "),
+                        Container(
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ),
+                              GestureDetector(
+                                onTap: _personCounterDecrement,
+                                child: Icon(Icons.arrow_circle_down_sharp),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(_personCount.toString()),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              GestureDetector(
+                                  onTap: _personCounterIncrement,
+                                  child: Icon(
+                                    Icons.arrow_circle_up_sharp,
+                                  )),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Per Person : ",
+                            style:
+                                TextStyle(fontSize: 13, color: Colors.black)),
+                        Text(" LKR ${_perPorsonCost}",
+                            style: const TextStyle(
+                                fontSize: 13, color: Colors.black)),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 2,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("            ",
+                            style:
+                                TextStyle(fontSize: 13, color: Colors.black)),
+                        Text("${_personCount} x ",
+                            style:
+                                TextStyle(fontSize: 13, color: Colors.black)),
+                        Text("${_perPorsonCost * _personCount}",
+                            style:
+                                TextStyle(fontSize: 13, color: Colors.black)),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Trip Cost: ",
+                            style:
+                                TextStyle(fontSize: 15, color: Colors.black)),
+                        Text("LKR ${_perPorsonCost * _personCount}",
+                            style:
+                                TextStyle(fontSize: 15, color: Colors.black)),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: _showMyDialog,
+                    child: Container(
+                      margin: EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: Color(0xff7C8385),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding: EdgeInsets.all(8),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.arrow_circle_left_sharp,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            "Signature",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 90,
+              )
+            ],
+          ),
         ),
-      ),
+        Positioned(
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              padding: const EdgeInsets.only(
+                  bottom: 10, left: 20, right: 20, top: 10),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Color.fromARGB(28, 179, 179, 179),
+                        spreadRadius: 3)
+                  ]),
+              width: double.infinity,
+              height: 80,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: CustomBtn(
+                          width: double.maxFinite,
+                          text: "PAY LKR ${_perPorsonCost * _personCount}",
+                          radius: 24,
+                          height: 48,
+                          txtColor: Colors.white,
+                          bgColor: primaryColor,
+                          borderColor: primaryColor)),
+                ],
+              ),
+            ),
+          ),
+        )
+      ]),
     );
   }
 
