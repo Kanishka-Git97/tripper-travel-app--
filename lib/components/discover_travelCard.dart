@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-class RegularTravelCard extends StatelessWidget {
+class DiscoverTravelCard extends StatelessWidget {
   String imageUrl;
-  RegularTravelCard({super.key, required this.imageUrl});
+  DiscoverTravelCard({
+    required this.imageUrl,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
@@ -20,29 +22,21 @@ class RegularTravelCard extends StatelessWidget {
           Stack(
             children: [
               Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
+                margin: EdgeInsets.all(10),
                 width: 170,
                 height: 152,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.black12,
-                    boxShadow: [
-                      BoxShadow(
-                          color: Color.fromARGB(28, 0, 0, 0), spreadRadius: 2),
-                    ]),
-                child: Image.asset(
-                  imageUrl,
-                  fit: BoxFit.cover,
-                ),
+                    borderRadius: BorderRadius.circular(10), boxShadow: []),
+                child: Image.asset(imageUrl),
               ),
               Positioned(
                   top: 10,
-                  left: 10,
+                  left: 20,
                   child: Container(
                     height: 30,
-                    width: 30,
+                    width: 70,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(10),
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
@@ -50,9 +44,16 @@ class RegularTravelCard extends StatelessWidget {
                               spreadRadius: 2),
                         ]),
                     margin: EdgeInsets.symmetric(vertical: 10),
-                    child: Icon(
-                      Icons.favorite,
-                      color: Colors.amber,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        Text('4.8')
+                      ],
                     ),
                   ))
             ],
@@ -65,9 +66,8 @@ class RegularTravelCard extends StatelessWidget {
                 Text('BEACH'),
                 Row(
                   children: [
-                    Text('4.9'),
                     Icon(
-                      Icons.star,
+                      Icons.favorite,
                       color: Colors.amber,
                     )
                   ],

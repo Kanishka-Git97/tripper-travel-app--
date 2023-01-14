@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app_v1/screens/comments-review/all_comments_screen.dart';
 
 import 'package:travel_app_v1/screens/imageview-screen/imageview_screen.dart';
 
@@ -28,14 +29,14 @@ class MyApp extends StatelessWidget {
       // initialRoute: '/',
       // initialRoute: '/payments',
 
-      initialRoute: '/payments',
+      initialRoute: '/reviews',
       //  initialRoute: '/payments',
 
       routes: {
         '/': (context) => const MainScreen(),
         '/trip_details': (context) => const CurrentBookingDetailsScreen(),
         '/map': (context) => const MapScreen(),
-        // '/reviews': (context) => const AllCommentsScreen(),
+        '/reviews': (context) => const AllCommentsScreen(),
         '/image': (context) => ImageViewScreen(),
         '/payments': (context) => const PaymentScreen(),
         '/splash': (context) => const SplashScreen(),
