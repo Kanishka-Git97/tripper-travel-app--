@@ -29,7 +29,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         shadowColor: Colors.transparent,
         centerTitle: true,
         title: const Text(
-          "Booked Your Trip",
+          "Book Your Trip",
           style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
