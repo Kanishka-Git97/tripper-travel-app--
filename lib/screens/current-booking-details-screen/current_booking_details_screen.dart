@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:travel_app_v1/components/custom_btn.dart';
 import 'package:travel_app_v1/components/map_box.dart';
 import 'package:travel_app_v1/components/review_details_card.dart';
 import 'package:travel_app_v1/constant/constant.dart';
@@ -84,7 +83,7 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Santa Justa Elevator",
                                         style: TextStyle(
                                             fontSize: 18,
@@ -96,7 +95,7 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                                               CrossAxisAlignment.center,
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
-                                          children: [
+                                          children: const [
                                             Text(
                                               "4",
                                               style: text,
@@ -160,6 +159,33 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                           ),
                           const SizedBox(
                             height: 20,
+                          ), 
+                          const Text(
+                            "Up Coming Trip Schedule",
+                            style: subHeading,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Wrap(
+                              children: List.generate(
+                                  3,
+                                  (index) => const Padding(
+                                        padding: EdgeInsets.all(2.0),
+                                        child: Chip(
+                                            label: Text(
+                                          "2023-01-27",
+                                          style: TextStyle(fontSize: 10),
+                                        )),
+                                      )),
+                            ),
+                          ],
+                        ),
+                          const SizedBox(
+                            height: 10,
                           ),
                           const Text(
                             "Map",
@@ -298,32 +324,22 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                     const SizedBox(
                       width: 10,
                     ),
-                    // const Align(
-                    //     alignment: Alignment.centerRight,
-                    //     child: CustomBtn(
-                    //         width: 278,
-                    //         text: "JOIN TRIP",
-                    //         radius: 24,
-                    //         height: 48,
-                    //         txtColor: Colors.white,
-                    //         bgColor: primaryColor,
-                    //         borderColor: primaryColor)),
-                    Spacer(),
+                    const Spacer(),
                     InkWell(
                       onTap: () {},
                       child: Container(
                         padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                            const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                         decoration: BoxDecoration(
                           color: primaryColor,
                           borderRadius: BorderRadius.circular(24),
                         ),
                         child: Row(
-                          children: [
+                          children: const [
                             Text(
                               "JOIN TRIP",
                               style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: 22,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
                             ),

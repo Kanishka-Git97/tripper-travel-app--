@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app_v1/components/discover_travelCard.dart';
-import 'package:travel_app_v1/components/regular_travelCard.dart';
 
 class DiscoverScreen extends StatelessWidget {
   const DiscoverScreen({super.key});
@@ -12,43 +11,41 @@ class DiscoverScreen extends StatelessWidget {
     final double itemWidth = size.width / 2;
     return Scaffold(
         appBar: AppBar(
-          elevation: 0,
-          iconTheme: IconThemeData(color: Colors.grey),
-          toolbarHeight: 60,
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          title: Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            width: double.infinity,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
-                    'empty',
-                  ),
-                  Text(
-                    'Discover',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: CircleAvatar(
-                      backgroundColor: Color(0xff2687A4),
-                      radius: 100,
-                      child: Text(
-                        'HP',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ]),
-          ),
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.grey),
+        toolbarHeight: 60,
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        centerTitle: true,
+        title: const Text(
+          'Discover',
+          style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Color(0xff383D3C)),
         ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: SizedBox(
+              width: 40,
+              height: 40,
+              child: CircleAvatar(
+                backgroundColor: Color(0xff2687A4),
+                radius: 100,
+                child: Text(
+                  'HP',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
         body: SingleChildScrollView(
           child: Container(
-              color: Color.fromARGB(0, 249, 249, 249),
-              margin: EdgeInsets.symmetric(horizontal: 10),
+              color: const  Color.fromARGB(0, 249, 249, 249),
+              margin: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: [
                   Row(

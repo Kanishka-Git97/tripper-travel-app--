@@ -15,15 +15,9 @@ class PaymentScreen extends StatefulWidget {
 class _PaymentScreenState extends State<PaymentScreen> {
   final GlobalKey<SfSignaturePadState> _signatureGlobalKey = GlobalKey();
   var _personCount = 1;
-  _PaymentScreenState() {
-    _selectedVal = _memberList[0];
-  }
 
   // Setup Trip Cost
   var _perPorsonCost = 8000.00;
-
-  final _memberList = ["Select", "1", "2", "3", "4", "5", "6", "7"];
-  String? _selectedVal = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +41,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.symmetric(
+                margin: const EdgeInsets.symmetric(
                   horizontal: 20,
                 ),
                 child: Row(
@@ -57,23 +51,23 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       width: 100,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
-                          image: DecorationImage(
+                          image: const DecorationImage(
                               image: NetworkImage(
                                   "https://www.actual-adventure.com/public/uploads/srilankasirigya.jpg"),
                               fit: BoxFit.cover)),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Trip Name",
                           style: subHeading,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         const Text(
@@ -85,8 +79,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             Wrap(
                               children: List.generate(
                                   3,
-                                  (index) => Padding(
-                                        padding: const EdgeInsets.all(2.0),
+                                  (index) => const Padding(
+                                        padding: EdgeInsets.all(2.0),
                                         child: Chip(
                                             label: Text(
                                           "2023-01-27",
@@ -128,45 +122,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         },
                       ),
                     ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // const Text(
-                    //   "Member",
-                    //   style: subHeading,
-                    // ),
-                    // const SizedBox(
-                    //   height: 10,
-                    // ),
-                    // DropdownButtonFormField(
-                    //   isExpanded: false,
-                    //   value: _selectedVal,
-                    //   items: _memberList.map((e) {
-                    //     return DropdownMenuItem(
-                    //       child: Text(
-                    //         e,
-                    //         style: const TextStyle(
-                    //             fontSize: 13, color: Colors.black),
-                    //       ),
-                    //       value: e,
-                    //     );
-                    //   }).toList(),
-                    //   onChanged: (val) {
-                    //     setState(() {
-                    //       _selectedVal = val as String;
-                    //     });
-                    //   },
-                    //   icon: const Icon(
-                    //     Icons.arrow_drop_down,
-                    //     color: primaryColor,
-                    //   ),
-                    //   decoration: InputDecoration(
-                    //       border: UnderlineInputBorder(
-                    //           borderRadius: BorderRadius.circular(14))),
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
                     const Text(
                       "Billing Information",
                       style: subHeading,
@@ -177,27 +132,27 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     // Person Counter
                     Row(
                       children: [
-                        Text("Person Amount: "),
+                        const Text("Person Amount: "),
                         Container(
                           child: Row(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               GestureDetector(
                                 onTap: _personCounterDecrement,
-                                child: Icon(Icons.arrow_circle_down_sharp),
+                                child: const Icon(Icons.arrow_circle_down_sharp),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
                               Text(_personCount.toString()),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
                               GestureDetector(
                                   onTap: _personCounterIncrement,
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.arrow_circle_up_sharp,
                                   )),
                             ],

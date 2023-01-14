@@ -12,49 +12,50 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.grey),
+        iconTheme: const IconThemeData(color: Colors.grey),
         toolbarHeight: 60,
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         centerTitle: true,
         title: const Text(
-                  'Home',
-                  style: TextStyle(
+          'Home',
+          style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
               color: Color(0xff383D3C)),
         ),
         actions: const [
-        Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: SizedBox(
-            width: 40,
-            height: 40,
-            child: CircleAvatar(
-              backgroundColor: Color(0xff2687A4),
-              radius: 100,
-              child: Text(
-                'HP',
-                style: TextStyle(fontSize: 16, color: Colors.white),
+          Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: SizedBox(
+              width: 40,
+              height: 40,
+              child: CircleAvatar(
+                backgroundColor: Color(0xff2687A4),
+                radius: 100,
+                child: Text(
+                  'HP',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
               ),
             ),
-          ),
-        )],
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
-          color: Color(0xF9F9F9),
-          margin: EdgeInsets.symmetric(horizontal: 10),
+          color: const Color(0xF9F9F9),
+          margin: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Welcome back , Hasantha 👋',
                 style: TextStyle(fontSize: 20),
               ),
               Container(
                 width: double.infinity,
-                margin: EdgeInsets.symmetric(vertical: 10),
+                margin: const EdgeInsets.symmetric(vertical: 10),
                 child: Card(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
@@ -67,67 +68,40 @@ class HomeScreen extends StatelessWidget {
                           padding: EdgeInsets.all(8.0),
                           height: 200,
                           width: double.infinity,
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), image: DecorationImage(image: AssetImage('assets/images/Home/img-1-ella.jpg'), fit: BoxFit.cover, colorFilter: ColorFilter.mode(Colors.black45, BlendMode.darken),)),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              image: const DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/Home/img-1-ella.jpg'),
+                                fit: BoxFit.cover,
+                                colorFilter: ColorFilter.mode(
+                                    Colors.black45, BlendMode.darken),
+                              )),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [Text("Discover", style: TextStyle(fontSize: 21, color: Colors.white, fontWeight: FontWeight.w800),), Text("Discover new places to spend a fun holiday", style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600))],),
-                          )
-                        // ListTile(
-                        //   leading: SizedBox(
-                        //     height: 200,
-                        //     child: new Image(
-                        //       image: new AssetImage(
-                        //           'assets/images/Home/img-1-ella.jpg'),
-                        //       fit: BoxFit.fill,
-                        //     ),
-                        //   ),
-                        //   title: Text('Discover',
-                        //       style: TextStyle(color: Colors.white)),
-                        //   subtitle: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       SizedBox(
-                        //         height: 10,
-                        //       ),
-                        //       Text(
-                        //         'Discover new places to spend a fun holiday',
-                        //         style: TextStyle(color: Colors.white),
-                        //       ),
-                        //       SizedBox(
-                        //         height: 15,
-                        //       ),
-                        //       Container(
-                        //         width: double.infinity,
-                        //         child: ElevatedButton(
-                        //             child: Text("Discover".toUpperCase(),
-                        //                 style: TextStyle(fontSize: 14)),
-                        //             style: ButtonStyle(
-                        //                 foregroundColor:
-                        //                     MaterialStateProperty.all<Color>(
-                        //                         Color(0xff2687A4)),
-                        //                 backgroundColor:
-                        //                     MaterialStateProperty.all<Color>(
-                        //                         Colors.white),
-                        //                 shape: MaterialStateProperty.all<
-                        //                         RoundedRectangleBorder>(
-                        //                     RoundedRectangleBorder(
-                        //                         borderRadius:
-                        //                             BorderRadius.circular(18.0),
-                        //                         side:
-                        //                             BorderSide(color: Colors.white)))),
-                        //             onPressed: () => null),
-                        //       )
-                        //     ],
-                        //   ),
-                        // ),
+                            children: const [
+                              Text(
+                                "Discover",
+                                style: TextStyle(
+                                    fontSize: 21,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w800),
+                              ),
+                              Text("Discover new places to spend a fun holiday",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600))
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
-              Text(
+              const Text(
                 'Frequesntly Visited',
                 style: TextStyle(fontSize: 18),
               ),
@@ -149,7 +123,7 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Text(
+              const Text(
                 'On Budget Tour',
                 style: TextStyle(fontSize: 18),
               ),
