@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_app_v1/provider/user_provider.dart';
 import 'package:travel_app_v1/screens/comments-review/all_comments_screen.dart';
 
 import 'package:travel_app_v1/screens/imageview-screen/imageview_screen.dart';
@@ -15,7 +17,14 @@ import 'package:travel_app_v1/screens/register-screen/register_screen.dart';
 import 'package:travel_app_v1/screens/splash/splash_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      Provider<User>(
+        create: (_) => User(),
+      )
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
