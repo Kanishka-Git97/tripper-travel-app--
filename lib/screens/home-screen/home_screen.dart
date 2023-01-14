@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app_v1/constant/constant.dart';
 
 import '../../components/extended_travelCard.dart';
 import '../../components/regular_travelCard.dart';
@@ -15,33 +16,30 @@ class HomeScreen extends StatelessWidget {
         toolbarHeight: 60,
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
-        title: Container(
-          margin: EdgeInsets.symmetric(horizontal: 10),
-          width: double.infinity,
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  'empty',
-                ),
-                Text(
+        centerTitle: true,
+        title: const Text(
                   'Home',
-                  style: TextStyle(color: Colors.black),
-                ),
-                SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: CircleAvatar(
-                    backgroundColor: Color(0xff2687A4),
-                    radius: 100,
-                    child: Text(
-                      'HP',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                  ),
-                ),
-              ]),
+                  style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Color(0xff383D3C)),
         ),
+        actions: const [
+        Padding(
+          padding: const EdgeInsets.only(right: 20),
+          child: SizedBox(
+            width: 40,
+            height: 40,
+            child: CircleAvatar(
+              backgroundColor: Color(0xff2687A4),
+              radius: 100,
+              child: Text(
+                'HP',
+                style: TextStyle(fontSize: 16, color: Colors.white),
+              ),
+            ),
+          ),
+        )],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -65,54 +63,65 @@ class HomeScreen extends StatelessWidget {
                     width: double.infinity,
                     child: Column(
                       children: [
-                        ListTile(
-                          leading: SizedBox(
-                            height: 200,
-                            child: new Image(
-                              image: new AssetImage(
-                                  'assets/images/Home/img-1-ella.jpg'),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          title: Text('Discover',
-                              style: TextStyle(color: Colors.white)),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                'Discover new places to spend a fun holiday',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Container(
-                                width: double.infinity,
-                                child: ElevatedButton(
-                                    child: Text("Discover".toUpperCase(),
-                                        style: TextStyle(fontSize: 14)),
-                                    style: ButtonStyle(
-                                        foregroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                Color(0xff2687A4)),
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                Colors.white),
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(18.0),
-                                                side:
-                                                    BorderSide(color: Colors.white)))),
-                                    onPressed: () => null),
-                              )
-                            ],
-                          ),
-                        ),
+                        Container(
+                          padding: EdgeInsets.all(8.0),
+                          height: 200,
+                          width: double.infinity,
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), image: DecorationImage(image: AssetImage('assets/images/Home/img-1-ella.jpg'), fit: BoxFit.cover, colorFilter: ColorFilter.mode(Colors.black45, BlendMode.darken),)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [Text("Discover", style: TextStyle(fontSize: 21, color: Colors.white, fontWeight: FontWeight.w800),), Text("Discover new places to spend a fun holiday", style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600))],),
+                          )
+                        // ListTile(
+                        //   leading: SizedBox(
+                        //     height: 200,
+                        //     child: new Image(
+                        //       image: new AssetImage(
+                        //           'assets/images/Home/img-1-ella.jpg'),
+                        //       fit: BoxFit.fill,
+                        //     ),
+                        //   ),
+                        //   title: Text('Discover',
+                        //       style: TextStyle(color: Colors.white)),
+                        //   subtitle: Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       SizedBox(
+                        //         height: 10,
+                        //       ),
+                        //       Text(
+                        //         'Discover new places to spend a fun holiday',
+                        //         style: TextStyle(color: Colors.white),
+                        //       ),
+                        //       SizedBox(
+                        //         height: 15,
+                        //       ),
+                        //       Container(
+                        //         width: double.infinity,
+                        //         child: ElevatedButton(
+                        //             child: Text("Discover".toUpperCase(),
+                        //                 style: TextStyle(fontSize: 14)),
+                        //             style: ButtonStyle(
+                        //                 foregroundColor:
+                        //                     MaterialStateProperty.all<Color>(
+                        //                         Color(0xff2687A4)),
+                        //                 backgroundColor:
+                        //                     MaterialStateProperty.all<Color>(
+                        //                         Colors.white),
+                        //                 shape: MaterialStateProperty.all<
+                        //                         RoundedRectangleBorder>(
+                        //                     RoundedRectangleBorder(
+                        //                         borderRadius:
+                        //                             BorderRadius.circular(18.0),
+                        //                         side:
+                        //                             BorderSide(color: Colors.white)))),
+                        //             onPressed: () => null),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
