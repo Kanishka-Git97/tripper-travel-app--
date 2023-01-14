@@ -132,7 +132,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     // Person Counter
                     Row(
                       children: [
-                        const Text("Person Amount: "),
+                        const Text("Persons: "),
                         Container(
                           child: Row(
                             children: [

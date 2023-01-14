@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       // initialRoute: '/',
       // initialRoute: '/payments',
 
-      initialRoute: '/trip_details',
+      initialRoute: '/payments',
       //  initialRoute: '/payments',
 
       routes: {
