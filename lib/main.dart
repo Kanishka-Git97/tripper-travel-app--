@@ -60,5 +60,19 @@ class MyApp extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)))),
     );
+
+    // return MaterialApp(
+    //   title: 'Flutter Travel UI',
+    //   debugShowCheckedModeBanner: false,
+    //   theme: ThemeData(
+    //
+    //     primaryColor: Color(0xFFF3F5F7),
+    //     accentColor: Color(0xFFD8ECF1),
+    //     scaffoldBackgroundColor: Color(0xFFF3F5F7),
+    //
+    //
+    //   ),
+    //   home: BlogHomeScreen(),
+    // );
   }
 }
