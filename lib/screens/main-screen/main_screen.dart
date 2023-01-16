@@ -5,7 +5,7 @@ import 'package:travel_app_v1/screens/discover-screen/discover_screen.dart';
 import 'package:travel_app_v1/screens/mybooked-screen/mybooked_screen.dart';
 import 'package:travel_app_v1/screens/profile-screen/ProfileScreen.dart';
 
-
+import '../blog-module-screens/blog_home_screen.dart';
 import '../home-screen/home_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -21,8 +21,8 @@ class _MainScreenState extends State<MainScreen> {
     const HomeScreen(),
     const DiscoverScreen(),
     const MyBookedScreen(),
+    BlogHomeScreen(),
     const ProfileScreen(),
-
   ];
 
   /*---current page number-----*/
@@ -66,6 +66,12 @@ class _MainScreenState extends State<MainScreen> {
               label: 'Bookings'),
           BottomNavigationBarItem(
               icon: _currentPageIndex == 3
+                  ? const Icon(Icons.local_attraction)
+                  : const Icon(Icons.local_attraction_outlined,
+                      color: Color(0xff2687A4)),
+              label: 'Blogs'),
+          BottomNavigationBarItem(
+              icon: _currentPageIndex == 4
                   ? const Icon(Icons.person)
                   : const Icon(Icons.person_outline, color: Color(0xff2687A4)),
               label: 'Profile'),

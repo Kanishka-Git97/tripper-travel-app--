@@ -3,7 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 //import 'package:travelapp/widgets/hotel_carousel.dart';
 import 'package:travel_app_v1/widgets/hotel_carousel.dart';
 
-import '../widgets/destination_carousel.dart';
+import '../../widgets/destination_carousel.dart';
+
+// import '../../widgets/destination_carousel.dart';
 
 class BlogHomeScreen extends StatefulWidget {
   @override

@@ -3,33 +3,29 @@ import 'package:travel_app_v1/models/destination_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../models/activity_model.dart';
+import '../../models/activity_model.dart';
 
 class DestinationScreen extends StatefulWidget {
-
   final Destination destination;
   DestinationScreen({required this.destination});
-
-
 
   @override
   State<DestinationScreen> createState() => _DestinationScreenState();
 }
 
 class _DestinationScreenState extends State<DestinationScreen> {
-  Text _buildRatingStars(double rating){
-
+  Text _buildRatingStars(double rating) {
     String stars = '';
-    for(double i=0;i<rating;i++){
-      stars +='⭐ ';
+    for (double i = 0; i < rating; i++) {
+      stars += '⭐ ';
     }
     stars.trim();
-    return Text(stars,
-    style: TextStyle(
-      fontSize: 12,
-    ),);
-
-
+    return Text(
+      stars,
+      style: TextStyle(
+        fontSize: 12,
+      ),
+    );
   }
 
   @override
@@ -39,14 +35,16 @@ class _DestinationScreenState extends State<DestinationScreen> {
         children: <Widget>[
           Stack(
             children: <Widget>[
-              Container(height: MediaQuery.of(context).size.width,
+              Container(
+                height: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.0),
-                  boxShadow:[BoxShadow(
-                    color: Colors.black26,
-                    offset: Offset(0.0,2.0),
-                    blurRadius: 6.0,
-                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      offset: Offset(0.0, 2.0),
+                      blurRadius: 6.0,
+                    ),
                   ],
                 ),
                 child: Hero(
@@ -61,7 +59,7 @@ class _DestinationScreenState extends State<DestinationScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 40.0),
+                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -69,9 +67,8 @@ class _DestinationScreenState extends State<DestinationScreen> {
                       icon: Icon(Icons.arrow_back),
                       iconSize: 30.0,
                       color: Colors.white,
-                      onPressed: ()=>Navigator.pop(context),
+                      onPressed: () => Navigator.pop(context),
                     ),
-
                   ],
                 ),
               ),
@@ -88,14 +85,14 @@ class _DestinationScreenState extends State<DestinationScreen> {
                         fontSize: 35.0,
                         fontWeight: FontWeight.w600,
                         letterSpacing: 1.2,
-
                       ),
                     ),
                     Row(
                       children: <Widget>[
-                        Icon(FontAwesomeIcons.locationArrow,
+                        Icon(
+                          FontAwesomeIcons.locationArrow,
                           size: 10.0,
-                          color:Colors.white70,
+                          color: Colors.white70,
                         ),
                         SizedBox(width: 5.0),
                         Text(
@@ -103,12 +100,11 @@ class _DestinationScreenState extends State<DestinationScreen> {
                           style: TextStyle(
                             color: Colors.white70,
                             fontSize: 20.0,
-
                           ),
                         ),
-                        ],
+                      ],
                     ),
-                   // _buildRatingStars(widget.destination.rating),
+                    // _buildRatingStars(widget.destination.rating),
                   ],
                 ),
               ),
@@ -123,17 +119,17 @@ class _DestinationScreenState extends State<DestinationScreen> {
               )
             ],
           ),
-         Expanded(                                        //destination screen
+          Expanded(
+            //destination screen
             child: Column(
-
               children: <Widget>[
                 Container(
-                  height: MediaQuery.of(context).size.height/2,
-                  padding: EdgeInsets.only(top: 1.0,left: 20.0,right: 20.0),
-
+                  height: MediaQuery.of(context).size.height / 2,
+                  padding: EdgeInsets.only(top: 1.0, left: 20.0, right: 20.0),
                   child: ListView(
                     children: [
-                      Padding(padding: EdgeInsets.all(8.0),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -141,7 +137,7 @@ class _DestinationScreenState extends State<DestinationScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                    widget.destination.article_title,
+                                  widget.destination.article_title,
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500,
@@ -149,18 +145,17 @@ class _DestinationScreenState extends State<DestinationScreen> {
                                 ),
                                 Row(
                                   children: [
-                                    _buildRatingStars(widget.destination.rating),
-                                    Text('${widget.destination.rating}',
+                                    _buildRatingStars(
+                                        widget.destination.rating),
+                                    Text(
+                                      '${widget.destination.rating}',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                       ),
                                     )
-
                                   ],
                                 ),
-
                               ],
-
                             ),
                             SizedBox(height: 25.0),
                             Text(widget.destination.article)
@@ -175,18 +170,15 @@ class _DestinationScreenState extends State<DestinationScreen> {
                             //         " more recently with desktop publishing software like Aldus PageMaker "
                             //         "including versions of Lorem Ipsum."
                             // ),
-
                           ],
                         ),
                       ),
                     ],
                   ),
-
-
                 )
               ],
             ),
-         )
+          )
         ],
       ),
     );
