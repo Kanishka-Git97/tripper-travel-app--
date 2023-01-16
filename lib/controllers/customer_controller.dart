@@ -10,4 +10,8 @@ class CustomerController {
     services.register(customer);
     return true;
   }
+
+  Future<Customer> login(String email, String password) {
+    return services.login(email, password);
+  }
 }

@@ -166,7 +166,7 @@ class _DependencyState extends State<Dependency> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const HomeScreen()));
+                              builder: (context) => LoginScreen()));
                     },
                     child: const Text(
                       "SIGN IN",
@@ -212,25 +212,26 @@ class _DependencyState extends State<Dependency> {
     // confirm Password
     if (_passwordController.text != _confirmPasswordController.text)
       return Utility.notification("Password Does not Matched!", context, false);
-    // todo: should connect internet
+    // Check Connectivity
     bool connection = await Utility.connectionChecker();
     if (connection) {
-      // todo: setup customer model
+      // Setup Model
       Customer customer = Customer(
           name: _nameController.text,
           email: _emailController.text,
           password: _passwordController.text,
           image: imgString);
-      // todo: should send data to the server
+      // Send Data to the Server
       if (_customerController.register(customer)) {
         Utility.notification(
             "Successfully Registerd Please Login", context, true);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
+          MaterialPageRoute(builder: (context) => LoginScreen()),
         );
       }
     } else {
+      // If no Connection
       return Utility.notification(
           "No Internet Connection Please Try Again!", context, false);
     }

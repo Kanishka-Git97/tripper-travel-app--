@@ -1,14 +1,21 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/provider/user_provider.dart';
 
 import '../../components/extended_travelCard.dart';
 import '../../components/regular_travelCard.dart';
+import '../../models/customer.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
 
+  Customer user = Customer();
   @override
   Widget build(BuildContext context) {
+    user = context.watch<User>().user;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -24,7 +31,7 @@ class HomeScreen extends StatelessWidget {
               fontWeight: FontWeight.w600,
               color: Color(0xff383D3C)),
         ),
-        actions: const [
+        actions: [
           Padding(
             padding: EdgeInsets.only(right: 20),
             child: SizedBox(
@@ -33,10 +40,12 @@ class HomeScreen extends StatelessWidget {
               child: CircleAvatar(
                 backgroundColor: Color(0xff2687A4),
                 radius: 100,
-                child: Text(
-                  'HP',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                ),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: user.image == null || user.image.toString() == "none"
+                        ? Image.memory(Base64Decoder().convert(sampleUser))
+                        : Image.memory(
+                            Base64Decoder().convert(user.image.toString()))),
               ),
             ),
           )
@@ -49,8 +58,8 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Welcome back , Hasantha 👋',
+              Text(
+                'Welcome back , ${user.name.toString()} 👋',
                 style: TextStyle(fontSize: 20),
               ),
               Container(

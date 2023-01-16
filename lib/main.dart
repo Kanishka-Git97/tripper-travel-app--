@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         '/payments': (context) => const PaymentScreen(),
         '/splash': (context) => const SplashScreen(),
         '/register': (context) => Dependency(),
-        '/login': (context) => const LoginScreen()
+        '/login': (context) => LoginScreen()
       },
 
       theme: ThemeData(

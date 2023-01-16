@@ -1,4 +1,12 @@
 class Customer {
+  // Table Schema
+  static const tblCustomer = 'customer';
+  static const colId = 'id';
+  static const colName = 'c_name';
+  static const colEmail = 'c_email';
+  static const colPassword = 'c_password';
+  static const colImage = 'c_image';
+
   int? id;
   String? name;
   String? email;
@@ -8,7 +16,7 @@ class Customer {
   Customer({this.id, this.name, this.email, this.password, this.image});
 
   Customer.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = int.tryParse(json['id']);
     name = json['c_name'];
     email = json['c_email'];
     password = json['c_password'];

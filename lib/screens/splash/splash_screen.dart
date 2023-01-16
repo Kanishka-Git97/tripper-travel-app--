@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:travel_app_v1/components/custom_btn.dart';
 import 'package:travel_app_v1/constant/constant.dart';
 import 'package:travel_app_v1/screens/home-screen/home_screen.dart';
+import 'package:travel_app_v1/screens/login-screen/login_screen.dart';
 import 'package:travel_app_v1/screens/register-screen/register_screen.dart';
 import 'package:travel_app_v1/utility/utility_helper.dart';
 
@@ -90,7 +91,7 @@ class SplashScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
                   );
                 },
                 child: CustomBtn(
