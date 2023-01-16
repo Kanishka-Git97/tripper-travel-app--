@@ -17,11 +17,17 @@ class Customer {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    if (this.id != null) {
+      data['id'] = this.id;
+    }
     data['c_name'] = this.name;
     data['c_email'] = this.email;
     data['c_password'] = this.password;
-    data['c_image'] = this.image;
+    if (this.image != null) {
+      data['c_image'] = this.image;
+    } else {
+      data['c_image'] = "none";
+    }
     return data;
   }
 }

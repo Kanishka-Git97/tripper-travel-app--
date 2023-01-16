@@ -114,7 +114,7 @@ class SplashScreen extends StatelessWidget {
     if (connection) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const RegisterScreen()),
+        MaterialPageRoute(builder: (context) => Dependency()),
       );
     } else {
       print("No Internet");

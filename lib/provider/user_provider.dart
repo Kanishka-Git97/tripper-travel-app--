@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:travel_app_v1/models/customer.dart';
+import 'package:travel_app_v1/repositories/customer_services.dart';
+
+late final CustomerServices services;
 
 class User with ChangeNotifier {
-  Customer _user = Customer();
-  Customer get user => _user;
-  void setUser(Customer customer) {
-    _user = customer;
+  void register(Customer customer) {
+    var response = services.register(customer);
+    print(response);
     notifyListeners();
   }
 }
