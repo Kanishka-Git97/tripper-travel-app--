@@ -1,9 +1,12 @@
 import 'dart:ui';
 
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app_v1/components/custom_btn.dart';
 import 'package:travel_app_v1/constant/constant.dart';
 import 'package:travel_app_v1/screens/home-screen/home_screen.dart';
+import 'package:travel_app_v1/screens/register-screen/register_screen.dart';
+import 'package:travel_app_v1/utility/utility_helper.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -70,11 +73,7 @@ class SplashScreen extends StatelessWidget {
               Spacer(),
               GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()),
-                    );
+                    _openRegister(context);
                   },
                   child: CustomBtn(
                       width: double.maxFinite,
@@ -108,5 +107,19 @@ class SplashScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _openRegister(BuildContext context) async {
+    bool connection = await Utility.connectionChecker();
+    if (connection) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const RegisterScreen()),
+      );
+    } else {
+      print("No Internet");
+      Utility.notification(
+          "No Internet Connection Please Try Again!", context, false);
+    }
   }
 }

@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       // initialRoute: '/',
       // initialRoute: '/payments',
 
-      initialRoute: '/payments',
+      initialRoute: '/splash',
       //  initialRoute: '/payments',
 
       routes: {
