@@ -10,6 +10,8 @@ import 'package:travel_app_v1/models/schedule.dart';
 import 'package:travel_app_v1/models/trip.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/review.dart';
+
 class DatabaseHelper {
   // Database Configuration
   static final _dbName = 'travel.db';
@@ -76,6 +78,16 @@ class DatabaseHelper {
         ${Schedule.colEnd} TEXT NOT NULL
         )
     ''');
+
+    await db.execute('''
+      CREATE TABLE ${Review.tblName}(
+        ${Review.colId} INTEGER PRIMARY KEY,
+        ${Review.colCusRef} INTEGER NOT NULL,
+        ${Review.colTripRef} INTEGER NOT NULL,
+        ${Review.colRate} INTEGER NOT NULL,
+        ${Review.colReview} TEXT NOT NULL
+        )
+    ''');
   }
 
   // Inserting Customer Details
@@ -101,8 +113,8 @@ class DatabaseHelper {
 
   // Asynchronous from server to client
   Future<void> syncData() async {
-    var response = await http
-        .get(Uri.parse('http://192.168.8.185/travelApp_API/trips.php'));
+    var response =
+        await http.get(Uri.parse('http://172.20.10.6/travelApp_API/trips.php'));
     List<dynamic> tripData = json.decode(response.body);
     print(tripData.length);
 
@@ -125,7 +137,7 @@ class DatabaseHelper {
     });
 
     var locationResponse = await http
-        .get(Uri.parse("http://192.168.8.185/travelApp_API/locations.php"));
+        .get(Uri.parse("http://172.20.10.6/travelApp_API/locations.php"));
     List<dynamic> locationData = json.decode(locationResponse.body);
 
     await db.transaction((txn) async {
@@ -145,7 +157,7 @@ class DatabaseHelper {
     });
 
     var scheduleResponse = await http
-        .get(Uri.parse("http://192.168.8.185/travelApp_API/schedules.php"));
+        .get(Uri.parse("http://172.20.10.6/travelApp_API/schedules.php"));
     List<dynamic> scheduleData = json.decode(scheduleResponse.body);
 
     await db.transaction((txn) async {
@@ -163,35 +175,55 @@ class DatabaseHelper {
         }
       }
     });
+
+    /*----update review data-------*/
+    var reviewResponse = await http
+        .get(Uri.parse("http://172.20.10.6/travelApp_API/reviews.php"));
+    List<dynamic> reviewData = json.decode(reviewResponse.body);
+
+    await db.transaction((txn) async {
+      for (var item in reviewData) {
+        // Check if the item already exists
+        var existing = await txn.query(Review.tblName,
+            where: '${Review.colId}=?', whereArgs: [item['id']]);
+        if (existing.length > 0) {
+          // Update the item in the database
+          await txn.update(Review.tblName, item,
+              where: '${Review.colId}=?', whereArgs: [item['id']]);
+        } else {
+          // Insert the item into the database
+          await txn.insert(Review.tblName, item);
+        }
+      }
+    });
   }
 
   /*----------fetch all data-----*/
   //Future<List<Map<String, dynamic>>>
   void queryAll() async {
     Database? db = await instance.database;
+    /**----fetch all data from Trips table from local database--- */
     List<Map> results = await db!.query('trip');
 
     List<Trip> data = [];
     for (var i = 0; i < results.length; i++) {
       var tempTripId = results[i]['id'];
-      // data.add({
-      //   "id": results[i]['id'],
-      //   "title": results[i]['title'],
-      //   "locationData": []
-      // });
-      data.add(new Trip(
+      /*----Add trip data to Trip model----------*/
+      data.add(Trip(
           id: int.parse(results[i]['id'].toString()),
           title: results[i]['title'],
           category: results[i]['category'],
           image: results[i]['image'],
           description: results[i]['description'],
           price: double.parse(results[i]['price']),
-          locations: []));
-
+          locations: [],
+          schedule: [],
+          review: []));
+      /**---fetch data from location table--------- */
       var resultLocation =
           await db!.rawQuery('SELECT * FROM location WHERE trip=$tempTripId');
       for (var j = 0; j < resultLocation.length; j++) {
-        data[i].locations!.add(new Location(
+        data[i].locations!.add(Location(
             id: int.parse(resultLocation[j]['id'].toString()),
             image: resultLocation[j]['image'].toString(),
             title: resultLocation[j]['title'].toString(),
@@ -199,8 +231,31 @@ class DatabaseHelper {
             latitude: double.parse(resultLocation[j]['latitude'].toString()),
             trip: int.parse(resultLocation[j]['trip'].toString())));
       }
+
+      /**----fetch data from schedule table--------- */
+      var resultSchedule =
+          await db!.rawQuery('SELECT * FROM schedule WHERE trip=$tempTripId');
+      for (var k = 0; k < resultSchedule.length; k++) {
+        data[i].schedule!.add(Schedule(
+            id: int.parse(resultSchedule[k]['id'].toString()),
+            trip: int.parse(resultSchedule[k]['trip'].toString()),
+            start: resultSchedule[k]['start'].toString(),
+            end: resultSchedule[k]['end'].toString()));
+      }
+
+      /**----fetch trip reviews--------- */
+      var resultReviews = await db!
+          .rawQuery('SELECT * FROM reviews WHERE trip_ref=$tempTripId');
+      for (var l = 0; l < resultReviews.length; l++) {
+        data[i].review!.add(Review(
+            id: int.parse(resultReviews[l]['id'].toString()),
+            cusRef: int.parse(resultReviews[l]['cus_ref'].toString()),
+            tripRef: int.parse(resultReviews[l]['trip_ref'].toString()),
+            rate: int.parse(resultReviews[l]['rate'].toString()),
+            review: resultReviews[l]['review'].toString()));
+      }
     }
 
-    print(json.encode(data[0].locations![1].title).toString());
+    print(json.encode(data[0].review![0].review).toString());
   }
 }

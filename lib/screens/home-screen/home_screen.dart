@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/provider/trip_provider.dart';
 import 'package:travel_app_v1/provider/user_provider.dart';
 
 import '../../components/extended_travelCard.dart';
@@ -16,7 +17,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     user = context.watch<User>().user;
-    Provider.of<User>(context, listen: false).getAllData();
+    Provider.of<TripProvider>(context, listen: false).getAllData();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
