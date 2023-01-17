@@ -200,7 +200,7 @@ class DatabaseHelper {
 
   /*----------fetch all data-----*/
   //Future<List<Map<String, dynamic>>>
-  void queryAll() async {
+  Future<List<Trip>> queryAll() async {
     Database? db = await instance.database;
     /**----fetch all data from Trips table from local database--- */
     List<Map> results = await db!.query('trip');
@@ -256,6 +256,8 @@ class DatabaseHelper {
       }
     }
 
-    print(json.encode(data[0].review![0].review).toString());
+    return data;
+
+    //print(json.encode(data[0].review![0].review).toString());
   }
 }

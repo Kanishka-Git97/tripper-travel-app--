@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app_v1/models/trip.dart';
 
 class RegularTravelCard extends StatelessWidget {
-  String imageUrl;
-  RegularTravelCard({super.key, required this.imageUrl});
+  List<Trip> travelData;
+  RegularTravelCard({super.key, required this.travelData});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class RegularTravelCard extends StatelessWidget {
                           color: Color.fromARGB(28, 0, 0, 0), spreadRadius: 2),
                     ]),
                 child: Image.asset(
-                  imageUrl,
+                  '',
                   fit: BoxFit.cover,
                 ),
               ),

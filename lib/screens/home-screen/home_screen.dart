@@ -9,6 +9,7 @@ import 'package:travel_app_v1/provider/user_provider.dart';
 import '../../components/extended_travelCard.dart';
 import '../../components/regular_travelCard.dart';
 import '../../models/customer.dart';
+import '../../models/trip.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -18,6 +19,10 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     user = context.watch<User>().user;
     Provider.of<TripProvider>(context, listen: false).getAllData();
+    List<Trip> tripData =
+        Provider.of<TripProvider>(context, listen: false).tripData;
+    print(tripData);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -119,19 +124,14 @@ class HomeScreen extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 20.0),
                 height: 270.0,
-                child: ListView(
+                child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  children: [
-                    RegularTravelCard(
-                      imageUrl: 'assets/images/img-1.jpeg',
-                    ),
-                    RegularTravelCard(
-                      imageUrl: 'assets/images/img-2.jpeg',
-                    ),
-                    RegularTravelCard(
-                      imageUrl: 'assets/images/img-3.jpeg',
-                    ),
-                  ],
+                  itemCount: tripData.length,
+                  itemBuilder: (context, index) {
+                    return RegularTravelCard(
+                      travelData: tripData,
+                    );
+                  },
                 ),
               ),
               const Text(
