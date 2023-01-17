@@ -22,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
     const DiscoverScreen(),
     const MyBookedScreen(),
     BlogHomeScreen(),
-    const ProfileScreen(),
+    ProfileScreen(),
   ];
 
   /*---current page number-----*/

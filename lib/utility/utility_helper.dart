@@ -34,4 +34,9 @@ class Utility {
   static String base64String(Uint8List data) {
     return base64Encode(data);
   }
+
+  static bool synchronize() {
+    // todo: need to implement synchronization method
+    return false;
+  }
 }

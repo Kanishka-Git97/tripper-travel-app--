@@ -1,6 +1,6 @@
 class Customer {
   // Table Schema
-  static const tblCustomer = 'customer';
+  static const tblName = 'customer';
   static const colId = 'id';
   static const colName = 'c_name';
   static const colEmail = 'c_email';

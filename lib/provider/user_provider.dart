@@ -1,5 +1,6 @@
 import 'package:travel_app_v1/controllers/customer_controller.dart';
 import 'package:travel_app_v1/screens/home-screen/home_screen.dart';
+import 'package:travel_app_v1/screens/main-screen/main_screen.dart';
 import 'package:travel_app_v1/utility/utility_helper.dart';
 import '../models/customer.dart';
 import 'package:travel_app_v1/repositories/customer_repository.dart';
@@ -17,6 +18,7 @@ class User with ChangeNotifier {
   // States
   Customer _user = Customer();
   Customer get user => _user;
+
   // void register(Customer customer) {
   //   var response = services.register(customer);
   //   print(response);
@@ -24,24 +26,44 @@ class User with ChangeNotifier {
   // }
 
   void login(String email, String password, BuildContext context) async {
-    print("test");
+    bool connection = await Utility.connectionChecker();
+    if (connection) {
+      _dbHelper.syncData();
+      // Online DataFlow
+      // get user data from server
+      Customer customer = await _customerController.login(email, password);
+      if (customer.id == 0) {
+        // todo: implement error message handling
+        Utility.notification(
+            "Password and Email Did not Matched!", context, false);
 
-    // get user data from server
-    Customer customer = await _customerController.login(email, password);
-    if (customer.id == 0) {
-      // todo: implement error message handling
-      print("no user");
-    } else {
-      // Update Local Database
-      bool status = await _dbHelper.insertCustomer(customer);
-      if (status) {
-        _user = customer;
+        print("no user");
+      } else {
+        // Update Local Database
+        bool status = await _dbHelper.insertCustomer(customer);
+        if (status) {
+          _user = customer;
+        }
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const MainScreen()),
+        );
       }
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
+    } else {
+      // todo: implement offline login flow
+      Utility.notification(
+          "No Internet Connection Please Try Again!", context, false);
+      // var response = await _dbHelper.validateCustomer();
+      // if (response.length > 0) {
+      //   // todo: fetch model and update state model
+
+      // } else {
+
+      //   print("no user");
+      // }
     }
+
     notifyListeners();
   }
 }
