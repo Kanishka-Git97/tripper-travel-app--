@@ -16,6 +16,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     user = context.watch<User>().user;
+    Provider.of<User>(context, listen: false).getAllData();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

@@ -102,7 +102,7 @@ class DatabaseHelper {
   // Asynchronous from server to client
   Future<void> syncData() async {
     var response = await http
-        .get(Uri.parse('http://192.168.8.101/travelApp_API/trips.php'));
+        .get(Uri.parse('http://192.168.8.185/travelApp_API/trips.php'));
     List<dynamic> tripData = json.decode(response.body);
     print(tripData.length);
 
@@ -125,7 +125,7 @@ class DatabaseHelper {
     });
 
     var locationResponse = await http
-        .get(Uri.parse("http://192.168.8.101/travelApp_API/locations.php"));
+        .get(Uri.parse("http://192.168.8.185/travelApp_API/locations.php"));
     List<dynamic> locationData = json.decode(locationResponse.body);
 
     await db.transaction((txn) async {
@@ -145,7 +145,7 @@ class DatabaseHelper {
     });
 
     var scheduleResponse = await http
-        .get(Uri.parse("http://192.168.8.101/travelApp_API/schedules.php"));
+        .get(Uri.parse("http://192.168.8.185/travelApp_API/schedules.php"));
     List<dynamic> scheduleData = json.decode(scheduleResponse.body);
 
     await db.transaction((txn) async {
@@ -163,5 +163,44 @@ class DatabaseHelper {
         }
       }
     });
+  }
+
+  /*----------fetch all data-----*/
+  //Future<List<Map<String, dynamic>>>
+  void queryAll() async {
+    Database? db = await instance.database;
+    List<Map> results = await db!.query('trip');
+
+    List<Trip> data = [];
+    for (var i = 0; i < results.length; i++) {
+      var tempTripId = results[i]['id'];
+      // data.add({
+      //   "id": results[i]['id'],
+      //   "title": results[i]['title'],
+      //   "locationData": []
+      // });
+      data.add(new Trip(
+          id: int.parse(results[i]['id'].toString()),
+          title: results[i]['title'],
+          category: results[i]['category'],
+          image: results[i]['image'],
+          description: results[i]['description'],
+          price: double.parse(results[i]['price']),
+          locations: []));
+
+      var resultLocation =
+          await db!.rawQuery('SELECT * FROM location WHERE trip=$tempTripId');
+      for (var j = 0; j < resultLocation.length; j++) {
+        data[i].locations!.add(new Location(
+            id: int.parse(resultLocation[j]['id'].toString()),
+            image: resultLocation[j]['image'].toString(),
+            title: resultLocation[j]['title'].toString(),
+            longitude: double.parse(resultLocation[j]['longitude'].toString()),
+            latitude: double.parse(resultLocation[j]['latitude'].toString()),
+            trip: int.parse(resultLocation[j]['trip'].toString())));
+      }
+    }
+
+    print(json.encode(data[0].locations![1].title).toString());
   }
 }

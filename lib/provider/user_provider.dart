@@ -66,4 +66,11 @@ class User with ChangeNotifier {
 
     notifyListeners();
   }
+
+  /*------fetch all data------*/
+  void getAllData() async {
+    DatabaseHelper.instance.queryAll();
+
+    // return allData;
+  }
 }

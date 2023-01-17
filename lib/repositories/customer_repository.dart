@@ -9,7 +9,7 @@ class CustomerRepository implements CustomerServices {
   Future<Customer> register(Customer customer) async {
     print('${customer.toJson().toString()}');
     var url =
-        Uri.parse('http://192.168.8.101/travelApp_API/customerRegister.php');
+        Uri.parse('http://192.168.8.185/travelApp_API/customerRegister.php');
     var response = await http.post(url,
         headers: {'Content-Type': 'application/json'},
         body: json.encode(customer.toJson()));
@@ -25,7 +25,7 @@ class CustomerRepository implements CustomerServices {
 
   @override
   Future<Customer> login(String email, String password) async {
-    var url = Uri.parse('http://192.168.8.101/travelApp_API/customerLogin.php');
+    var url = Uri.parse('http://192.168.8.185/travelApp_API/customerLogin.php');
     var body = {"c_email": email, "c_password": password};
 
     var response = await http.post(url,

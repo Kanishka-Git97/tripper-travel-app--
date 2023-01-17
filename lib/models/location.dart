@@ -24,7 +24,7 @@ class Location {
       this.trip});
 
   Location.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = int.parse(json['id']);
     image = json['image'];
     title = json['title'];
     longitude = json['longitude'];

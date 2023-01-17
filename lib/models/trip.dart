@@ -1,3 +1,7 @@
+import 'dart:ffi';
+
+import 'package:travel_app_v1/models/location.dart';
+
 class Trip {
   // Table Schema
   static const tblName = 'trip';
@@ -14,6 +18,7 @@ class Trip {
   String? image;
   String? description;
   double? price;
+  List<Location>? locations;
 
   Trip(
       {this.id,
@@ -21,15 +26,21 @@ class Trip {
       this.category,
       this.image,
       this.description,
-      this.price});
+      this.price,
+      this.locations});
 
   Trip.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    var list = json['locations'] as List;
+    List<Location> locationList =
+        list.map((e) => Location.fromJson(e)).toList();
+
+    id = int.parse(json['id']);
     title = json['title'];
     category = json['category'];
     image = json['image'];
     description = json['description'];
-    price = json['price'];
+    price = double.parse(json['price']);
+    locations = locationList;
   }
 
   Map<String, dynamic> toJson() {
