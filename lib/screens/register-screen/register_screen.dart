@@ -1,12 +1,40 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:travel_app_v1/components/custom_btn.dart';
 import 'package:travel_app_v1/components/custom_input.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/controllers/customer_controller.dart';
+import 'package:travel_app_v1/provider/user_provider.dart';
+import 'package:travel_app_v1/repositories/customer_repository.dart';
+import 'package:travel_app_v1/repositories/customer_services.dart';
 import 'package:travel_app_v1/screens/home-screen/home_screen.dart';
+import 'package:travel_app_v1/screens/login-screen/login_screen.dart';
+import 'package:travel_app_v1/utility/utility_helper.dart';
 
-class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+import '../../models/customer.dart';
+
+class Dependency extends StatefulWidget {
+  Dependency({Key? key}) : super(key: key);
+
+  @override
+  State<Dependency> createState() => _DependencyState();
+}
+
+class _DependencyState extends State<Dependency> {
+  // TextEditing Controller Setup
+  final _nameController = new TextEditingController();
+  final _emailController = new TextEditingController();
+  final _passwordController = new TextEditingController();
+  final _confirmPasswordController = new TextEditingController();
+
+  // Depedancy Injection
+  var _customerController = CustomerController(CustomerRepository());
+
+  String imgString =
+      sampleUser;
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +71,18 @@ class RegisterScreen extends StatelessWidget {
             Stack(children: [
               Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    image: DecorationImage(
-                        image: NetworkImage(
-                            "https://d1bo3i1pvdbydg.cloudfront.net/assets/images/default-avatar.png"))),
+                  borderRadius: BorderRadius.circular(5),
+                ),
                 height: 80,
                 width: 80,
+                child: ClipRRect(
+                  clipBehavior: Clip.antiAlias,
+                  borderRadius: BorderRadius.circular(5),
+                  child: Image.memory(
+                    Base64Decoder().convert(imgString),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
               Positioned(
                 bottom: 0,
@@ -65,44 +99,47 @@ class RegisterScreen extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            const CustomInput(
-                hintText: "Name",
-                labelText: "Name",
-                keyboardType: TextInputType.name),
+            CustomInput(
+              hintText: "Name",
+              labelText: "Name",
+              keyboardType: TextInputType.name,
+              controller: _nameController,
+            ),
             const SizedBox(
               height: 20,
             ),
-            const CustomInput(
-                hintText: "Email Address",
-                labelText: "Email Address",
-                keyboardType: TextInputType.emailAddress),
+            CustomInput(
+              hintText: "Email Address",
+              labelText: "Email Address",
+              keyboardType: TextInputType.emailAddress,
+              controller: _emailController,
+            ),
             const SizedBox(
               height: 20,
             ),
-            const CustomInput(
+            CustomInput(
               hintText: "Password",
               labelText: "Password",
               keyboardType: TextInputType.visiblePassword,
               obscureText: true,
+              controller: _passwordController,
             ),
             const SizedBox(
               height: 20,
             ),
-            const CustomInput(
+            CustomInput(
               hintText: "Confirm Password",
               labelText: "Confirm Password",
               keyboardType: TextInputType.visiblePassword,
               obscureText: true,
+              controller: _confirmPasswordController,
             ),
             const SizedBox(
               height: 30,
             ),
             GestureDetector(
                 onTap: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
+                  _signUp(context);
                 },
                 child: const CustomBtn(
                     width: double.maxFinite,
@@ -129,7 +166,7 @@ class RegisterScreen extends StatelessWidget {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const HomeScreen()));
+                              builder: (context) => LoginScreen()));
                     },
                     child: const Text(
                       "SIGN IN",
@@ -161,7 +198,42 @@ class RegisterScreen extends StatelessWidget {
   }
 
   _imgPicker() async {
-    late String imgString;
-    ImagePicker().pickImage(source: ImageSource.gallery).then((img) async {});
+    String output;
+    ImagePicker().pickImage(source: ImageSource.gallery).then((img) async {
+      output = Utility.base64String(await img!.readAsBytes());
+      setState(() {
+        imgString = output;
+      });
+    });
+  }
+
+  _signUp(BuildContext context) async {
+    // todo: should check all fields are filled
+    // confirm Password
+    if (_passwordController.text != _confirmPasswordController.text)
+      return Utility.notification("Password Does not Matched!", context, false);
+    // Check Connectivity
+    bool connection = await Utility.connectionChecker();
+    if (connection) {
+      // Setup Model
+      Customer customer = Customer(
+          name: _nameController.text,
+          email: _emailController.text,
+          password: _passwordController.text,
+          image: imgString);
+      // Send Data to the Server
+      if (_customerController.register(customer)) {
+        Utility.notification(
+            "Successfully Registerd Please Login", context, true);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+        );
+      }
+    } else {
+      // If no Connection
+      return Utility.notification(
+          "No Internet Connection Please Try Again!", context, false);
+    }
   }
 }

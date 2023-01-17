@@ -18,11 +18,11 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   /*----added new pages related to bootm navigationbar here-----*/
   final List<Widget> _pages = [
-    const HomeScreen(),
+    HomeScreen(),
     const DiscoverScreen(),
     const MyBookedScreen(),
     BlogHomeScreen(),
-    const ProfileScreen(),
+    ProfileScreen(),
   ];
 
   /*---current page number-----*/

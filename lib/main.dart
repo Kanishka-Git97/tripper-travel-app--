@@ -17,6 +17,7 @@ import 'package:travel_app_v1/screens/register-screen/register_screen.dart';
 import 'package:travel_app_v1/screens/splash/splash_screen.dart';
 
 void main() {
+  Provider.debugCheckInvalidValueType = null;
   runApp(MultiProvider(
     providers: [
       Provider<User>(
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       // initialRoute: '/',
       // initialRoute: '/payments',
 
-      initialRoute: '/payments',
+      initialRoute: '/splash',
       //  initialRoute: '/payments',
 
       routes: {
@@ -49,8 +50,8 @@ class MyApp extends StatelessWidget {
         '/image': (context) => ImageViewScreen(),
         '/payments': (context) => const PaymentScreen(),
         '/splash': (context) => const SplashScreen(),
-        '/register': (context) => const RegisterScreen(),
-        '/login': (context) => const LoginScreen()
+        '/register': (context) => Dependency(),
+        '/login': (context) => LoginScreen()
       },
 
       theme: ThemeData(

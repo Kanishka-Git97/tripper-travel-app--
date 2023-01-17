@@ -42,6 +42,9 @@ dependencies:
   syncfusion_flutter_signaturepad: ^20.3.61
   image_picker: ^0.8.6
   provider: ^6.0.5
+  sqflite: any
+  path_provider: any
+  connectivity: any
 
 dev_dependencies:
   flutter_test:

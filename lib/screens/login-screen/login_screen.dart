@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../Constant/constant.dart';
 import '../../components/custom_btn.dart';
 import '../../components/custom_input.dart';
+import '../../provider/user_provider.dart';
 import '../home-screen/home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key? key}) : super(key: key);
+
+  final _emailController = new TextEditingController();
+  final _passwordController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,28 +37,28 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(
               height: 25,
             ),
-            const CustomInput(
-                hintText: "Email Address",
-                labelText: "Email Address",
-                keyboardType: TextInputType.emailAddress),
+            CustomInput(
+              hintText: "Email Address",
+              labelText: "Email Address",
+              keyboardType: TextInputType.emailAddress,
+              controller: _emailController,
+            ),
             const SizedBox(
               height: 15,
             ),
-            const CustomInput(
+            CustomInput(
               hintText: "Password",
               labelText: "Password",
               keyboardType: TextInputType.visiblePassword,
               obscureText: true,
+              controller: _passwordController,
             ),
             const SizedBox(
               height: 28,
-            ), 
+            ),
             GestureDetector(
                 onTap: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
+                  _login(context);
                 },
                 child: const CustomBtn(
                     width: double.maxFinite,
@@ -63,7 +68,7 @@ class LoginScreen extends StatelessWidget {
                     txtColor: Colors.white,
                     bgColor: primaryColor,
                     borderColor: Colors.transparent)),
-            const SizedBox( 
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -80,7 +85,7 @@ class LoginScreen extends StatelessWidget {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const HomeScreen()));
+                              builder: (context) => HomeScreen()));
                     },
                     child: const Text(
                       "SIGN UP",
@@ -110,5 +115,10 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _login(BuildContext context) {
+    Provider.of<User>(context, listen: false)
+        .login(_emailController.text, _passwordController.text, context);
   }
 }

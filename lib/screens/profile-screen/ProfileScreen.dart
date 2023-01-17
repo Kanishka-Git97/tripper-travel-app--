@@ -1,15 +1,23 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:travel_app_v1/components/custom_btn.dart';
 import 'package:travel_app_v1/components/custom_input.dart';
 import 'package:travel_app_v1/components/header.dart';
 import 'package:travel_app_v1/components/map_box.dart';
 import 'package:travel_app_v1/constant/constant.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+import '../../models/customer.dart';
+import '../../provider/user_provider.dart';
 
+class ProfileScreen extends StatelessWidget {
+  ProfileScreen({Key? key}) : super(key: key);
+
+  Customer user = Customer();
   @override
   Widget build(BuildContext context) {
+    user = context.watch<User>().user;
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
@@ -35,13 +43,21 @@ class ProfileScreen extends StatelessWidget {
                   margin: EdgeInsets.all(20.0),
                   height: 120,
                   width: 120,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25.0),
+                    child: user.image == null || user.image.toString() == "none"
+                        ? Image.memory(
+                            Base64Decoder().convert(sampleUser),
+                            fit: BoxFit.cover,
+                          )
+                        : Image.memory(
+                            Base64Decoder().convert(user.image.toString()),
+                            fit: BoxFit.cover),
+                  ),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25.0),
-                      color: Colors.redAccent,
-                      image: DecorationImage(
-                          image: NetworkImage(
-                              "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80"),
-                          fit: BoxFit.cover)),
+                    borderRadius: BorderRadius.circular(25.0),
+                    color: Colors.redAccent,
+                  ),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20.0, right: 20.0),
@@ -49,7 +65,7 @@ class ProfileScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Jesica Jones",
+                        user.name.toString(),
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 32,
@@ -65,7 +81,7 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        "JesicaJones123@gmail.com",
+                        user.email.toString(),
                         style: TextStyle(fontSize: 14),
                       ),
                       SizedBox(
