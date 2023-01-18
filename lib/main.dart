@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         '/image': (context) => ImageViewScreen(),
         // '/payments': (context) => const PaymentScreen(),
         '/splash': (context) => SplashScreen(),
-        '/register': (context) => Dependency(),
+        '/register': (context) => RegisterScreen(),
         '/login': (context) => LoginScreen()
       },
 

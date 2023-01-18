@@ -152,6 +152,17 @@ class _SplashScreenState extends State<SplashScreen> {
       bool isAuthenticated = false;
       if (showBiometrics) {
         print("have");
+        isAuthenticated = await BiometricHelper().authenticate();
+        if(isAuthenticated){
+          Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        );
+        }
+        else{
+          Utility.notification(
+          "Unauthorized Access Please try again!", context, false);
+        }
       } else {
         print("dont");
       }
