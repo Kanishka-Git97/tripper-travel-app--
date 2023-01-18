@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:travel_app_v1/constant/constant.dart';
+
 import '../models/customer.dart';
 import 'customer_services.dart';
 import 'package:http/http.dart' as http;
@@ -8,8 +10,7 @@ class CustomerRepository implements CustomerServices {
   // Customer Registration
   Future<Customer> register(Customer customer) async {
     print('${customer.toJson().toString()}');
-    var url =
-        Uri.parse('http://192.168.8.185/travelApp_API/customerRegister.php');
+    var url = Uri.parse('$baseUrl/customerRegister.php');
     var response = await http.post(url,
         headers: {'Content-Type': 'application/json'},
         body: json.encode(customer.toJson()));
@@ -25,7 +26,7 @@ class CustomerRepository implements CustomerServices {
 
   @override
   Future<Customer> login(String email, String password) async {
-    var url = Uri.parse('http://192.168.8.185/travelApp_API/customerLogin.php');
+    var url = Uri.parse('$baseUrl/customerLogin.php');
     var body = {"c_email": email, "c_password": password};
 
     var response = await http.post(url,

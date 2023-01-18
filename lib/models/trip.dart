@@ -21,8 +21,10 @@ class Trip {
   String? description;
   double? price;
   List<Location>? locations;
+
   List<Schedule>? schedule;
   List<Review>? review;
+
 
   Trip(
       {this.id,
