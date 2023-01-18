@@ -112,6 +112,8 @@ class DatabaseHelper {
     return await db.query(Customer.tblName);
   }
 
+  
+
   // Asynchronous from server to client
   Future<void> syncData() async {
     var response = await http.get(Uri.parse('$baseUrl/trips.php'));

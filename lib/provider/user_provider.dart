@@ -58,4 +58,11 @@ class User with ChangeNotifier {
 
     notifyListeners();
   }
+
+  void localAuth() async {
+    List<Map<String, dynamic>> response = await _dbHelper.validateCustomer();
+    Customer customer = Customer.fromJson(response[0]);
+    _user = customer;
+    notifyListeners();
+  }
 }

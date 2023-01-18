@@ -2,8 +2,10 @@ import 'dart:ui';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:travel_app_v1/components/custom_btn.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/provider/user_provider.dart';
 import 'package:travel_app_v1/screens/home-screen/home_screen.dart';
 import 'package:travel_app_v1/screens/login-screen/login_screen.dart';
 import 'package:travel_app_v1/screens/register-screen/register_screen.dart';
@@ -70,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: 40,
               ),
               Row(
-                children: const[
+                children: const [
                   Text(
                     "Trip with Us",
                     style: TextStyle(
@@ -153,18 +155,22 @@ class _SplashScreenState extends State<SplashScreen> {
       if (showBiometrics) {
         print("have");
         isAuthenticated = await BiometricHelper().authenticate();
-        if(isAuthenticated){
+        if (isAuthenticated) {
+          Provider.of<User>(context, listen: false).localAuth();
           Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-        );
-        }
-        else{
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          );
+        } else {
+          Provider.of<User>(context, listen: false).localAuth();
           Utility.notification(
-          "Unauthorized Access Please try again!", context, false);
+              "Unauthorized Access Please try again!", context, false);
         }
       } else {
-        print("dont");
+        Utility.notification(
+            "Local Authentication Feature Not Available, Please Configure it!",
+            context,
+            false);
       }
     }
   }
