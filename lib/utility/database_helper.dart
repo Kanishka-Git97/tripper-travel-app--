@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:travel_app_v1/constant/constant.dart';
 import 'package:travel_app_v1/models/customer.dart';
 import 'package:travel_app_v1/models/location.dart';
 import 'package:travel_app_v1/models/schedule.dart';
@@ -113,8 +114,7 @@ class DatabaseHelper {
 
   // Asynchronous from server to client
   Future<void> syncData() async {
-    var response = await http
-        .get(Uri.parse('http://192.168.8.185/travelApp_API/trips.php'));
+    var response = await http.get(Uri.parse('$baseUrl/trips.php'));
     List<dynamic> tripData = json.decode(response.body);
     print(tripData.length);
 
@@ -136,8 +136,7 @@ class DatabaseHelper {
       }
     });
 
-    var locationResponse = await http
-        .get(Uri.parse("http://192.168.8.185/travelApp_API/locations.php"));
+    var locationResponse = await http.get(Uri.parse("$baseUrl/locations.php"));
     List<dynamic> locationData = json.decode(locationResponse.body);
 
     await db.transaction((txn) async {
@@ -156,8 +155,7 @@ class DatabaseHelper {
       }
     });
 
-    var scheduleResponse = await http
-        .get(Uri.parse("http://192.168.8.185/travelApp_API/schedules.php"));
+    var scheduleResponse = await http.get(Uri.parse("$baseUrl/schedules.php"));
     List<dynamic> scheduleData = json.decode(scheduleResponse.body);
 
     await db.transaction((txn) async {
@@ -177,8 +175,7 @@ class DatabaseHelper {
     });
 
     /*----update review data-------*/
-    var reviewResponse = await http
-        .get(Uri.parse("http://192.168.8.185/travelApp_API/reviews.php"));
+    var reviewResponse = await http.get(Uri.parse("$baseUrl/reviews.php"));
     List<dynamic> reviewData = json.decode(reviewResponse.body);
 
     await db.transaction((txn) async {
@@ -234,7 +231,7 @@ class DatabaseHelper {
 
       /**----fetch data from schedule table--------- */
       var resultSchedule =
-          await db!.rawQuery('SELECT * FROM schedule WHERE trip=$tempTripId');
+          await db.rawQuery('SELECT * FROM schedule WHERE trip=$tempTripId');
       for (var k = 0; k < resultSchedule.length; k++) {
         data[i].schedule!.add(Schedule(
             id: int.parse(resultSchedule[k]['id'].toString()),
@@ -244,8 +241,8 @@ class DatabaseHelper {
       }
 
       /**----fetch trip reviews--------- */
-      var resultReviews = await db!
-          .rawQuery('SELECT * FROM reviews WHERE trip_ref=$tempTripId');
+      var resultReviews =
+          await db.rawQuery('SELECT * FROM reviews WHERE trip_ref=$tempTripId');
       for (var l = 0; l < resultReviews.length; l++) {
         data[i].review!.add(Review(
             id: int.parse(resultReviews[l]['id'].toString()),
@@ -257,7 +254,5 @@ class DatabaseHelper {
     }
 
     return data;
-
-    //print(json.encode(data[0].review![0].review).toString());
   }
 }
