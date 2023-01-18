@@ -3,6 +3,8 @@ import 'package:travel_app_v1/components/map_box.dart';
 import 'package:travel_app_v1/components/review_details_card.dart';
 import 'package:travel_app_v1/constant/constant.dart';
 import 'package:travel_app_v1/models/trip.dart';
+import 'package:travel_app_v1/screens/map-screen/map_screen.dart';
+import 'package:travel_app_v1/screens/payment-screen/payment_screen.dart';
 
 class CurrentBookingDetailsScreen extends StatelessWidget {
   CurrentBookingDetailsScreen({Key? key, required this.trip}) : super(key: key);
@@ -160,7 +162,7 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                           ),
                           const SizedBox(
                             height: 20,
-                          ), 
+                          ),
                           const Text(
                             "Up Coming Trip Schedule",
                             style: subHeading,
@@ -170,27 +172,51 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Wrap(
-                              children: List.generate(
-                                  3,
-                                  (index) => const Padding(
-                                        padding: EdgeInsets.all(2.0),
-                                        child: Chip(
-                                            label: Text(
-                                          "2023-01-27",
-                                          style: TextStyle(fontSize: 10),
+                            children: [
+                              Wrap(
+                                children: List.generate(
+                                    trip.schedule!.length,
+                                    (index) => Padding(
+                                          padding: EdgeInsets.all(2.0),
+                                          child: Chip(
+                                              label: Text(
+                                            trip.schedule![index].start
+                                                .toString(),
+                                            style: TextStyle(fontSize: 10),
+                                          )),
                                         )),
-                                      )),
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
                           const SizedBox(
                             height: 10,
                           ),
-                          const Text(
-                            "Map",
-                            style: subHeading,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Map",
+                                style: subHeading,
+                              ),
+                              SizedBox(
+                                width: 180,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MapScreen(
+                                              locations: trip.locations!,
+                                            )),
+                                  );
+                                },
+                                child: Text(
+                                  "See More",
+                                  style: text,
+                                ),
+                              )
+                            ],
                           ),
                           const SizedBox(
                             height: 10,
@@ -202,7 +228,7 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                               color: const Color.fromARGB(255, 221, 236, 243),
                             ),
-                            child: MapBox(),
+                            child: MapBox(locations: trip.locations),
                             clipBehavior: Clip.antiAlias,
                           ),
                           const SizedBox(
@@ -327,10 +353,18 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                     ),
                     const Spacer(),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PaymentScreen(
+                                    trip: trip,
+                                  )),
+                        );
+                      },
                       child: Container(
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 20),
                         decoration: BoxDecoration(
                           color: primaryColor,
                           borderRadius: BorderRadius.circular(24),

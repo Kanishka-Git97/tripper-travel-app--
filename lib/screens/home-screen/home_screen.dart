@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/provider/trip_provider.dart';
 import 'package:travel_app_v1/provider/user_provider.dart';
 
 import '../../components/extended_travelCard.dart';
 import '../../components/regular_travelCard.dart';
 import '../../models/customer.dart';
+import '../../models/trip.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -16,7 +18,11 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     user = context.watch<User>().user;
-    Provider.of<User>(context, listen: false).getAllData();
+    Provider.of<TripProvider>(context, listen: false).getAllData();
+    List<Trip> tripData =
+        Provider.of<TripProvider>(context, listen: false).tripData;
+    print(tripData);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -118,19 +124,14 @@ class HomeScreen extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 20.0),
                 height: 270.0,
-                child: ListView(
+                child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  children: [
-                    RegularTravelCard(
-                      imageUrl: 'assets/images/img-1.jpeg',
-                    ),
-                    RegularTravelCard(
-                      imageUrl: 'assets/images/img-2.jpeg',
-                    ),
-                    RegularTravelCard(
-                      imageUrl: 'assets/images/img-3.jpeg',
-                    ),
-                  ],
+                  itemCount: tripData.length,
+                  itemBuilder: (context, index) {
+                    return RegularTravelCard(
+                      travelData: tripData[index],
+                    );
+                  },
                 ),
               ),
               const Text(
@@ -138,23 +139,17 @@ class HomeScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 18),
               ),
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 20.0),
-                height: 400.0,
-                child: ListView(
-                  padding: const EdgeInsets.all(8),
-                  children: <Widget>[
-                    ExtendedTravelCard(
-                      imageUrl: ('assets/images/img-1f.jpeg'),
-                    ),
-                    ExtendedTravelCard(
-                      imageUrl: ('assets/images/img-2f.jpeg'),
-                    ),
-                    ExtendedTravelCard(
-                      imageUrl: ('assets/images/img-3f.jpeg'),
-                    ),
-                  ],
-                ),
-              ),
+                  margin: const EdgeInsets.symmetric(vertical: 20.0),
+                  height: 400.0,
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: tripData.length,
+                    itemBuilder: (context, index) {
+                      return ExtendedTravelCard(
+                        travelData: tripData[index],
+                      );
+                    },
+                  )),
             ],
           ),
         ),

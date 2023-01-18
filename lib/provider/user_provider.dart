@@ -54,23 +54,8 @@ class User with ChangeNotifier {
       // todo: implement offline login flow
       Utility.notification(
           "No Internet Connection Please Try Again!", context, false);
-      // var response = await _dbHelper.validateCustomer();
-      // if (response.length > 0) {
-      //   // todo: fetch model and update state model
-
-      // } else {
-
-      //   print("no user");
-      // }
     }
 
     notifyListeners();
-  }
-
-  /*------fetch all data------*/
-  void getAllData() async {
-    DatabaseHelper.instance.queryAll();
-
-    // return allData;
   }
 }

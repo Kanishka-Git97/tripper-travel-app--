@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/models/trip.dart';
 
 import '../../components/custom_btn.dart';
 
 class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({Key? key}) : super(key: key);
+  const PaymentScreen({Key? key, required this.trip}) : super(key: key);
 
+  final Trip trip;
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
 }
@@ -16,10 +18,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
   final GlobalKey<SfSignaturePadState> _signatureGlobalKey = GlobalKey();
   var _personCount = 1;
 
-  // Setup Trip Cost
-  var _perPorsonCost = 8000.00;
   @override
   Widget build(BuildContext context) {
+    // Setup Trip Cost
+    var _perPorsonCost = double.parse(widget.trip.price.toString());
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -63,8 +65,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Trip Name",
+                        Text(
+                          widget.trip.title.toString(),
                           style: subHeading,
                         ),
                         const SizedBox(
@@ -78,12 +80,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           children: [
                             Wrap(
                               children: List.generate(
-                                  3,
-                                  (index) => const Padding(
+                                  widget.trip.schedule!.length,
+                                  (index) => Padding(
                                         padding: EdgeInsets.all(2.0),
                                         child: Chip(
                                             label: Text(
-                                          "2023-01-27",
+                                          widget.trip.schedule![index].start
+                                              .toString(),
                                           style: TextStyle(fontSize: 10),
                                         )),
                                       )),
@@ -141,7 +144,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               ),
                               GestureDetector(
                                 onTap: _personCounterDecrement,
-                                child: const Icon(Icons.arrow_circle_down_sharp),
+                                child:
+                                    const Icon(Icons.arrow_circle_down_sharp),
                               ),
                               const SizedBox(
                                 width: 5,

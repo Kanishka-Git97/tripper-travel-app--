@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travel_app_v1/provider/trip_provider.dart';
 import 'package:travel_app_v1/provider/user_provider.dart';
 import 'package:travel_app_v1/screens/comments-review/all_comments_screen.dart';
 
@@ -22,7 +23,8 @@ void main() {
     providers: [
       Provider<User>(
         create: (_) => User(),
-      )
+      ),
+      Provider(create: (_) => TripProvider())
     ],
     child: const MyApp(),
   ));
@@ -44,10 +46,10 @@ class MyApp extends StatelessWidget {
 
       routes: {
         '/': (context) => const MainScreen(),
-        '/map': (context) => const MapScreen(),
+        // '/map': (context) => MapScreen(),
         '/reviews': (context) => const AllCommentsScreen(),
         '/image': (context) => ImageViewScreen(),
-        '/payments': (context) => const PaymentScreen(),
+        // '/payments': (context) => const PaymentScreen(),
         '/splash': (context) => const SplashScreen(),
         '/register': (context) => RegisterScreen(),
         '/login': (context) => LoginScreen()

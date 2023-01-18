@@ -123,4 +123,17 @@ class SplashScreen extends StatelessWidget {
           "No Internet Connection Please Try Again!", context, false);
     }
   }
+
+  _openLogin(BuildContext context) async {
+    bool connection = await Utility.connectionChecker();
+    if (connection) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+      );
+    }else{
+      // todo: should implement Local Authentication
+      
+    }
+  }
 }

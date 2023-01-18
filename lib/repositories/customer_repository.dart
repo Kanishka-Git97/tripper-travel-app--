@@ -10,8 +10,7 @@ class CustomerRepository implements CustomerServices {
   // Customer Registration
   Future<Customer> register(Customer customer) async {
     print('${customer.toJson().toString()}');
-    var url =
-        Uri.parse('$baseUrl/customerRegister.php');
+    var url = Uri.parse('$baseUrl/customerRegister.php');
     var response = await http.post(url,
         headers: {'Content-Type': 'application/json'},
         body: json.encode(customer.toJson()));
