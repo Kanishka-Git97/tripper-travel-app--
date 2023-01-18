@@ -159,7 +159,7 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                           ),
                           const SizedBox(
                             height: 20,
-                          ), 
+                          ),
                           const Text(
                             "Up Coming Trip Schedule",
                             style: subHeading,
@@ -169,21 +169,21 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Wrap(
-                              children: List.generate(
-                                  3,
-                                  (index) => const Padding(
-                                        padding: EdgeInsets.all(2.0),
-                                        child: Chip(
-                                            label: Text(
-                                          "2023-01-27",
-                                          style: TextStyle(fontSize: 10),
+                            children: [
+                              Wrap(
+                                children: List.generate(
+                                    3,
+                                    (index) => const Padding(
+                                          padding: EdgeInsets.all(2.0),
+                                          child: Chip(
+                                              label: Text(
+                                            "2023-01-27",
+                                            style: TextStyle(fontSize: 10),
+                                          )),
                                         )),
-                                      )),
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
                           const SizedBox(
                             height: 10,
                           ),
@@ -328,8 +328,8 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {},
                       child: Container(
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 20),
                         decoration: BoxDecoration(
                           color: primaryColor,
                           borderRadius: BorderRadius.circular(24),
