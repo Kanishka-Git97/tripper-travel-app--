@@ -9,7 +9,7 @@ import 'package:travel_app_v1/utility/database_helper.dart';
 import 'package:flutter/material.dart';
 
 late final CustomerServices services;
-
+enum AuthState { Fail, Error, Success, Pending}
 class User with ChangeNotifier {
   // Dependency Injection
   var _customerController = CustomerController(CustomerRepository());
@@ -18,6 +18,9 @@ class User with ChangeNotifier {
   // States
   Customer _user = Customer();
   Customer get user => _user;
+
+  AuthState _authStat = AuthState.Pending;
+  AuthState get authStat => _authStat;
 
   // void register(Customer customer) {
   //   var response = services.register(customer);
@@ -61,8 +64,25 @@ class User with ChangeNotifier {
 
   void localAuth() async {
     List<Map<String, dynamic>> response = await _dbHelper.validateCustomer();
-    Customer customer = Customer.fromJson(response[0]);
+    print(response.length);
+    if(response.length > 0){
+       Customer customer = Customer.fromJson(response[0]);
     _user = customer;
+    _authStat = AuthState.Success;
+    }
+    else{
+      
+      _authStat = AuthState.Error;
+      print(_authStat);
+    }
     notifyListeners();
+  }
+  void localAuthReset(){
+    _authStat = AuthState.Pending;
+    notifyListeners();
+  }
+
+  void sync() async{
+    await _dbHelper.syncData();
   }
 }

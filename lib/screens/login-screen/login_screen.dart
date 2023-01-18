@@ -5,6 +5,7 @@ import 'package:travel_app_v1/screens/register-screen/register_screen.dart';
 import '../../Constant/constant.dart';
 import '../../components/custom_btn.dart';
 import '../../components/custom_input.dart';
+import '../../provider/trip_provider.dart';
 import '../../provider/user_provider.dart';
 import '../home-screen/home_screen.dart';
 
@@ -16,6 +17,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(

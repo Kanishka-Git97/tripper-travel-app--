@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app_v1/components/custom_btn.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/provider/trip_provider.dart';
 import 'package:travel_app_v1/provider/user_provider.dart';
 import 'package:travel_app_v1/screens/home-screen/home_screen.dart';
 import 'package:travel_app_v1/screens/login-screen/login_screen.dart';
@@ -35,6 +36,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<User>().localAuth();
+    
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -124,8 +127,10 @@ class _SplashScreenState extends State<SplashScreen> {
             ],
           ),
         ),
+        
       ),
     );
+   
   }
 
   _openRegister(BuildContext context) async {
@@ -143,24 +148,41 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _openLogin(BuildContext context) async {
+   
     bool connection = await Utility.connectionChecker();
     if (connection) {
+     Provider.of<User>(context, listen: false).sync();
+      Provider.of<User>(context, listen: false).localAuthReset();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LoginScreen()),
       );
     } else {
-      // todo: should implement Local Authentication
+      
       bool isAuthenticated = false;
       if (showBiometrics) {
         print("have");
+        
         isAuthenticated = await BiometricHelper().authenticate();
         if (isAuthenticated) {
-          Provider.of<User>(context, listen: false).localAuth();
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
-          );
+            AuthState _state = Provider.of<User>(context, listen: false).authStat;
+           if(_state == AuthState.Error){
+             
+              Utility.notification(
+              "First Time Login Required Internet", context, false);
+              
+            }
+            else{
+            print(_state.toString());
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            );
+            }
+         
+       
+          
+          
         } else {
           Provider.of<User>(context, listen: false).localAuth();
           Utility.notification(
@@ -173,5 +195,7 @@ class _SplashScreenState extends State<SplashScreen> {
             false);
       }
     }
+    
+     
   }
 }
