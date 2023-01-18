@@ -4,6 +4,7 @@ import 'package:travel_app_v1/components/review_details_card.dart';
 import 'package:travel_app_v1/constant/constant.dart';
 import 'package:travel_app_v1/models/trip.dart';
 import 'package:travel_app_v1/screens/map-screen/map_screen.dart';
+import 'package:travel_app_v1/screens/payment-screen/payment_screen.dart';
 
 class CurrentBookingDetailsScreen extends StatelessWidget {
   CurrentBookingDetailsScreen({Key? key, required this.trip}) : super(key: key);
@@ -352,7 +353,15 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                     ),
                     const Spacer(),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PaymentScreen(
+                                    trip: trip,
+                                  )),
+                        );
+                      },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 10, horizontal: 20),

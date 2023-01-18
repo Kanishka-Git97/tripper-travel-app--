@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         // '/map': (context) => MapScreen(),
         '/reviews': (context) => const AllCommentsScreen(),
         '/image': (context) => ImageViewScreen(),
-        '/payments': (context) => const PaymentScreen(),
+        // '/payments': (context) => const PaymentScreen(),
         '/splash': (context) => const SplashScreen(),
         '/register': (context) => Dependency(),
         '/login': (context) => LoginScreen()

@@ -48,6 +48,7 @@ class MapScreen extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       // todo: add to back method
+                      Navigator.of(context).pop();
                     },
                     child: Center(
                         child: Icon(
