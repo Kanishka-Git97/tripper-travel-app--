@@ -46,8 +46,7 @@ class MyApp extends StatelessWidget {
 
       routes: {
         '/': (context) => const MainScreen(),
-        '/trip_details': (context) => const CurrentBookingDetailsScreen(),
-        '/map': (context) => const MapScreen(),
+        // '/map': (context) => MapScreen(),
         '/reviews': (context) => const AllCommentsScreen(),
         '/image': (context) => ImageViewScreen(),
         '/payments': (context) => const PaymentScreen(),

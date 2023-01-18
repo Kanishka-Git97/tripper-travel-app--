@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app_v1/models/trip.dart';
+import 'package:travel_app_v1/screens/current-booking-details-screen/current_booking_details_screen.dart';
 
 class RegularTravelCard extends StatelessWidget {
   Trip? travelData;
@@ -9,7 +10,12 @@ class RegularTravelCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed('/trip_details', arguments: travelData);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  CurrentBookingDetailsScreen(trip: travelData!)),
+        );
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),

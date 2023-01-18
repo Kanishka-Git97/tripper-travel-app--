@@ -3,17 +3,21 @@ import 'package:travel_app_v1/components/extended_travelCard.dart';
 import 'package:travel_app_v1/components/location_card.dart';
 import 'package:travel_app_v1/components/map_box.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/models/location.dart';
+import 'package:travel_app_v1/screens/current-booking-details-screen/current_booking_details_screen.dart';
 
 class MapScreen extends StatelessWidget {
-  const MapScreen({Key? key}) : super(key: key);
-
+  MapScreen({Key? key, required this.locations}) : super(key: key);
+  List<Location> locations;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
           Container(
-            child: MapBox(),
+            child: MapBox(
+              locations: locations,
+            ),
           ),
           Align(
             alignment: AlignmentDirectional.bottomCenter,
@@ -21,18 +25,14 @@ class MapScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0),
               width: double.infinity,
               height: 160,
-              child: ListView(
+              child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                children: const [
-                  LocationCard(
-                    img:
-                        "https://www.boredpanda.com/blog/wp-content/uuuploads/unbelievable-places/unbelievable-places-8.jpg",
-                  ),
-                  LocationCard(
-                    img:
-                        "https://imageio.forbes.com/blogs-images/trevornace/files/2015/11/ta-prohm-cambodia-1200x798.jpg?height=472&width=711&fit=bounds",
-                  )
-                ],
+                itemCount: locations.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return LocationCard(
+                    location: locations[index],
+                  );
+                },
               ),
             ),
           ),
@@ -46,6 +46,9 @@ class MapScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(50)),
                 child: Center(
                   child: InkWell(
+                    onTap: () {
+                      // todo: add to back method
+                    },
                     child: Center(
                         child: Icon(
                       Icons.arrow_back_ios_new_outlined,

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:travel_app_v1/components/custom_btn.dart';
 import 'package:travel_app_v1/components/rating_panel.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/models/location.dart';
 
 class LocationCard extends StatelessWidget {
-  const LocationCard({Key? key, required this.img}) : super(key: key);
-  final String img;
+  const LocationCard({Key? key, required this.location}) : super(key: key);
+  final Location location;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,8 +31,7 @@ class LocationCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
                 color: Colors.redAccent,
                 image: DecorationImage(
-                  image: NetworkImage(
-                      img),
+                  image: NetworkImage(location.image.toString()),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -40,14 +40,14 @@ class LocationCard extends StatelessWidget {
               padding: const EdgeInsets.only(left: 8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   // Todo: Get Data from Provider or Previous Screen
                   Text(
-                    "Easby Orchard",
+                    location.title.toString(),
                     style: largeText,
                   ),
                   Text("Sparkels", style: smallText),
-                  RatingPanel(),
+                  // RatingPanel(),
                   SizedBox(
                     height: 10,
                   ),
