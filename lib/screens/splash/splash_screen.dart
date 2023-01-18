@@ -7,10 +7,29 @@ import 'package:travel_app_v1/constant/constant.dart';
 import 'package:travel_app_v1/screens/home-screen/home_screen.dart';
 import 'package:travel_app_v1/screens/login-screen/login_screen.dart';
 import 'package:travel_app_v1/screens/register-screen/register_screen.dart';
+import 'package:travel_app_v1/utility/biometric_helper.dart';
 import 'package:travel_app_v1/utility/utility_helper.dart';
 
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+class SplashScreen extends StatefulWidget {
+  SplashScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  bool showBiometrics = false;
+
+  isBiometricAvailable() async {
+    showBiometrics = await BiometricHelper().hasEnrolledBiometrics();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    isBiometricAvailable();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,10 +108,7 @@ class SplashScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                  );
+                  _openLogin(context);
                 },
                 child: CustomBtn(
                     width: double.maxFinite,
@@ -131,9 +147,14 @@ class SplashScreen extends StatelessWidget {
         context,
         MaterialPageRoute(builder: (context) => LoginScreen()),
       );
-    }else{
+    } else {
       // todo: should implement Local Authentication
-      
+      bool isAuthenticated = false;
+      if (showBiometrics) {
+        print("have");
+      } else {
+        print("dont");
+      }
     }
   }
 }
