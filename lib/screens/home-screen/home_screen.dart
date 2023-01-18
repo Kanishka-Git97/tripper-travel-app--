@@ -129,7 +129,7 @@ class HomeScreen extends StatelessWidget {
                   itemCount: tripData.length,
                   itemBuilder: (context, index) {
                     return RegularTravelCard(
-                      travelData: tripData,
+                      travelData: tripData[index],
                     );
                   },
                 ),
@@ -139,23 +139,17 @@ class HomeScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 18),
               ),
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 20.0),
-                height: 400.0,
-                child: ListView(
-                  padding: const EdgeInsets.all(8),
-                  children: <Widget>[
-                    ExtendedTravelCard(
-                      imageUrl: ('assets/images/img-1f.jpeg'),
-                    ),
-                    ExtendedTravelCard(
-                      imageUrl: ('assets/images/img-2f.jpeg'),
-                    ),
-                    ExtendedTravelCard(
-                      imageUrl: ('assets/images/img-3f.jpeg'),
-                    ),
-                  ],
-                ),
-              ),
+                  margin: const EdgeInsets.symmetric(vertical: 20.0),
+                  height: 400.0,
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: tripData.length,
+                    itemBuilder: (context, index) {
+                      return ExtendedTravelCard(
+                        travelData: tripData[index],
+                      );
+                    },
+                  )),
             ],
           ),
         ),

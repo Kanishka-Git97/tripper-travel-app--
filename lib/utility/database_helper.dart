@@ -113,8 +113,8 @@ class DatabaseHelper {
 
   // Asynchronous from server to client
   Future<void> syncData() async {
-    var response =
-        await http.get(Uri.parse('http://172.20.10.6/travelApp_API/trips.php'));
+    var response = await http
+        .get(Uri.parse('http://192.168.8.185/travelApp_API/trips.php'));
     List<dynamic> tripData = json.decode(response.body);
     print(tripData.length);
 
@@ -137,7 +137,7 @@ class DatabaseHelper {
     });
 
     var locationResponse = await http
-        .get(Uri.parse("http://172.20.10.6/travelApp_API/locations.php"));
+        .get(Uri.parse("http://192.168.8.185/travelApp_API/locations.php"));
     List<dynamic> locationData = json.decode(locationResponse.body);
 
     await db.transaction((txn) async {
@@ -157,7 +157,7 @@ class DatabaseHelper {
     });
 
     var scheduleResponse = await http
-        .get(Uri.parse("http://172.20.10.6/travelApp_API/schedules.php"));
+        .get(Uri.parse("http://192.168.8.185/travelApp_API/schedules.php"));
     List<dynamic> scheduleData = json.decode(scheduleResponse.body);
 
     await db.transaction((txn) async {
@@ -178,7 +178,7 @@ class DatabaseHelper {
 
     /*----update review data-------*/
     var reviewResponse = await http
-        .get(Uri.parse("http://172.20.10.6/travelApp_API/reviews.php"));
+        .get(Uri.parse("http://192.168.8.185/travelApp_API/reviews.php"));
     List<dynamic> reviewData = json.decode(reviewResponse.body);
 
     await db.transaction((txn) async {
