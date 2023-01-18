@@ -334,9 +334,9 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
-                          "LKR 8000",
+                          trip.price.toString(),
                           style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.w500,
