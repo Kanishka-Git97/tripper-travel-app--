@@ -19,7 +19,7 @@ class Trip {
   String? description;
   double? price;
   List<Location>? locations;
-
+  
   Trip(
       {this.id,
       this.title,

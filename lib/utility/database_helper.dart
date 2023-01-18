@@ -169,7 +169,7 @@ class DatabaseHelper {
   //Future<List<Map<String, dynamic>>>
   void queryAll() async {
     Database? db = await instance.database;
-    List<Map> results = await db!.query('trip');
+    List<Map> results = await db.query('trip');
 
     List<Trip> data = [];
     for (var i = 0; i < results.length; i++) {
@@ -189,7 +189,7 @@ class DatabaseHelper {
           locations: []));
 
       var resultLocation =
-          await db!.rawQuery('SELECT * FROM location WHERE trip=$tempTripId');
+          await db.rawQuery('SELECT * FROM location WHERE trip=$tempTripId');
       for (var j = 0; j < resultLocation.length; j++) {
         data[i].locations!.add(new Location(
             id: int.parse(resultLocation[j]['id'].toString()),
