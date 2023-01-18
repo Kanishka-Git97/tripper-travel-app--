@@ -16,14 +16,14 @@ import 'package:travel_app_v1/utility/utility_helper.dart';
 
 import '../../models/customer.dart';
 
-class Dependency extends StatefulWidget {
-  Dependency({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  State<Dependency> createState() => _DependencyState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _DependencyState extends State<Dependency> {
+class _RegisterScreenState extends State<RegisterScreen> {
   // TextEditing Controller Setup
   final _nameController = new TextEditingController();
   final _emailController = new TextEditingController();
@@ -39,159 +39,163 @@ class _DependencyState extends State<Dependency> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            const SizedBox(
-              height: 50,
-            ),
-            Text(
-              "Hello!",
-              style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black),
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            Text(
-              "Sign up to get Start",
-              style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Stack(children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                height: 80,
-                width: 80,
-                child: ClipRRect(
-                  clipBehavior: Clip.antiAlias,
-                  borderRadius: BorderRadius.circular(5),
-                  child: Image.memory(
-                    Base64Decoder().convert(imgString),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+      extendBody: true,
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              const SizedBox(
+                height: 50,
               ),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: GestureDetector(
-                  onTap: _imgPicker,
-                  child: Icon(
-                    Icons.add_circle,
-                    color: primaryColor,
+              Text(
+                "Hello!",
+                style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black),
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              Text(
+                "Sign up to get Start",
+                style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Stack(children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  height: 80,
+                  width: 80,
+                  child: ClipRRect(
+                    clipBehavior: Clip.antiAlias,
+                    borderRadius: BorderRadius.circular(5),
+                    child: Image.memory(
+                      Base64Decoder().convert(imgString),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              )
-            ]),
-            const SizedBox(
-              height: 30,
-            ),
-            CustomInput(
-              hintText: "Name",
-              labelText: "Name",
-              keyboardType: TextInputType.name,
-              controller: _nameController,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CustomInput(
-              hintText: "Email Address",
-              labelText: "Email Address",
-              keyboardType: TextInputType.emailAddress,
-              controller: _emailController,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CustomInput(
-              hintText: "Password",
-              labelText: "Password",
-              keyboardType: TextInputType.visiblePassword,
-              obscureText: true,
-              controller: _passwordController,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CustomInput(
-              hintText: "Confirm Password",
-              labelText: "Confirm Password",
-              keyboardType: TextInputType.visiblePassword,
-              obscureText: true,
-              controller: _confirmPasswordController,
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            GestureDetector(
-                onTap: () {
-                  _signUp(context);
-                },
-                child: const CustomBtn(
-                    width: double.maxFinite,
-                    text: "SIGN UP",
-                    radius: 16,
-                    height: 48,
-                    txtColor: Colors.white,
-                    bgColor: primaryColor,
-                    borderColor: Colors.transparent)),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                const Text(
-                  "Already have an account?",
-                  style: smallText,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()));
-                    },
-                    child: const Text(
-                      "SIGN IN",
-                      style: smallText,
-                    )),
-              ],
-            ),
-            Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Trip",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w900,
-                      color: primaryColor),
-                ),
-                Text(
-                  "per.",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: GestureDetector(
+                    onTap: _imgPicker,
+                    child: Icon(
+                      Icons.add_circle,
+                      color: primaryColor,
+                    ),
+                  ),
                 )
-              ],
-            )
-          ],
+              ]),
+              const SizedBox(
+                height: 30,
+              ),
+              CustomInput(
+                hintText: "Name",
+                labelText: "Name",
+                keyboardType: TextInputType.name,
+                controller: _nameController,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CustomInput(
+                hintText: "Email Address",
+                labelText: "Email Address",
+                keyboardType: TextInputType.emailAddress,
+                controller: _emailController,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CustomInput(
+                hintText: "Password",
+                labelText: "Password",
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: true,
+                controller: _passwordController,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CustomInput(
+                hintText: "Confirm Password",
+                labelText: "Confirm Password",
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: true,
+                controller: _confirmPasswordController,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              GestureDetector(
+                  onTap: () {
+                    _signUp(context);
+                  },
+                  child: const CustomBtn(
+                      width: double.maxFinite,
+                      text: "SIGN UP",
+                      radius: 16,
+                      height: 48,
+                      txtColor: Colors.white,
+                      bgColor: primaryColor,
+                      borderColor: Colors.transparent)),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  const Text(
+                    "Already have an account?",
+                    style: smallText,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()));
+                      },
+                      child: const Text(
+                        "SIGN IN",
+                        style: smallText,
+                      )),
+                ],
+              ),
+              Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Trip",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w900,
+                        color: primaryColor),
+                  ),
+                  Text(
+                    "per.",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

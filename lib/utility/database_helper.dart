@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:travel_app_v1/constant/constant.dart';
 import 'package:travel_app_v1/models/customer.dart';
 import 'package:travel_app_v1/models/location.dart';
 import 'package:travel_app_v1/models/schedule.dart';
@@ -102,7 +103,7 @@ class DatabaseHelper {
   // Asynchronous from server to client
   Future<void> syncData() async {
     var response = await http
-        .get(Uri.parse('http://192.168.8.185/travelApp_API/trips.php'));
+        .get(Uri.parse('$baseUrl/trips.php'));
     List<dynamic> tripData = json.decode(response.body);
     print(tripData.length);
 
@@ -125,7 +126,7 @@ class DatabaseHelper {
     });
 
     var locationResponse = await http
-        .get(Uri.parse("http://192.168.8.185/travelApp_API/locations.php"));
+        .get(Uri.parse("$baseUrl/locations.php"));
     List<dynamic> locationData = json.decode(locationResponse.body);
 
     await db.transaction((txn) async {
@@ -145,7 +146,7 @@ class DatabaseHelper {
     });
 
     var scheduleResponse = await http
-        .get(Uri.parse("http://192.168.8.185/travelApp_API/schedules.php"));
+        .get(Uri.parse("$baseUrl/schedules.php"));
     List<dynamic> scheduleData = json.decode(scheduleResponse.body);
 
     await db.transaction((txn) async {
@@ -169,7 +170,7 @@ class DatabaseHelper {
   //Future<List<Map<String, dynamic>>>
   void queryAll() async {
     Database? db = await instance.database;
-    List<Map> results = await db!.query('trip');
+    List<Map> results = await db.query('trip');
 
     List<Trip> data = [];
     for (var i = 0; i < results.length; i++) {
@@ -189,7 +190,7 @@ class DatabaseHelper {
           locations: []));
 
       var resultLocation =
-          await db!.rawQuery('SELECT * FROM location WHERE trip=$tempTripId');
+          await db.rawQuery('SELECT * FROM location WHERE trip=$tempTripId');
       for (var j = 0; j < resultLocation.length; j++) {
         data[i].locations!.add(new Location(
             id: int.parse(resultLocation[j]['id'].toString()),

@@ -27,12 +27,12 @@ class SplashScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: const [
                   Text(
                     "Trip",
                     style: TextStyle(
@@ -51,8 +51,8 @@ class SplashScreen extends StatelessWidget {
                 height: 40,
               ),
               Row(
-                children: [
-                  const Text(
+                children: const[
+                  Text(
                     "Trip with Us",
                     style: TextStyle(
                         letterSpacing: 1,
@@ -66,12 +66,12 @@ class SplashScreen extends StatelessWidget {
                   )
                 ],
               ),
-              Text(
+              const Text(
                 "Keep on the look out for new features such as ordering food and beverages before or during your travels, as we aim to improve you travel experience.",
                 style: TextStyle(fontSize: 12),
                 textAlign: TextAlign.justify,
               ),
-              Spacer(),
+              const Spacer(),
               GestureDetector(
                   onTap: () {
                     _openRegister(context);
@@ -115,7 +115,7 @@ class SplashScreen extends StatelessWidget {
     if (connection) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Dependency()),
+        MaterialPageRoute(builder: (context) => RegisterScreen()),
       );
     } else {
       print("No Internet");

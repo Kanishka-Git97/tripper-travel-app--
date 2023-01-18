@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:travel_app_v1/components/map_box.dart';
 import 'package:travel_app_v1/components/review_details_card.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/models/trip.dart';
 
 class CurrentBookingDetailsScreen extends StatelessWidget {
-  const CurrentBookingDetailsScreen({Key? key}) : super(key: key);
-
+  CurrentBookingDetailsScreen({Key? key, required this.trip}) : super(key: key);
+  Trip trip;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,9 +84,9 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const Text(
-                                        "Santa Justa Elevator",
-                                        style: TextStyle(
+                                      Text(
+                                        trip.title.toString(),
+                                        style: const TextStyle(
                                             fontSize: 18,
                                             color: Color(0xff3C4143),
                                             fontWeight: FontWeight.w600),
@@ -112,7 +113,7 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                                     height: 5,
                                   ),
                                   Row(
-                                    children: const [
+                                    children: [
                                       Icon(
                                         Icons.location_on_outlined,
                                         color: Color(0xffDCE1E2),
@@ -121,7 +122,7 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                                         width: 5,
                                       ),
                                       Text(
-                                        "Lisbon, Portugal",
+                                        trip.category.toString(),
                                         style: text,
                                       )
                                     ],
@@ -153,8 +154,8 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                          const Text(
-                            "Suspendisse pharetra eleifend massa, blandit and aliquam turpis fermentum mattis. Fusce pharetra neque ut on elit vulputate cursus…",
+                          Text(
+                            trip.description.toString(),
                             style: text,
                           ),
                           const SizedBox(
@@ -230,12 +231,12 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: List.generate(
-                                  3,
+                                  trip.locations!.length,
                                   (index) => Container(
                                         margin: const EdgeInsets.only(right: 5),
-                                        child: const Image(
+                                        child: Image(
                                           image: NetworkImage(
-                                              'https://charlieswanderings.com/wp-content/uploads/2020/05/BEAUTIFUL-CASTLES-IN-GERMANY-26-scaled.jpg'),
+                                              '${trip.locations![index].image.toString()}'),
                                           fit: BoxFit.cover,
                                         ),
                                         width: 150,

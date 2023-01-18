@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travel_app_v1/screens/register-screen/register_screen.dart';
 
 import '../../Constant/constant.dart';
 import '../../components/custom_btn.dart';
@@ -85,7 +86,7 @@ class LoginScreen extends StatelessWidget {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
+                              builder: (context) => RegisterScreen()));
                     },
                     child: const Text(
                       "SIGN UP",

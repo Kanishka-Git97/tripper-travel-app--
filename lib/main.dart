@@ -44,13 +44,12 @@ class MyApp extends StatelessWidget {
 
       routes: {
         '/': (context) => const MainScreen(),
-        '/trip_details': (context) => const CurrentBookingDetailsScreen(),
         '/map': (context) => const MapScreen(),
         '/reviews': (context) => const AllCommentsScreen(),
         '/image': (context) => ImageViewScreen(),
         '/payments': (context) => const PaymentScreen(),
         '/splash': (context) => const SplashScreen(),
-        '/register': (context) => Dependency(),
+        '/register': (context) => RegisterScreen(),
         '/login': (context) => LoginScreen()
       },
 
