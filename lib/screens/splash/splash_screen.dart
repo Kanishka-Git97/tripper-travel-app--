@@ -9,6 +9,7 @@ import 'package:travel_app_v1/provider/trip_provider.dart';
 import 'package:travel_app_v1/provider/user_provider.dart';
 import 'package:travel_app_v1/screens/home-screen/home_screen.dart';
 import 'package:travel_app_v1/screens/login-screen/login_screen.dart';
+import 'package:travel_app_v1/screens/main-screen/main_screen.dart';
 import 'package:travel_app_v1/screens/register-screen/register_screen.dart';
 import 'package:travel_app_v1/utility/biometric_helper.dart';
 import 'package:travel_app_v1/utility/utility_helper.dart';
@@ -36,8 +37,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    context.read<User>().localAuth();
-    
+    context.read<User>().localAuth(context);
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -127,10 +128,8 @@ class _SplashScreenState extends State<SplashScreen> {
             ],
           ),
         ),
-        
       ),
     );
-   
   }
 
   _openRegister(BuildContext context) async {
@@ -148,43 +147,34 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _openLogin(BuildContext context) async {
-   
     bool connection = await Utility.connectionChecker();
     if (connection) {
-     Provider.of<User>(context, listen: false).sync();
+      Provider.of<User>(context, listen: false).sync();
       Provider.of<User>(context, listen: false).localAuthReset();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LoginScreen()),
       );
     } else {
-      
       bool isAuthenticated = false;
       if (showBiometrics) {
         print("have");
-        
+
         isAuthenticated = await BiometricHelper().authenticate();
         if (isAuthenticated) {
-            AuthState _state = Provider.of<User>(context, listen: false).authStat;
-           if(_state == AuthState.Error){
-             
-              Utility.notification(
-              "First Time Login Required Internet", context, false);
-              
-            }
-            else{
+          AuthState _state = Provider.of<User>(context, listen: false).authStat;
+          if (_state == AuthState.Error) {
+            Utility.notification(
+                "First Time Login Required Internet", context, false);
+          } else {
             print(_state.toString());
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
+              MaterialPageRoute(builder: (context) => const MainScreen()),
             );
-            }
-         
-       
-          
-          
+          }
         } else {
-          Provider.of<User>(context, listen: false).localAuth();
+          Provider.of<User>(context, listen: false).localAuth(context);
           Utility.notification(
               "Unauthorized Access Please try again!", context, false);
         }
@@ -195,7 +185,5 @@ class _SplashScreenState extends State<SplashScreen> {
             false);
       }
     }
-    
-     
   }
 }

@@ -24,14 +24,12 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
     print(widget.travelData!.image);
     return GestureDetector(
       onTap: () {
-
         Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  CurrentBookingDetailsScreen(trip: travelData!)),
+                  CurrentBookingDetailsScreen(trip: widget.travelData!)),
         );
-
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
