@@ -10,6 +10,12 @@ class BookedCard extends StatelessWidget {
   BookedCard({Key? key, required this.booking}) : super(key: key);
   final Booking booking;
 
+  String _dateFormatter(String date) {
+    String input = date.replaceAll(RegExp(r' at.*'), '');
+    var formatter = DateFormat('dd MMM yyyy, EEE');
+    return formatter.parse(input).toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,7 +26,7 @@ class BookedCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                booking.date.toString(),
+                _dateFormatter(booking.date.toString()),
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               Spacer(),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 const String baseUrl = 'http://192.168.1.102/travelApp_API';
 
+
 // Colors
 const Color primaryColor = Color(0xff2687A4);
 const Color secondaryColor = Color(0xffF7F9FA);
