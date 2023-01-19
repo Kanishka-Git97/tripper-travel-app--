@@ -106,8 +106,8 @@ class DatabaseHelper {
         ${Booking.colPerPerson} TEXT NOT NULL
         )
     ''');
-    
-     await db.execute('''
+
+    await db.execute('''
       CREATE TABLE ${WishList.tblName}(
          ${WishList.colId} INTEGER PRIMARY KEY,
         ${WishList.colCustomerRef} INTEGER NOT NULL,
@@ -221,7 +221,6 @@ class DatabaseHelper {
 
     print("Data Synced");
 
-
     /*----update wishlist local database-------*/
     var wishlistResponse = await http.get(Uri.parse("$baseUrl/wishlist.php"));
     List<dynamic> wishlistData = json.decode(wishlistResponse.body);
@@ -241,7 +240,6 @@ class DatabaseHelper {
         }
       }
     });
-
   }
 
   /*----------fetch all data-----*/
@@ -303,7 +301,6 @@ class DatabaseHelper {
 
     return data;
   }
-
 
   Future<void> authSync(Customer customer) async {
     Database db = await database;
@@ -407,6 +404,7 @@ class DatabaseHelper {
           perPerson: double.parse(item['per_person'].toString())));
     }
     return data;
+  }
 
   /*-----fetch all data from wishlist-----*/
   Future<List<Map<String, Object?>>> fetchAllWishList(int customerId) async {
@@ -426,6 +424,5 @@ class DatabaseHelper {
     //       trip_ref: int.parse(results[i]["trip_ref"].toString())));
     // }
     return result;
-
   }
 }
