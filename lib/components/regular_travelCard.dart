@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app_v1/models/trip.dart';
 
-class RegularTravelCard extends StatelessWidget {
+class RegularTravelCard extends StatefulWidget {
   Trip? travelData;
   RegularTravelCard({super.key, required this.travelData});
 
   @override
+  State<RegularTravelCard> createState() => _RegularTravelCardState();
+}
+
+class _RegularTravelCardState extends State<RegularTravelCard> {
+  bool _isFavorited = false;
+
+  void _toggleFavorite() {
+    setState(() {
+      _isFavorited = !_isFavorited;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return InkWell(
+    print(widget.travelData!.image);
+    return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed('/trip_details', arguments: travelData);
+        Navigator.of(context)
+            .pushNamed('/trip_details', arguments: widget.travelData);
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
@@ -36,31 +51,22 @@ class RegularTravelCard extends StatelessWidget {
                             color: Color.fromARGB(28, 0, 0, 0),
                             spreadRadius: 2),
                       ]),
-                  child: Image.asset(
-                    '',
+                  child: Image.network(
+                    widget.travelData!.image.toString(),
                     fit: BoxFit.cover,
                   ),
                 ),
                 Positioned(
-                    top: 10,
-                    left: 10,
-                    child: Container(
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color.fromARGB(28, 0, 0, 0),
-                                spreadRadius: 2),
-                          ]),
-                      margin: EdgeInsets.symmetric(vertical: 10),
-                      child: Icon(
-                        Icons.favorite,
-                        color: Colors.amber,
-                      ),
-                    ))
+                  top: 5,
+                  right: 5,
+                  child: IconButton(
+                    icon: _isFavorited
+                        ? Icon(Icons.favorite)
+                        : Icon(Icons.favorite_border),
+                    onPressed: _toggleFavorite,
+                    color: _isFavorited ? Colors.amber : null,
+                  ),
+                ),
               ],
             ),
             Container(
@@ -68,7 +74,7 @@ class RegularTravelCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(travelData!.title.toString()),
+                  Text(widget.travelData!.title.toString()),
                   Row(
                     children: [
                       Text('4.9'),

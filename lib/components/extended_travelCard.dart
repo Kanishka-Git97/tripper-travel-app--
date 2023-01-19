@@ -8,7 +8,7 @@ class ExtendedTravelCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed('/trip_details', arguments: travelData);
       },
@@ -29,8 +29,8 @@ class ExtendedTravelCard extends StatelessWidget {
                 height: 120,
                 width: 120,
                 child: Container(
-                    child: Image.asset(
-                      '',
+                    child: Image.network(
+                      travelData!.image.toString(),
                       fit: BoxFit.cover,
                     ),
                     decoration: BoxDecoration(
