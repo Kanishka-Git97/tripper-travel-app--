@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/controllers/booking_controller.dart';
+import 'package:travel_app_v1/models/booking.dart';
 import 'package:travel_app_v1/models/schedule.dart';
 import 'package:travel_app_v1/models/trip.dart';
 import 'package:intl/intl.dart';
+import 'package:travel_app_v1/provider/booking_provider.dart';
+import 'package:travel_app_v1/repositories/booking_repository.dart';
+import 'package:travel_app_v1/utility/database_helper.dart';
 import 'package:travel_app_v1/utility/utility_helper.dart';
 import '../../components/custom_btn.dart';
+import '../../models/customer.dart';
+import '../../provider/user_provider.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({Key? key, required this.trip}) : super(key: key);
@@ -17,13 +25,22 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
+  // Dependency Injection
+  var _bookingController = BookingController(BookingRepository());
+  DatabaseHelper _dbHelper = DatabaseHelper.instance;
+  // Variables Defines
   final GlobalKey<SfSignaturePadState> _signatureGlobalKey = GlobalKey();
   var _personCount = 1;
+  bool _isDateValid = false;
+  bool _isSigned = false;
+  String _sign = "";
+  Booking booking = Booking();
 
   @override
   Widget build(BuildContext context) {
     // Setup Trip Cost
     var _perPorsonCost = double.parse(widget.trip.price.toString());
+    Customer user = context.watch<User>().user;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -117,7 +134,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       width: double.maxFinite,
                       height: 300,
                       child: SfDateRangePicker(
-                        onSelectionChanged: _onSelectionChanged,
+                        onSelectionChanged:
+                            (DateRangePickerSelectionChangedArgs args) {
+                          _onSelectionChanged(args, context);
+                        },
                         selectableDayPredicate: (DateTime dateTime) {
                           if (dateTime.isBefore(DateTime.now())) {
                             return false;
@@ -274,10 +294,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       alignment: Alignment.centerRight,
                       child: CustomBtn(
                           onPress: () {
-                            // todo: validate Booking
-                            // todo: validate internet
-                            // todo: update Server
-                            // todo: sync local db
+                            _processBooking(context, user);
                           },
                           width: double.maxFinite,
                           text: "PAY LKR ${_perPorsonCost * _personCount}",
@@ -295,7 +312,46 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-  _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+  _processBooking(BuildContext context, Customer user) async {
+    // Validate Booking Information
+    if (!_isSigned || !_isDateValid) {
+      return Utility.notification(
+          "Required Information are Missing, Please try again", context, false);
+    }
+    // Complete Booking Model
+    booking.bookingStatus = "Booked";
+    booking.customerRef = user;
+    booking.tripRef = widget.trip;
+    booking.paymentStatus = "Paid";
+    booking.persons = int.parse(_personCount.toString());
+    booking.perPerson = double.parse(widget.trip.price.toString());
+
+    // Check Internet Connection
+    bool isConnected = await Utility.connectionChecker();
+    if (isConnected) {
+      // Process Server Update
+      bool isUpdatedServer = await _bookingController.addBooking(booking);
+      if (isUpdatedServer) {
+        Utility.notification(
+            "Successfully Booked your new Trip, Enjoy!", context, true);
+        // Update Local Storage
+        await _dbHelper.authSync(user);
+        context.read<BookingProvider>().setBookings();
+        print("Updated");
+      } else {
+        Utility.notification(
+            "Something Went Wrong, You have already Booked this Trip",
+            context,
+            false);
+      }
+    } else {
+      Utility.notification(
+          "No Internet Connection Please Try Again", context, false);
+    }
+  }
+
+  _onSelectionChanged(
+      DateRangePickerSelectionChangedArgs args, BuildContext context) {
     List<Schedule> schedules = widget.trip.schedule!;
     print(args.value);
     DateFormat format = DateFormat("dd/MM/yyyy");
@@ -308,17 +364,17 @@ class _PaymentScreenState extends State<PaymentScreen> {
       }
       bool isValid = dates.contains(args.value);
       if (!isValid) {
-        // todo: should implemet Notification
-        // todo: should update validation status
+        Utility.notification("Please Select Valid Date", context, false);
         print("not a valid date");
       } else {
-        // todo: should implemet Notification
-        // todo: need to assign date to Booking
-        // todo: should update validation status
-        print("valid date");
+        Utility.notification("Date Selected", context, true);
+        booking.date = args.value.toString();
+        _isDateValid = true;
+        print("valid date: ${booking.date.toString()}");
       }
-      // todo: should implemet Notification
-      // todo: should update validation status
+    } else {
+      Utility.notification("No Available Dates for this Trip", context, false);
+      _isDateValid = false;
       print("No Availble Dates");
     }
   }
@@ -368,8 +424,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                // todo: should update singature states
-                                // todo: update signature value
+                                _isSigned = true;
+                                _sign =
+                                    _signatureGlobalKey.currentState.toString();
+                                _hideDialog();
                               },
                               child: Container(
                                 padding: EdgeInsets.all(8.0),

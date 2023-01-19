@@ -45,9 +45,11 @@ class Booking {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['customer_ref'] = this.customerRef;
-    data['trip_ref'] = this.tripRef;
+    if (this.id != null) {
+      data['id'] = this.id;
+    }
+    data['customer_ref'] = int.parse(this.customerRef!.id.toString());
+    data['trip_ref'] = int.parse(this.tripRef!.id.toString());
     data['date'] = this.date;
     data['payment_status'] = this.paymentStatus;
     data['booking_status'] = this.bookingStatus;
