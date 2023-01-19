@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:travel_app_v1/components/booked_card.dart';
 import 'package:travel_app_v1/components/header.dart';
 import 'package:travel_app_v1/components/history_card.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/provider/booking_provider.dart';
+
+import '../../models/booking.dart';
 
 class MyBookedScreen extends StatelessWidget {
   const MyBookedScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<Booking> _bookedList = context.watch<BookingProvider>().bookedList;
+    List<Booking> _historyList = context.watch<BookingProvider>().historyList;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -62,29 +68,35 @@ class MyBookedScreen extends StatelessWidget {
                         // Todo: Booked Item Card Loading
                         child: SingleChildScrollView(
                             child: Column(
-                          children: [
-                            BookedCard(
-                              img:
-                                  "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Torre_Bel%C3%A9m_April_2009-4a.jpg/800px-Torre_Bel%C3%A9m_April_2009-4a.jpg",
-                            )
-                          ],
+                          children: List.generate(
+                              _bookedList.length,
+                              (index) => BookedCard(
+                                    booking: _bookedList[index],
+                                  )),
                         )),
                       ),
                       Container(
                         // Todo: History Item Card Loading
                         child: SingleChildScrollView(
-                            child: Column(children: [
-                          HistoryCard(
-                            ctx: context,
-                            img:
-                                "https://globalgrasshopper.com/wp-content/uploads/2012/01/10-of-the-most-beautiful-places-to-visit-in-Laos.jpg",
-                          ),
-                          HistoryCard(
-                            ctx: context,
-                            img:
-                                "https://www.actual-adventure.com/public/uploads/srilankasirigya.jpg",
-                          )
-                        ])),
+                            child: Column(
+                                children: List.generate(
+                                    _historyList.length,
+                                    (index) => HistoryCard(
+                                        ctx: context,
+                                        booking: _historyList[index]))
+                                // [
+                                //   HistoryCard(
+                                //     ctx: context,
+                                //     img:
+                                //         "https://globalgrasshopper.com/wp-content/uploads/2012/01/10-of-the-most-beautiful-places-to-visit-in-Laos.jpg",
+                                //   ),
+                                //   HistoryCard(
+                                //     ctx: context,
+                                //     img:
+                                //         "https://www.actual-adventure.com/public/uploads/srilankasirigya.jpg",
+                                //   )
+                                // ]
+                                )),
                       ),
                     ]),
                   )

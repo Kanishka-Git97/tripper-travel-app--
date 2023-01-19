@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travel_app_v1/provider/booking_provider.dart';
 import 'package:travel_app_v1/provider/trip_provider.dart';
 import 'package:travel_app_v1/provider/user_provider.dart';
 import 'package:travel_app_v1/screens/comments-review/all_comments_screen.dart';
@@ -24,7 +25,10 @@ void main() {
       Provider<User>(
         create: (_) => User(),
       ),
-      Provider(create: (_) => TripProvider())
+      Provider(
+        create: (_) => TripProvider(),
+      ),
+      Provider(create: (_) => BookingProvider())
     ],
     child: const MyApp(),
   ));
@@ -46,13 +50,12 @@ class MyApp extends StatelessWidget {
 
       routes: {
         '/': (context) => const MainScreen(),
-        '/trip_details': (context) => const CurrentBookingDetailsScreen(),
-        '/map': (context) => const MapScreen(),
+        // '/map': (context) => MapScreen(),
         '/reviews': (context) => const AllCommentsScreen(),
         '/image': (context) => ImageViewScreen(),
-        '/payments': (context) => const PaymentScreen(),
-        '/splash': (context) => const SplashScreen(),
-        '/register': (context) => Dependency(),
+        // '/payments': (context) => const PaymentScreen(),
+        '/splash': (context) => SplashScreen(),
+        '/register': (context) => RegisterScreen(),
         '/login': (context) => LoginScreen()
       },
 

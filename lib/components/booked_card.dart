@@ -3,9 +3,13 @@ import 'package:travel_app_v1/components/custom_btn.dart';
 import 'package:travel_app_v1/components/rating_panel.dart';
 import 'package:travel_app_v1/constant/constant.dart';
 
+import '../models/booking.dart';
+import 'package:intl/intl.dart';
+
 class BookedCard extends StatelessWidget {
-  const BookedCard({Key? key, required this.img}) : super(key: key);
-  final String img;
+  BookedCard({Key? key, required this.booking}) : super(key: key);
+  final Booking booking;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,12 +20,10 @@ class BookedCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                "17 July 2022, Mon",
+                booking.date.toString(),
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              SizedBox(
-                width: 10,
-              ),
+              Spacer(),
               Icon(
                 Icons.group,
                 color: Color(0xff7C8385),
@@ -30,7 +32,7 @@ class BookedCard extends StatelessWidget {
                 width: 10,
               ),
               Text(
-                "Booked for 1 Person",
+                "Booked for ${booking.persons} Person",
               )
             ],
           ),
@@ -45,13 +47,13 @@ class BookedCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8.0),
                     color: Colors.greenAccent,
                     image: DecorationImage(
-                        image: NetworkImage(img), fit: BoxFit.cover)),
+                        image: NetworkImage(""), fit: BoxFit.cover)),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Tower of Belem",
+                    booking.tripRef!.title.toString(),
                     style: subHeading,
                   ),
                   Row(
@@ -60,7 +62,7 @@ class BookedCard extends StatelessWidget {
                         Icons.location_on_outlined,
                         size: 12,
                       ),
-                      Text("Lisbon, Protugal", style: text)
+                      Text(booking.tripRef!.category.toString(), style: text)
                     ],
                   ),
                   SizedBox(
@@ -82,7 +84,7 @@ class BookedCard extends StatelessWidget {
                 "TOTAL PRICE",
                 style: text,
               ),
-              Text("LKR 45000.00",
+              Text("LKR ${booking.persons! * booking.perPerson!}",
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

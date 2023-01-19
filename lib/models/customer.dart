@@ -16,7 +16,7 @@ class Customer {
   Customer({this.id, this.name, this.email, this.password, this.image});
 
   Customer.fromJson(Map<String, dynamic> json) {
-    id = int.tryParse(json['id']);
+    id = int.parse(json['id'].toString());
     name = json['c_name'];
     email = json['c_email'];
     password = json['c_password'];

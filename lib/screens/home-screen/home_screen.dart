@@ -26,6 +26,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.grey),
+        automaticallyImplyLeading: false,
         toolbarHeight: 60,
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,

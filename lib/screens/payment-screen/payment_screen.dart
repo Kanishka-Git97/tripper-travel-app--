@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:travel_app_v1/constant/constant.dart';
-
+import 'package:travel_app_v1/models/schedule.dart';
+import 'package:travel_app_v1/models/trip.dart';
+import 'package:intl/intl.dart';
+import 'package:travel_app_v1/utility/utility_helper.dart';
 import '../../components/custom_btn.dart';
 
 class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({Key? key}) : super(key: key);
+  const PaymentScreen({Key? key, required this.trip}) : super(key: key);
 
+  final Trip trip;
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
 }
@@ -16,10 +20,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
   final GlobalKey<SfSignaturePadState> _signatureGlobalKey = GlobalKey();
   var _personCount = 1;
 
-  // Setup Trip Cost
-  var _perPorsonCost = 8000.00;
   @override
   Widget build(BuildContext context) {
+    // Setup Trip Cost
+    var _perPorsonCost = double.parse(widget.trip.price.toString());
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -63,8 +67,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Trip Name",
+                        Text(
+                          widget.trip.title.toString(),
                           style: subHeading,
                         ),
                         const SizedBox(
@@ -78,12 +82,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           children: [
                             Wrap(
                               children: List.generate(
-                                  3,
-                                  (index) => const Padding(
+                                  widget.trip.schedule!.length,
+                                  (index) => Padding(
                                         padding: EdgeInsets.all(2.0),
                                         child: Chip(
                                             label: Text(
-                                          "2023-01-27",
+                                          widget.trip.schedule![index].start
+                                              .toString(),
                                           style: TextStyle(fontSize: 10),
                                         )),
                                       )),
@@ -141,7 +146,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               ),
                               GestureDetector(
                                 onTap: _personCounterDecrement,
-                                child: const Icon(Icons.arrow_circle_down_sharp),
+                                child:
+                                    const Icon(Icons.arrow_circle_down_sharp),
                               ),
                               const SizedBox(
                                 width: 5,
@@ -267,6 +273,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   Align(
                       alignment: Alignment.centerRight,
                       child: CustomBtn(
+                          onPress: () {
+                            // todo: validate Booking
+                            // todo: validate internet
+                            // todo: update Server
+                            // todo: sync local db
+                          },
                           width: double.maxFinite,
                           text: "PAY LKR ${_perPorsonCost * _personCount}",
                           radius: 24,
@@ -284,7 +296,31 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    List<Schedule> schedules = widget.trip.schedule!;
     print(args.value);
+    DateFormat format = DateFormat("dd/MM/yyyy");
+    // DateTime _selectedDate = format.parse(args.value.toString());
+    // print(_selectedDate);
+    if (schedules.length > 0) {
+      var dates = [];
+      for (var schedule in schedules) {
+        dates.add(format.parse(schedule.start.toString()));
+      }
+      bool isValid = dates.contains(args.value);
+      if (!isValid) {
+        // todo: should implemet Notification
+        // todo: should update validation status
+        print("not a valid date");
+      } else {
+        // todo: should implemet Notification
+        // todo: need to assign date to Booking
+        // todo: should update validation status
+        print("valid date");
+      }
+      // todo: should implemet Notification
+      // todo: should update validation status
+      print("No Availble Dates");
+    }
   }
 
   _personCounterIncrement() {
@@ -330,21 +366,27 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       child: Container(
                         child: Row(
                           children: [
-                            Container(
-                              padding: EdgeInsets.all(8.0),
-                              margin: EdgeInsets.all(4.0),
-                              decoration: BoxDecoration(
-                                color: Color(0xff7C8385),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.verified_user,
-                                    size: 12,
-                                  ),
-                                  Text("Done")
-                                ],
+                            GestureDetector(
+                              onTap: () {
+                                // todo: should update singature states
+                                // todo: update signature value
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(8.0),
+                                margin: EdgeInsets.all(4.0),
+                                decoration: BoxDecoration(
+                                  color: Color(0xff7C8385),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.verified_user,
+                                      size: 12,
+                                    ),
+                                    Text("Done")
+                                  ],
+                                ),
                               ),
                             ),
                             GestureDetector(

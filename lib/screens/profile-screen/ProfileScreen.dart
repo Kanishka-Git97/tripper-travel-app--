@@ -7,8 +7,11 @@ import 'package:travel_app_v1/components/custom_input.dart';
 import 'package:travel_app_v1/components/header.dart';
 import 'package:travel_app_v1/components/map_box.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/provider/booking_provider.dart';
 
+import '../../models/booking.dart';
 import '../../models/customer.dart';
+import '../../models/location.dart';
 import '../../provider/user_provider.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -18,6 +21,14 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     user = context.watch<User>().user;
+    List<Booking> bookings = context.watch<BookingProvider>().completedList;
+    List<Location> locations = [];
+    // Setup All Locations that completed
+    for (var booking in bookings) {
+      for (var location in booking.tripRef!.locations!) {
+        locations.add(location);
+      }
+    }
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
@@ -114,11 +125,18 @@ class ProfileScreen extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      Text(
-                        "My Journey",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "My Journey",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            Spacer(),
+                            Text("Exapnd")
+                          ]),
                       SizedBox(
                         height: 20,
                       ),
@@ -126,7 +144,9 @@ class ProfileScreen extends StatelessWidget {
                         height: 300,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20.0)),
-                        child: MapBox(),
+                        child: MapBox(
+                          locations: locations,
+                        ),
                         clipBehavior: Clip.antiAlias,
                       ),
                       SizedBox(

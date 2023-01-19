@@ -31,7 +31,7 @@ class CustomerRepository implements CustomerServices {
 
     var response = await http.post(url,
         headers: {'Content-Type': 'application/json'}, body: json.encode(body));
-
+    print(response.statusCode);
     if (response.statusCode == 200) {
       if (response.body.contains("invalid")) {
         return Customer(id: 0);
