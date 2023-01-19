@@ -1,50 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:travel_app_v1/components/discover_travelCard.dart';
+
+import '../../models/trip.dart';
+import '../../provider/trip_provider.dart';
 
 class DiscoverScreen extends StatelessWidget {
   const DiscoverScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<Trip> tripData =
+        Provider.of<TripProvider>(context, listen: false).tripData;
     var size = MediaQuery.of(context).size;
     final double itemHeight = (size.height) / 2;
     final double itemWidth = size.width / 2;
     return Scaffold(
         appBar: AppBar(
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.grey),
-        toolbarHeight: 60,
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        centerTitle: true,
-        title: const Text(
-          'Discover',
-          style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Color(0xff383D3C)),
-        ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: SizedBox(
-              width: 40,
-              height: 40,
-              child: CircleAvatar(
-                backgroundColor: Color(0xff2687A4),
-                radius: 100,
-                child: Text(
-                  'HP',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+          elevation: 0,
+          iconTheme: const IconThemeData(color: Colors.grey),
+          toolbarHeight: 60,
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          centerTitle: true,
+          title: const Text(
+            'Discover',
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Color(0xff383D3C)),
+          ),
+          actions: const [
+            Padding(
+              padding: EdgeInsets.only(right: 20),
+              child: SizedBox(
+                width: 40,
+                height: 40,
+                child: CircleAvatar(
+                  backgroundColor: Color(0xff2687A4),
+                  radius: 100,
+                  child: Text(
+                    'HP',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
                 ),
               ),
-            ),
-          )
-        ],
-      ),
+            )
+          ],
+        ),
         body: SingleChildScrollView(
           child: Container(
-              color: const  Color.fromARGB(0, 249, 249, 249),
+              color: const Color.fromARGB(0, 249, 249, 249),
               margin: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: [
@@ -138,26 +144,20 @@ class DiscoverScreen extends StatelessWidget {
                   ),
                   Container(
                     height: 500,
-                    child: GridView(
+                    child: GridView.builder(
+                      itemCount: tripData.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           crossAxisSpacing: 20,
                           mainAxisSpacing: 20,
                           mainAxisExtent: 300),
-                      children: [
-                        DiscoverTravelCard(
-                          imageUrl: 'assets/images/img-1d.jpeg',
-                        ),
-                        DiscoverTravelCard(
-                          imageUrl: 'assets/images/img-2d.jpeg',
-                        ),
-                        DiscoverTravelCard(
-                          imageUrl: 'assets/images/img-3d.jpeg',
-                        ),
-                        DiscoverTravelCard(
-                          imageUrl: 'assets/images/img-4d.jpeg',
-                        )
-                      ],
+                      itemBuilder: (BuildContext context, int index) {
+                        return GridTile(
+                          child: DiscoverTravelCard(
+                            travelData: tripData[index],
+                          ),
+                        );
+                      },
                     ),
                   )
                 ],
