@@ -51,7 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(
                 height: 50,
               ),
-              Text(
+              const Text(
                 "Hello!",
                 style: TextStyle(
                     fontSize: 30,
@@ -180,7 +180,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: const [
                   Text(
                     "Trip",
                     style: TextStyle(

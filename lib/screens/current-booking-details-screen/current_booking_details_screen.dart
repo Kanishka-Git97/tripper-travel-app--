@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app_v1/components/error_card.dart';
 import 'package:travel_app_v1/components/map_box.dart';
 import 'package:travel_app_v1/components/review_details_card.dart';
 import 'package:travel_app_v1/constant/constant.dart';
@@ -309,6 +310,8 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                               ),
                             ),
                           ),
+                          SizedBox(height: 10,),
+                          ErrorCard(),
                         ],
                       ),
                     ),

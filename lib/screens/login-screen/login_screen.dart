@@ -98,7 +98,7 @@ class LoginScreen extends StatelessWidget {
             SizedBox(height: 80),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Text(
                   "Trip",
                   style: TextStyle(
