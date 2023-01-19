@@ -5,10 +5,12 @@ import 'package:travel_app_v1/constant/constant.dart';
 import 'package:travel_app_v1/models/trip.dart';
 import 'package:travel_app_v1/screens/map-screen/map_screen.dart';
 import 'package:travel_app_v1/screens/payment-screen/payment_screen.dart';
+import 'package:travel_app_v1/utility/rating_helper.dart';
 
 class CurrentBookingDetailsScreen extends StatelessWidget {
   CurrentBookingDetailsScreen({Key? key, required this.trip}) : super(key: key);
   Trip trip;
+  RatingHelper _ratingHelper = RatingHelper();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,9 +100,11 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                                               CrossAxisAlignment.center,
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
-                                          children: const [
+                                          children: [
                                             Text(
-                                              "4",
+                                              _ratingHelper
+                                                  .generateRating(trip.review!)
+                                                  .toString(),
                                               style: text,
                                             ),
                                             Icon(

@@ -1,8 +1,13 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:travel_app_v1/components/custom_input.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/models/customer.dart';
+
+import '../provider/user_provider.dart';
 
 class RatingView extends StatefulWidget {
   const RatingView({Key? key}) : super(key: key);
@@ -17,6 +22,7 @@ class _RatingViewState extends State<RatingView> {
   var _rating = 0;
   @override
   Widget build(BuildContext context) {
+    Customer user = context.watch<User>().user;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
@@ -29,7 +35,7 @@ class _RatingViewState extends State<RatingView> {
           child: PageView(
             controller: _ratingPageController,
             physics: NeverScrollableScrollPhysics(),
-            children: [_buildNote(), _causeOfRating()],
+            children: [_buildNote(), _causeOfRating(user)],
           ),
         ),
         // Done Button
@@ -108,7 +114,7 @@ class _RatingViewState extends State<RatingView> {
     );
   }
 
-  _causeOfRating() {
+  _causeOfRating(Customer user) {
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -121,8 +127,13 @@ class _RatingViewState extends State<RatingView> {
               height: 60,
               width: 60,
               child: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80")),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: user.image == null || user.image.toString() == "none"
+                        ? Image.memory(Base64Decoder().convert(sampleUser))
+                        : Image.memory(
+                            Base64Decoder().convert(user.image.toString()))),
+              ),
             ),
             SizedBox(
               height: 10,

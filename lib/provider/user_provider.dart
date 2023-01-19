@@ -1,3 +1,4 @@
+import 'package:provider/provider.dart';
 import 'package:travel_app_v1/controllers/customer_controller.dart';
 import 'package:travel_app_v1/screens/home-screen/home_screen.dart';
 import 'package:travel_app_v1/screens/main-screen/main_screen.dart';
@@ -8,8 +9,12 @@ import 'package:travel_app_v1/repositories/customer_services.dart';
 import 'package:travel_app_v1/utility/database_helper.dart';
 import 'package:flutter/material.dart';
 
+import 'booking_provider.dart';
+
 late final CustomerServices services;
-enum AuthState { Fail, Error, Success, Pending}
+
+enum AuthState { Fail, Error, Success, Pending }
+
 class User with ChangeNotifier {
   // Dependency Injection
   var _customerController = CustomerController(CustomerRepository());
@@ -29,8 +34,10 @@ class User with ChangeNotifier {
   // }
 
   void login(String email, String password, BuildContext context) async {
+    print("call login provider");
     bool connection = await Utility.connectionChecker();
     if (connection) {
+      print("connection have");
       _dbHelper.syncData();
       // Online DataFlow
       // get user data from server
@@ -44,10 +51,11 @@ class User with ChangeNotifier {
       } else {
         // Update Local Database
         bool status = await _dbHelper.insertCustomer(customer);
+        _dbHelper.authSync(customer);
         if (status) {
           _user = customer;
         }
-
+        Provider.of<BookingProvider>(context, listen: false).setBookings();
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const MainScreen()),
@@ -65,24 +73,23 @@ class User with ChangeNotifier {
   void localAuth() async {
     List<Map<String, dynamic>> response = await _dbHelper.validateCustomer();
     print(response.length);
-    if(response.length > 0){
-       Customer customer = Customer.fromJson(response[0]);
-    _user = customer;
-    _authStat = AuthState.Success;
-    }
-    else{
-      
+    if (response.length > 0) {
+      Customer customer = Customer.fromJson(response[0]);
+      _user = customer;
+      _authStat = AuthState.Success;
+    } else {
       _authStat = AuthState.Error;
       print(_authStat);
     }
     notifyListeners();
   }
-  void localAuthReset(){
+
+  void localAuthReset() {
     _authStat = AuthState.Pending;
     notifyListeners();
   }
 
-  void sync() async{
+  void sync() async {
     await _dbHelper.syncData();
   }
 }

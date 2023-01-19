@@ -17,7 +17,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -121,6 +120,7 @@ class LoginScreen extends StatelessWidget {
   }
 
   _login(BuildContext context) {
+    print("login");
     Provider.of<User>(context, listen: false)
         .login(_emailController.text, _passwordController.text, context);
   }

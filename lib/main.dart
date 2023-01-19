@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travel_app_v1/provider/booking_provider.dart';
 import 'package:travel_app_v1/provider/trip_provider.dart';
 import 'package:travel_app_v1/provider/user_provider.dart';
 import 'package:travel_app_v1/screens/comments-review/all_comments_screen.dart';
@@ -24,7 +25,10 @@ void main() {
       Provider<User>(
         create: (_) => User(),
       ),
-      Provider(create: (_) => TripProvider())
+      Provider(
+        create: (_) => TripProvider(),
+      ),
+      Provider(create: (_) => BookingProvider())
     ],
     child: const MyApp(),
   ));

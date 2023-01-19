@@ -3,12 +3,13 @@ import 'package:travel_app_v1/components/custom_btn.dart';
 import 'package:travel_app_v1/components/rating_panel.dart';
 import 'package:travel_app_v1/components/rating_view.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/models/booking.dart';
 
 class HistoryCard extends StatelessWidget {
-  const HistoryCard({Key? key, required this.ctx, required this.img})
+  const HistoryCard({Key? key, required this.ctx, required this.booking})
       : super(key: key);
   final BuildContext ctx;
-  final String img;
+  final Booking booking;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,7 +21,7 @@ class HistoryCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "17 July 2022, Mon",
+                booking.date.toString(),
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               IconButton(onPressed: () {}, icon: Icon(Icons.more_vert_outlined))
@@ -37,13 +38,13 @@ class HistoryCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8.0),
                     color: Colors.greenAccent,
                     image: DecorationImage(
-                        image: NetworkImage(img), fit: BoxFit.cover)),
+                        image: NetworkImage(""), fit: BoxFit.cover)),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Tower of Belem",
+                    booking.tripRef!.title.toString(),
                     style: subHeading,
                   ),
                   Row(
@@ -52,8 +53,12 @@ class HistoryCard extends StatelessWidget {
                         Icons.location_on_outlined,
                         size: 12,
                       ),
-                      Text("Lisbon, Protugal", style: text)
+                      Text(booking.tripRef!.category.toString(), style: text)
                     ],
+                  ),
+                  Text(
+                    booking.bookingStatus!.toString(),
+                    style: text,
                   ),
                   SizedBox(
                     height: 10,
@@ -72,20 +77,6 @@ class HistoryCard extends StatelessWidget {
                 borderColor: primaryColor,
                 onPress: () => _showMyDialog(context),
               ))
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "TOTAL PRICE",
-                style: text,
-              ),
-              Text("LKR 45000.00",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: primaryColor))
             ],
           ),
           SizedBox(

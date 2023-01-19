@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/models/booking.dart';
 import 'package:travel_app_v1/models/customer.dart';
 import 'package:travel_app_v1/models/location.dart';
 import 'package:travel_app_v1/models/schedule.dart';
@@ -89,6 +90,19 @@ class DatabaseHelper {
         ${Review.colReview} TEXT NOT NULL
         )
     ''');
+
+    await db.execute('''
+      CREATE TABLE ${Booking.tblName}(
+        ${Booking.colId} INTEGER PRIMARY KEY,
+        ${Booking.colCus} INTEGER NOT NULL,
+        ${Booking.colTrip} INTEGER NOT NULL,
+        ${Booking.colDate} TEXT NOT NULL,
+        ${Booking.colPaymentStat} TEXT NOT NULL,
+        ${Booking.colBookingStat} TEXT NOT NULL,
+        ${Booking.colPerson} INTEGER NOT NULL,
+        ${Booking.colPerPerson} TEXT NOT NULL
+        )
+    ''');
   }
 
   // Inserting Customer Details
@@ -111,8 +125,6 @@ class DatabaseHelper {
     Database db = await database;
     return await db.query(Customer.tblName);
   }
-
-  
 
   // Asynchronous from server to client
   Future<void> syncData() async {
@@ -195,6 +207,7 @@ class DatabaseHelper {
         }
       }
     });
+    print("Data Synced");
   }
 
   /*----------fetch all data-----*/
@@ -254,6 +267,110 @@ class DatabaseHelper {
       }
     }
 
+    return data;
+  }
+
+  Future<void> authSync(Customer customer) async {
+    Database db = await database;
+    // Define Data
+    var data = {"c_id": customer.id};
+    // Booking History Sync
+    var bookingResponse = await http.post(Uri.parse("$baseUrl/bookings.php"),
+        headers: {'Content-Type': 'application/json'}, body: json.encode(data));
+
+    List<dynamic> bookingData = json.decode(bookingResponse.body);
+
+    await db.transaction((txn) async {
+      for (var item in bookingData) {
+        // Check if the item already exists
+        var existing = await txn.query(Booking.tblName,
+            where: '${Booking.colId}=?', whereArgs: [item['id']]);
+        if (existing.length > 0) {
+          // Update the item in the database
+          await txn.update(Booking.tblName, item,
+              where: '${Booking.colId}=?', whereArgs: [item['id']]);
+        } else {
+          // Insert the item into the database
+          await txn.insert(Booking.tblName, item);
+        }
+      }
+    });
+  }
+
+  Future<Trip> getTrip(int id) async {
+    Database? db = await instance.database;
+    List<Map> results = await db.rawQuery('SELECT * FROM trip WHERE id=$id');
+
+    List<Trip> data = [];
+    for (var i = 0; i < results.length; i++) {
+      var tempTripId = results[i]['id'];
+      /*----Add trip data to Trip model----------*/
+      data.add(Trip(
+          id: int.parse(results[i]['id'].toString()),
+          title: results[i]['title'],
+          category: results[i]['category'],
+          image: results[i]['image'],
+          description: results[i]['description'],
+          price: double.parse(results[i]['price']),
+          locations: [],
+          schedule: [],
+          review: []));
+      /**---fetch data from location table--------- */
+      var resultLocation =
+          await db.rawQuery('SELECT * FROM location WHERE trip=$tempTripId');
+      for (var j = 0; j < resultLocation.length; j++) {
+        data[i].locations!.add(Location(
+            id: int.parse(resultLocation[j]['id'].toString()),
+            image: resultLocation[j]['image'].toString(),
+            title: resultLocation[j]['title'].toString(),
+            longitude: double.parse(resultLocation[j]['longitude'].toString()),
+            latitude: double.parse(resultLocation[j]['latitude'].toString()),
+            trip: int.parse(resultLocation[j]['trip'].toString())));
+      }
+
+      /**----fetch data from schedule table--------- */
+      var resultSchedule =
+          await db.rawQuery('SELECT * FROM schedule WHERE trip=$tempTripId');
+      for (var k = 0; k < resultSchedule.length; k++) {
+        data[i].schedule!.add(Schedule(
+            id: int.parse(resultSchedule[k]['id'].toString()),
+            trip: int.parse(resultSchedule[k]['trip'].toString()),
+            start: resultSchedule[k]['start'].toString(),
+            end: resultSchedule[k]['end'].toString()));
+      }
+
+      /**----fetch trip reviews--------- */
+      var resultReviews =
+          await db.rawQuery('SELECT * FROM reviews WHERE trip_ref=$tempTripId');
+      for (var l = 0; l < resultReviews.length; l++) {
+        data[i].review!.add(Review(
+            id: int.parse(resultReviews[l]['id'].toString()),
+            cusRef: int.parse(resultReviews[l]['cus_ref'].toString()),
+            tripRef: int.parse(resultReviews[l]['trip_ref'].toString()),
+            rate: int.parse(resultReviews[l]['rate'].toString()),
+            review: resultReviews[l]['review'].toString()));
+      }
+    }
+
+    return data[0];
+  }
+
+  Future<List<Booking>> getBookings() async {
+    Database db = await database;
+    List<Map> response = await db.query(Booking.tblName);
+    List<Booking> data = [];
+    var i = 0;
+    for (var item in response) {
+      data.add(new Booking(
+          id: int.parse(item['id'].toString()),
+          customerRef: Customer(),
+          tripRef: await getTrip(item["trip"]),
+          date: item['date'],
+          paymentStatus: item['payment_status'],
+          bookingStatus: item['booking_status'],
+          persons: int.parse(item['person'].toString()),
+          perPerson: double.parse(item['per_person'].toString())));
+    }
     return data;
   }
 }

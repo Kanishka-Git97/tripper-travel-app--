@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/models/schedule.dart';
 import 'package:travel_app_v1/models/trip.dart';
-
+import 'package:intl/intl.dart';
+import 'package:travel_app_v1/utility/utility_helper.dart';
 import '../../components/custom_btn.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -271,6 +273,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   Align(
                       alignment: Alignment.centerRight,
                       child: CustomBtn(
+                          onPress: () {
+                            // todo: validate Booking
+                            // todo: validate internet
+                            // todo: update Server
+                            // todo: sync local db
+                          },
                           width: double.maxFinite,
                           text: "PAY LKR ${_perPorsonCost * _personCount}",
                           radius: 24,
@@ -288,7 +296,31 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    List<Schedule> schedules = widget.trip.schedule!;
     print(args.value);
+    DateFormat format = DateFormat("dd/MM/yyyy");
+    // DateTime _selectedDate = format.parse(args.value.toString());
+    // print(_selectedDate);
+    if (schedules.length > 0) {
+      var dates = [];
+      for (var schedule in schedules) {
+        dates.add(format.parse(schedule.start.toString()));
+      }
+      bool isValid = dates.contains(args.value);
+      if (!isValid) {
+        // todo: should implemet Notification
+        // todo: should update validation status
+        print("not a valid date");
+      } else {
+        // todo: should implemet Notification
+        // todo: need to assign date to Booking
+        // todo: should update validation status
+        print("valid date");
+      }
+      // todo: should implemet Notification
+      // todo: should update validation status
+      print("No Availble Dates");
+    }
   }
 
   _personCounterIncrement() {
@@ -334,21 +366,27 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       child: Container(
                         child: Row(
                           children: [
-                            Container(
-                              padding: EdgeInsets.all(8.0),
-                              margin: EdgeInsets.all(4.0),
-                              decoration: BoxDecoration(
-                                color: Color(0xff7C8385),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.verified_user,
-                                    size: 12,
-                                  ),
-                                  Text("Done")
-                                ],
+                            GestureDetector(
+                              onTap: () {
+                                // todo: should update singature states
+                                // todo: update signature value
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(8.0),
+                                margin: EdgeInsets.all(4.0),
+                                decoration: BoxDecoration(
+                                  color: Color(0xff7C8385),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.verified_user,
+                                      size: 12,
+                                    ),
+                                    Text("Done")
+                                  ],
+                                ),
                               ),
                             ),
                             GestureDetector(
