@@ -51,7 +51,7 @@ class User with ChangeNotifier {
       } else {
         // Update Local Database
         bool status = await _dbHelper.insertCustomer(customer);
-        _dbHelper.authSync(customer);
+       await  _dbHelper.authSync(customer);
         if (status) {
           _user = customer;
         }

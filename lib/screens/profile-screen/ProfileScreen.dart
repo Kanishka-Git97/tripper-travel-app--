@@ -34,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     user = context.watch<User>().user;
-    List<Booking> bookings = context.watch<BookingProvider>().completedList;
+    List<Booking> bookings = context.watch<BookingProvider>().bookings;
     List<Location> locations = [];
     // Setup All Locations that completed
     for (var booking in bookings) {
@@ -123,15 +123,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 color: primaryColor,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Center(
-                                child: bookings.length == 0
+                                child: 
+                                bookings.length == 0
                                     ? Text("Start Your Journey",
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 14))
                                     : Text(
-                                        "Last Trip | ${bookings.last.tripRef!.title.toString()}",
+                                        "Last Booking | ${bookings.last.tripRef!.title.toString()}",
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 14))),
+                                            fontSize: 14)),),
                           ),
                           const Spacer(),
                           GestureDetector(

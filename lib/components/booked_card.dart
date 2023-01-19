@@ -26,7 +26,7 @@ class BookedCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                _dateFormatter(booking.date.toString()),
+                booking.date.toString(),
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               Spacer(),

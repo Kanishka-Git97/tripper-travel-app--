@@ -4,8 +4,11 @@ import 'package:travel_app_v1/components/map_box.dart';
 import 'package:travel_app_v1/components/review_details_card.dart';
 import 'package:travel_app_v1/constant/constant.dart';
 import 'package:travel_app_v1/models/trip.dart';
+import 'package:travel_app_v1/screens/comments-review/all_comments_screen.dart';
+import 'package:travel_app_v1/screens/imageview-screen/imageview_screen.dart';
 import 'package:travel_app_v1/screens/map-screen/map_screen.dart';
 import 'package:travel_app_v1/screens/payment-screen/payment_screen.dart';
+import 'package:travel_app_v1/screens/review-screen/review_screen.dart';
 import 'package:travel_app_v1/utility/rating_helper.dart';
 
 class CurrentBookingDetailsScreen extends StatelessWidget {
@@ -239,21 +242,9 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text(
-                                "Gallery",
-                                style: subHeading,
-                              ),
-                              SizedBox(
-                                width: 180,
-                              ),
-                              Text(
-                                "See All",
-                                style: text,
-                              )
-                            ],
+                          const Text(
+                            "Gallery",
+                            style: subHeading,
                           ),
                           const SizedBox(
                             height: 10,
@@ -263,18 +254,30 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                             child: Row(
                               children: List.generate(
                                   trip.locations!.length,
-                                  (index) => Container(
-                                        margin: const EdgeInsets.only(right: 5),
-                                        child: Image(
-                                          image: NetworkImage(
-                                              '${trip.locations![index].image.toString()}'),
-                                          fit: BoxFit.cover,
-                                        ),
-                                        width: 150,
-                                        height: 100,
-                                        decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(14)),
+                                  (index) => GestureDetector(
+                                        onTap: (() {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: ((context) =>
+                                                  ImageViewScreen()),
+                                            ),
+                                          );
+                                        }),
+                                        child: Container(
+                                          margin:
+                                              const EdgeInsets.only(right: 5),
+                                          child: Image(
+                                            image: NetworkImage(
+                                                '${trip.locations![index].image.toString()}'),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          width: 150,
+                                          height: 100,
+                                          decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(14)),
+                                          ),
                                         ),
                                       )),
                             ),
@@ -284,17 +287,28 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text(
+                            children: [
+                              const Text(
                                 "Reviews",
                                 style: subHeading,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 180,
                               ),
-                              Text(
-                                "See All",
-                                style: text,
+                              GestureDetector(
+                                onTap: (() {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: ((context) =>
+                                          AllCommentsScreen()),
+                                    ),
+                                  );
+                                }),
+                                child: Text(
+                                  "See All",
+                                  style: text,
+                                ),
                               )
                             ],
                           ),
@@ -310,7 +324,9 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                           ErrorCard(),
                         ],
                       ),
