@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:travel_app_v1/constant/constant.dart';
@@ -13,6 +14,8 @@ import 'package:travel_app_v1/models/trip.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/review.dart';
+import '../models/wishList.dart';
+import '../provider/user_provider.dart';
 
 class DatabaseHelper {
   // Database Configuration
@@ -101,6 +104,14 @@ class DatabaseHelper {
         ${Booking.colBookingStat} TEXT NOT NULL,
         ${Booking.colPerson} INTEGER NOT NULL,
         ${Booking.colPerPerson} TEXT NOT NULL
+        )
+    ''');
+    
+     await db.execute('''
+      CREATE TABLE ${WishList.tblName}(
+         ${WishList.colId} INTEGER PRIMARY KEY,
+        ${WishList.colCustomerRef} INTEGER NOT NULL,
+        ${WishList.colTripRef} INTEGER NOT NULL
         )
     ''');
   }
@@ -207,7 +218,30 @@ class DatabaseHelper {
         }
       }
     });
+
     print("Data Synced");
+
+
+    /*----update wishlist local database-------*/
+    var wishlistResponse = await http.get(Uri.parse("$baseUrl/wishlist.php"));
+    List<dynamic> wishlistData = json.decode(wishlistResponse.body);
+
+    await db.transaction((txn) async {
+      for (var item in wishlistData) {
+        // Check if the item already exists
+        var existing = await txn.query(WishList.tblName,
+            where: '${WishList.colId}=?', whereArgs: [item['id']]);
+        if (existing.length > 0) {
+          // Update the item in the database
+          await txn.update(WishList.tblName, item,
+              where: '${WishList.colId}=?', whereArgs: [item['id']]);
+        } else {
+          // Insert the item into the database
+          await txn.insert(WishList.tblName, item);
+        }
+      }
+    });
+
   }
 
   /*----------fetch all data-----*/
@@ -269,6 +303,7 @@ class DatabaseHelper {
 
     return data;
   }
+
 
   Future<void> authSync(Customer customer) async {
     Database db = await database;
@@ -372,5 +407,25 @@ class DatabaseHelper {
           perPerson: double.parse(item['per_person'].toString())));
     }
     return data;
+
+  /*-----fetch all data from wishlist-----*/
+  Future<List<Map<String, Object?>>> fetchAllWishList(int customerId) async {
+    Database? db = await instance.database;
+    String sql = '''
+                  SELECT * FROM trip 
+                  LEFT JOIN wishlist ON trip.id=wishlist.trip_ref
+                ''';
+    final result = await db.rawQuery(sql);
+
+    // List<Map> results = await db.query('wishlist');
+    // List<WishList> data = [];
+    // for (var i = 0; i < results.length; i++) {
+    //   data.add(WishList(
+    //       id: int.parse(results[i]["id"].toString()),
+    //       customer_ref: int.parse(results[i]["customer_ref"].toString()),
+    //       trip_ref: int.parse(results[i]["trip_ref"].toString())));
+    // }
+    return result;
+
   }
 }

@@ -21,7 +21,6 @@ class HomeScreen extends StatelessWidget {
     Provider.of<TripProvider>(context, listen: false).getAllData();
     List<Trip> tripData =
         Provider.of<TripProvider>(context, listen: false).tripData;
-    print(tripData);
 
     return Scaffold(
       appBar: AppBar(
