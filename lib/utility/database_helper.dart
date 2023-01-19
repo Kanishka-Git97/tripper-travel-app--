@@ -406,7 +406,7 @@ class DatabaseHelper {
     return data;
   }
 
-  /*-----fetch all data from wishlist-----*/
+/*-----fetch all data from wishlist-----*/
   Future<List<Map<String, Object?>>> fetchAllWishList(int customerId) async {
     Database? db = await instance.database;
     String sql = '''

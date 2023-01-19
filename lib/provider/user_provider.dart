@@ -70,13 +70,14 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  void localAuth() async {
+  void localAuth(BuildContext context) async {
     List<Map<String, dynamic>> response = await _dbHelper.validateCustomer();
     print(response.length);
     if (response.length > 0) {
       Customer customer = Customer.fromJson(response[0]);
       _user = customer;
       _authStat = AuthState.Success;
+      Provider.of<BookingProvider>(context, listen: false).setBookings();
     } else {
       _authStat = AuthState.Error;
       print(_authStat);
