@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/trip.dart';
+import '../screens/current-booking-details-screen/current_booking_details_screen.dart';
 
 class ExtendedTravelCard extends StatelessWidget {
   Trip? travelData;
@@ -10,7 +11,12 @@ class ExtendedTravelCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed('/trip_details', arguments: travelData);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  CurrentBookingDetailsScreen(trip: travelData!)),
+        );
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 10),
