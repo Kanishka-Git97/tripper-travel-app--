@@ -78,7 +78,7 @@ class DiscoverTravelCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('BEACH'),
+                  Text(travelData!.title.toString()),
                   Row(
                     children: [
                       Icon(
