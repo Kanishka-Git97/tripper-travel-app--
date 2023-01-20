@@ -1,16 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app_v1/components/error_card.dart';
 import 'package:travel_app_v1/components/map_box.dart';
 import 'package:travel_app_v1/components/review_details_card.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/controllers/review_controller.dart';
+import 'package:travel_app_v1/models/comment.dart';
 import 'package:travel_app_v1/models/trip.dart';
+import 'package:travel_app_v1/repositories/review_repository.dart';
+import 'package:travel_app_v1/screens/comments-review/all_comments_screen.dart';
+import 'package:travel_app_v1/screens/imageview-screen/imageview_screen.dart';
 import 'package:travel_app_v1/screens/map-screen/map_screen.dart';
 import 'package:travel_app_v1/screens/payment-screen/payment_screen.dart';
+import 'package:travel_app_v1/screens/review-screen/review_screen.dart';
 import 'package:travel_app_v1/utility/rating_helper.dart';
 
-class CurrentBookingDetailsScreen extends StatelessWidget {
+class CurrentBookingDetailsScreen extends StatefulWidget {
   CurrentBookingDetailsScreen({Key? key, required this.trip}) : super(key: key);
   Trip trip;
+
+  @override
+  State<CurrentBookingDetailsScreen> createState() =>
+      _CurrentBookingDetailsScreenState();
+}
+
+class _CurrentBookingDetailsScreenState
+    extends State<CurrentBookingDetailsScreen> {
   RatingHelper _ratingHelper = RatingHelper();
+  final _reviewController = ReviewController(ReviewRepository());
+  List<Comment> _comments = [];
+  _syncComments() async {
+    List<Comment> comments =
+        await _reviewController.getComments(widget.trip.id!);
+    setState(() {
+      _comments = comments;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _syncComments();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +120,7 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        trip.title.toString(),
+                                        widget.trip.title.toString(),
                                         style: const TextStyle(
                                             fontSize: 18,
                                             color: Color(0xff3C4143),
@@ -103,7 +134,8 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                                           children: [
                                             Text(
                                               _ratingHelper
-                                                  .generateRating(trip.review!)
+                                                  .generateRating(
+                                                      widget.trip.review!)
                                                   .toString(),
                                               style: text,
                                             ),
@@ -128,7 +160,7 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                                         width: 5,
                                       ),
                                       Text(
-                                        trip.category.toString(),
+                                        widget.trip.category.toString(),
                                         style: text,
                                       )
                                     ],
@@ -161,7 +193,7 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                             height: 10,
                           ),
                           Text(
-                            trip.description.toString(),
+                            widget.trip.description.toString(),
                             style: text,
                           ),
                           const SizedBox(
@@ -179,12 +211,12 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                             children: [
                               Wrap(
                                 children: List.generate(
-                                    trip.schedule!.length,
+                                    widget.trip.schedule!.length,
                                     (index) => Padding(
                                           padding: EdgeInsets.all(2.0),
                                           child: Chip(
                                               label: Text(
-                                            trip.schedule![index].start
+                                            widget.trip.schedule![index].start
                                                 .toString(),
                                             style: TextStyle(fontSize: 10),
                                           )),
@@ -211,7 +243,7 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => MapScreen(
-                                              locations: trip.locations!,
+                                              locations: widget.trip.locations!,
                                             )),
                                   );
                                 },
@@ -232,27 +264,15 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                               color: const Color.fromARGB(255, 221, 236, 243),
                             ),
-                            child: MapBox(locations: trip.locations),
+                            child: MapBox(locations: widget.trip.locations),
                             clipBehavior: Clip.antiAlias,
                           ),
                           const SizedBox(
                             height: 20,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text(
-                                "Gallery",
-                                style: subHeading,
-                              ),
-                              SizedBox(
-                                width: 180,
-                              ),
-                              Text(
-                                "See All",
-                                style: text,
-                              )
-                            ],
+                          const Text(
+                            "Gallery",
+                            style: subHeading,
                           ),
                           const SizedBox(
                             height: 10,
@@ -261,19 +281,31 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: List.generate(
-                                  trip.locations!.length,
-                                  (index) => Container(
-                                        margin: const EdgeInsets.only(right: 5),
-                                        child: Image(
-                                          image: NetworkImage(
-                                              '${trip.locations![index].image.toString()}'),
-                                          fit: BoxFit.cover,
-                                        ),
-                                        width: 150,
-                                        height: 100,
-                                        decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(14)),
+                                  widget.trip.locations!.length,
+                                  (index) => GestureDetector(
+                                        onTap: (() {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: ((context) =>
+                                                  ImageViewScreen()),
+                                            ),
+                                          );
+                                        }),
+                                        child: Container(
+                                          margin:
+                                              const EdgeInsets.only(right: 5),
+                                          child: Image(
+                                            image: NetworkImage(
+                                                '${widget.trip.locations![index].image.toString()}'),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          width: 150,
+                                          height: 100,
+                                          decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(14)),
+                                          ),
                                         ),
                                       )),
                             ),
@@ -283,31 +315,51 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text(
+                            children: [
+                              const Text(
                                 "Reviews",
                                 style: subHeading,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 180,
                               ),
-                              Text(
-                                "See All",
-                                style: text,
+                              GestureDetector(
+                                onTap: (() {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: ((context) =>
+                                          AllCommentsScreen()),
+                                    ),
+                                  );
+                                }),
+                                child: Text(
+                                  "See All",
+                                  style: text,
+                                ),
                               )
                             ],
                           ),
                           const SizedBox(
                             height: 10,
                           ),
-                          Column(
-                            children: List.generate(
-                              2,
-                              (index) => Container(
-                                margin: const EdgeInsets.only(bottom: 5.0),
-                                child: const ReviewDetailsCard(),
-                              ),
-                            ),
+                          Container(
+                              child: _comments.length == 0
+                                  ? ErrorCard()
+                                  : Column(
+                                      children: List.generate(
+                                        _comments.length,
+                                        (index) => Container(
+                                          margin: const EdgeInsets.only(
+                                              bottom: 5.0),
+                                          child: ReviewDetailsCard(
+                                            comment: _comments[index],
+                                          ),
+                                        ),
+                                      ),
+                                    )),
+                          SizedBox(
+                            height: 10,
                           ),
                         ],
                       ),
@@ -340,7 +392,7 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          trip.price.toString(),
+                          widget.trip.price.toString(),
                           style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.w500,
@@ -362,7 +414,7 @@ class CurrentBookingDetailsScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => PaymentScreen(
-                                    trip: trip,
+                                    trip: widget.trip,
                                   )),
                         );
                       },

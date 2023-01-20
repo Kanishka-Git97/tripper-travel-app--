@@ -43,4 +43,22 @@ class CustomerRepository implements CustomerServices {
       return Customer();
     }
   }
+
+  @override
+  Future<bool> update(Customer customer) async {
+    var url = Uri.parse('$baseUrl/update_customer.php');
+    var response = await http.post(url,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(customer.toJson()));
+    if (response.statusCode == 200) {
+      var result = json.decode(response.body);
+      if (result) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
 }

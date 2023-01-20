@@ -5,11 +5,23 @@ import 'package:travel_app_v1/components/rating_view.dart';
 import 'package:travel_app_v1/constant/constant.dart';
 import 'package:travel_app_v1/models/booking.dart';
 
+import 'package:intl/intl.dart';
+import 'package:travel_app_v1/models/trip.dart';
+
 class HistoryCard extends StatelessWidget {
   const HistoryCard({Key? key, required this.ctx, required this.booking})
       : super(key: key);
   final BuildContext ctx;
   final Booking booking;
+
+  String _dateFormatter(String input) {
+    String timeStamp = input;
+    DateTime date = DateTime.parse(timeStamp);
+    var formater = DateFormat('dd MMM yyyy, E');
+    String dateOnly = formater.format(date).toString();
+    return dateOnly;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,17 +33,19 @@ class HistoryCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                booking.date.toString(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                _dateFormatter(booking.date.toString()),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              IconButton(onPressed: () {}, icon: Icon(Icons.more_vert_outlined))
+              IconButton(
+                  onPressed: () {}, icon: const Icon(Icons.more_vert_outlined))
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                margin: EdgeInsets.all(10.0),
+                margin: const EdgeInsets.all(10.0),
                 height: 100,
                 width: 100,
                 decoration: BoxDecoration(
@@ -49,7 +63,7 @@ class HistoryCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.location_on_outlined,
                         size: 12,
                       ),
@@ -60,7 +74,7 @@ class HistoryCard extends StatelessWidget {
                     booking.bookingStatus!.toString(),
                     style: text,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   RatingPanel()
@@ -75,11 +89,11 @@ class HistoryCard extends StatelessWidget {
                 bgColor: Colors.white,
                 radius: 50,
                 borderColor: primaryColor,
-                onPress: () => _showMyDialog(context),
+                onPress: () => _showMyDialog(context, booking.tripRef!),
               ))
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
         ],
@@ -87,17 +101,21 @@ class HistoryCard extends StatelessWidget {
     );
   }
 
-  openRating(BuildContext ctx) {
+  openRating(
+    BuildContext ctx,
+  ) {
     Navigator.of(ctx).pushNamed('/reviews');
   }
 
-  Future<void> _showMyDialog(BuildContext context) async {
+  Future<void> _showMyDialog(BuildContext context, Trip trip) async {
     return showDialog<void>(
         context: context,
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
           return Dialog(
-            child: RatingView(),
+            child: RatingView(
+              trip: trip.id,
+            ),
           );
         });
   }

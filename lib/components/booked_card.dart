@@ -10,20 +10,29 @@ class BookedCard extends StatelessWidget {
   BookedCard({Key? key, required this.booking}) : super(key: key);
   final Booking booking;
 
+  String _dateFormatter(String input) {
+    String timeStamp = input;
+    DateTime date = DateTime.parse(timeStamp);
+    var formater = DateFormat('dd MMM yyyy, E');
+    String dateOnly = formater.format(date).toString();
+    return dateOnly;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 20.0),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Text(
-                booking.date.toString(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                _dateFormatter(booking.date.toString()),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              Spacer(),
+              const Spacer(),
               Icon(
                 Icons.group,
                 color: Color(0xff7C8385),

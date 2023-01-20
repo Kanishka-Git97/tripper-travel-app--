@@ -14,4 +14,8 @@ class CustomerController {
   Future<Customer> login(String email, String password) {
     return services.login(email, password);
   }
+
+  Future<bool> update(Customer customer) {
+    return services.update(customer);
+  }
 }

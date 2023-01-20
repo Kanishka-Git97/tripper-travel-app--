@@ -7,21 +7,40 @@ import 'package:travel_app_v1/components/custom_input.dart';
 import 'package:travel_app_v1/components/header.dart';
 import 'package:travel_app_v1/components/map_box.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/controllers/customer_controller.dart';
 import 'package:travel_app_v1/provider/booking_provider.dart';
+import 'package:travel_app_v1/repositories/customer_repository.dart';
+import 'package:travel_app_v1/screens/splash/splash_screen.dart';
+import 'package:travel_app_v1/utility/database_helper.dart';
+import 'package:travel_app_v1/utility/utility_helper.dart';
 
 import '../../models/booking.dart';
 import '../../models/customer.dart';
 import '../../models/location.dart';
 import '../../provider/user_provider.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   Customer user = Customer();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final _currentPasswordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
+  // Dependency Injection
+  var _customerController = CustomerController(CustomerRepository());
+  DatabaseHelper _dbHelper = DatabaseHelper.instance;
   @override
   Widget build(BuildContext context) {
     user = context.watch<User>().user;
-    List<Booking> bookings = context.watch<BookingProvider>().completedList;
+    List<Booking> bookings = context.watch<BookingProvider>().bookings;
     List<Location> locations = [];
     // Setup All Locations that completed
     for (var booking in bookings) {
@@ -29,6 +48,9 @@ class ProfileScreen extends StatelessWidget {
         locations.add(location);
       }
     }
+    _nameController.text = user.name.toString();
+    _emailController.text = user.email.toString();
+
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
@@ -83,7 +105,7 @@ class ProfileScreen extends StatelessWidget {
                             fontWeight: FontWeight.w800),
                       ),
                       Row(
-                        children: [
+                        children: const [
                           Icon(
                             Icons.location_on,
                             size: 12,
@@ -93,9 +115,9 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       Text(
                         user.email.toString(),
-                        style: TextStyle(fontSize: 14),
+                        style: const TextStyle(fontSize: 14),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
@@ -107,82 +129,124 @@ class ProfileScreen extends StatelessWidget {
                                 color: primaryColor,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Center(
-                                child: Text("Last Booking | Tower of Belem",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 14))),
+                              child: bookings.length == 0
+                                  ? Text("Start Your Journey",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 14))
+                                  : Text(
+                                      "Last Booking | ${bookings.last.tripRef!.title.toString()}",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 14)),
+                            ),
                           ),
-                          Spacer(),
-                          CustomBtn(
-                              width: 100,
-                              text: "Sign Out",
-                              radius: 10.0,
-                              height: 50.0,
-                              txtColor: primaryColor,
-                              bgColor: Colors.white,
-                              borderColor: primaryColor)
+                          const Spacer(),
+                          GestureDetector(
+                            onTap: (() {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: ((context) => SplashScreen()),
+                                ),
+                              );
+                            }),
+                            child: const CustomBtn(
+                                width: 100,
+                                text: "Sign Out",
+                                radius: 10.0,
+                                height: 50.0,
+                                txtColor: primaryColor,
+                                bgColor: Colors.white,
+                                borderColor: primaryColor),
+                          )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Text(
                               "My Journey",
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             Spacer(),
-                            Text("Exapnd")
+                            Text("Expand")
                           ]),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Container(
                         height: 300,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20.0)),
-                        child: MapBox(
-                          locations: locations,
-                        ),
+                        child: bookings.length == 0
+                            ? Column(
+                                children: const [
+                                  SizedBox(
+                                    height: 200,
+                                    width: double.maxFinite,
+                                    child: Image(
+                                      image: AssetImage(
+                                          "assets/images/travel.png"),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    "Start Your Journey",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500),
+                                  )
+                                ],
+                              )
+                            : MapBox(
+                                locations: locations,
+                              ),
                         clipBehavior: Clip.antiAlias,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      Text(
+                      const Text(
                         "Update My Profile",
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       CustomInput(
-                          hintText: "Full Name",
-                          labelText: "Full Name",
-                          keyboardType: TextInputType.name),
-                      SizedBox(
+                        hintText: "Full Name",
+                        labelText: "Full Name",
+                        keyboardType: TextInputType.name,
+                        controller: _nameController,
+                      ),
+                      const SizedBox(
                         height: 15,
                       ),
                       CustomInput(
-                          hintText: "Email",
-                          labelText: "Email",
-                          keyboardType: TextInputType.emailAddress),
-                      SizedBox(
+                        hintText: "Email",
+                        labelText: "Email",
+                        keyboardType: TextInputType.emailAddress,
+                        controller: _emailController,
+                      ),
+                      const SizedBox(
                         height: 15,
                       ),
                       CustomInput(
                           hintText: "Address",
                           labelText: "Address",
                           keyboardType: TextInputType.text),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
-                      Text("Login Information Update"),
-                      SizedBox(
+                      const Text("Login Information Update"),
+                      const SizedBox(
                         height: 15,
                       ),
                       CustomInput(
@@ -190,8 +254,9 @@ class ProfileScreen extends StatelessWidget {
                         labelText: "Password",
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
+                        controller: _passwordController,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       CustomInput(
@@ -199,12 +264,13 @@ class ProfileScreen extends StatelessWidget {
                         labelText: "Confirm Password",
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
+                        controller: _confirmPasswordController,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
-                      Text("Confirm your update with Current Password"),
-                      SizedBox(
+                      const Text("Confirm your update with Current Password"),
+                      const SizedBox(
                         height: 15,
                       ),
                       CustomInput(
@@ -212,11 +278,15 @@ class ProfileScreen extends StatelessWidget {
                         labelText: "Current Password",
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
+                        controller: _currentPasswordController,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       CustomBtn(
+                          onPress: () {
+                            updateProfile(context, user);
+                          },
                           width: double.maxFinite,
                           text: "Update Profile",
                           radius: 10.0,
@@ -224,7 +294,7 @@ class ProfileScreen extends StatelessWidget {
                           txtColor: Colors.white,
                           bgColor: primaryColor,
                           borderColor: primaryColor),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                     ],
@@ -234,5 +304,74 @@ class ProfileScreen extends StatelessWidget {
             ),
           )),
     );
+  }
+
+  updateProfile(BuildContext context, Customer user) async {
+    bool isInternetAvailble = await Utility.connectionChecker();
+    if (isInternetAvailble) {
+      var temp = user.password;
+      if (_passwordController.text != _confirmPasswordController.text)
+        return Utility.notification(
+            "Password Does not Matched", context, false);
+      // want to change password?
+      if (_passwordController.text != "" || _passwordController.text != null) {
+        if (user.password == _passwordController.text) {
+          return Utility.notification(
+              "Can not Update Current Password as New Password",
+              context,
+              false);
+        } else {
+          user.password = _passwordController.text;
+        }
+      }
+      // setup updated model
+      if (_nameController.text != "" || _nameController.text != null) {
+        user.name = _nameController.text;
+      }
+      if (_emailController.text != "" || _emailController.text != null) {
+        user.email = _emailController.text;
+      }
+      // validate
+      if (_currentPasswordController.text == temp) {
+        // save data
+        Customer updateUser = Customer(
+            email: user.email,
+            name: user.name,
+            password: user.password,
+            id: user.id,
+            image: user.image);
+
+        bool isServerUpdated = await _customerController.update(updateUser);
+        if (isServerUpdated) {
+          bool isLocalUpdated = await _dbHelper.insertCustomer(updateUser);
+          if (!isLocalUpdated) {
+            Utility.notification(
+                "Something Went Wrong Please Try Again!", context, false);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: ((context) => SplashScreen()),
+              ),
+            );
+          } else {
+            Utility.notification("Profile Details Updated", context, true);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: ((context) => ProfileScreen()),
+              ),
+            );
+          }
+        } else {
+          return Utility.notification(
+              "Something Went Wrong Please Try Again!", context, false);
+        }
+      } else {
+        return Utility.notification("Verification Failed", context, false);
+      }
+    } else {
+      return Utility.notification(
+          "No Internet Connection Please try again!", context, false);
+    }
   }
 }

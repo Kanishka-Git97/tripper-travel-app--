@@ -51,11 +51,12 @@ class User with ChangeNotifier {
       } else {
         // Update Local Database
         bool status = await _dbHelper.insertCustomer(customer);
-        _dbHelper.authSync(customer);
+       await  _dbHelper.authSync(customer);
         if (status) {
           _user = customer;
         }
-        Provider.of<BookingProvider>(context, listen: false).setBookings();
+
+        context.read<BookingProvider>().setBookings();
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const MainScreen()),
@@ -77,7 +78,7 @@ class User with ChangeNotifier {
       Customer customer = Customer.fromJson(response[0]);
       _user = customer;
       _authStat = AuthState.Success;
-      Provider.of<BookingProvider>(context, listen: false).setBookings();
+       context.read<BookingProvider>().setBookings();
     } else {
       _authStat = AuthState.Error;
       print(_authStat);

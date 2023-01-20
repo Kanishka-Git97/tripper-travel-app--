@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/models/comment.dart';
 
 class ReviewDetailsCard extends StatelessWidget {
-  const ReviewDetailsCard({Key? key}) : super(key: key);
-
+  const ReviewDetailsCard({Key? key, required this.comment}) : super(key: key);
+  final Comment comment;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,13 +20,18 @@ class ReviewDetailsCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const SizedBox(
+              Container(
+                clipBehavior: Clip.antiAlias,
                 width: 50,
                 height: 50,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(50)),
                 child: CircleAvatar(
                   radius: 30,
-                  backgroundImage: NetworkImage(
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBOM9ChGm_vp-nX6zF80QAj2wnWNXpMDuZZpUOJe9rjgNcYTRlqX1fLrYqdpHL2yC68hs&usqp=CAU'),
+                  child: Image.memory(
+                    base64Decode(comment.customer!.image.toString()),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               const SizedBox(
@@ -33,14 +41,14 @@ class ReviewDetailsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Indigo Violet",
+                    comment.customer!.name.toString(),
                     style: heading,
                   ),
                   SizedBox(
                     height: 5,
                   ),
                   Text(
-                    "12 July 2022",
+                    comment.comment.toString(),
                     style: text,
                   ),
                 ],
@@ -50,7 +58,7 @@ class ReviewDetailsCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    "4",
+                    comment.rate.toString(),
                     style: text,
                   ),
                   SizedBox(
@@ -64,16 +72,6 @@ class ReviewDetailsCard extends StatelessWidget {
                 ],
               )
             ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 60),
-            child: Text(
-              "Sed egestas, velit at laoreet facilisis, nulla velit laoreet purus.",
-              style: text,
-            ),
           ),
         ],
       ),
