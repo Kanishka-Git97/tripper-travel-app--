@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:travel_app_v1/models/trip.dart';
 import 'package:travel_app_v1/screens/current-booking-details-screen/current_booking_details_screen.dart';
 
+import '../provider/trip_provider.dart';
+
 class RegularTravelCard extends StatefulWidget {
-  Trip? travelData;
+  Trip travelData;
   RegularTravelCard({super.key, required this.travelData});
 
   @override
@@ -12,6 +15,7 @@ class RegularTravelCard extends StatefulWidget {
 
 class _RegularTravelCardState extends State<RegularTravelCard> {
   bool _isFavorited = false;
+  bool _wishListCheck = false;
 
   void _toggleFavorite() {
     setState(() {
@@ -21,7 +25,20 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.travelData!.image);
+    int tripId = widget.travelData.id!;
+    // Future<int> wishlistAvailability =
+    //     context.read<TripProvider>().checkWishListAvailability(tripId);
+    // wishlistAvailability.then(
+    //   (value) {
+    //     print(value);
+    //   },
+    // );
+
+    // Provider.of<TripProvider>(context, listen: true)
+    //     .checkWishListAvailability(tripId);
+
+    context.read<TripProvider>().checkWishListAvailability(tripId);
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
