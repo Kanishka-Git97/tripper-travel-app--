@@ -7,8 +7,11 @@ import 'package:travel_app_v1/components/custom_input.dart';
 import 'package:travel_app_v1/components/header.dart';
 import 'package:travel_app_v1/components/map_box.dart';
 import 'package:travel_app_v1/constant/constant.dart';
+import 'package:travel_app_v1/controllers/customer_controller.dart';
 import 'package:travel_app_v1/provider/booking_provider.dart';
+import 'package:travel_app_v1/repositories/customer_repository.dart';
 import 'package:travel_app_v1/screens/splash/splash_screen.dart';
+import 'package:travel_app_v1/utility/database_helper.dart';
 import 'package:travel_app_v1/utility/utility_helper.dart';
 
 import '../../models/booking.dart';
@@ -31,6 +34,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
+  // Dependency Injection
+  var _customerController = CustomerController(CustomerRepository());
+  DatabaseHelper _dbHelper = DatabaseHelper.instance;
   @override
   Widget build(BuildContext context) {
     user = context.watch<User>().user;
@@ -123,16 +129,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 color: primaryColor,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Center(
-                                child: 
-                                bookings.length == 0
-                                    ? Text("Start Your Journey",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 14))
-                                    : Text(
-                                        "Last Booking | ${bookings.last.tripRef!.title.toString()}",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14)),),
+                              child: bookings.length == 0
+                                  ? Text("Start Your Journey",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 14))
+                                  : Text(
+                                      "Last Booking | ${bookings.last.tripRef!.title.toString()}",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 14)),
+                            ),
                           ),
                           const Spacer(),
                           GestureDetector(
@@ -302,31 +307,71 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   updateProfile(BuildContext context, Customer user) async {
-    var temp = user.password;
-    if (_passwordController.text != _confirmPasswordController.text)
-      return Utility.notification("Password Does not Matched", context, false);
-    // want to change password?
-    if (_passwordController.text != "" || _passwordController.text != null) {
-      if (user.password == _passwordController.text) {
+    bool isInternetAvailble = await Utility.connectionChecker();
+    if (isInternetAvailble) {
+      var temp = user.password;
+      if (_passwordController.text != _confirmPasswordController.text)
         return Utility.notification(
-            "Can not Update Current Password as New Password", context, false);
-      } else {
-        user.password = _passwordController.text;
+            "Password Does not Matched", context, false);
+      // want to change password?
+      if (_passwordController.text != "" || _passwordController.text != null) {
+        if (user.password == _passwordController.text) {
+          return Utility.notification(
+              "Can not Update Current Password as New Password",
+              context,
+              false);
+        } else {
+          user.password = _passwordController.text;
+        }
       }
-    }
-    // setup updated model
-    if (_nameController.text != "" || _nameController.text != null) {
-      user.name = _nameController.text;
-    }
-    if (_emailController.text != "" || _emailController.text != null) {
-      user.email = _emailController.text;
-    }
-    // validate
-    if (_currentPasswordController.text == temp) {
-      // save data
+      // setup updated model
+      if (_nameController.text != "" || _nameController.text != null) {
+        user.name = _nameController.text;
+      }
+      if (_emailController.text != "" || _emailController.text != null) {
+        user.email = _emailController.text;
+      }
+      // validate
+      if (_currentPasswordController.text == temp) {
+        // save data
+        Customer updateUser = Customer(
+            email: user.email,
+            name: user.name,
+            password: user.password,
+            id: user.id,
+            image: user.image);
 
+        bool isServerUpdated = await _customerController.update(updateUser);
+        if (isServerUpdated) {
+          bool isLocalUpdated = await _dbHelper.insertCustomer(updateUser);
+          if (!isLocalUpdated) {
+            Utility.notification(
+                "Something Went Wrong Please Try Again!", context, false);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: ((context) => SplashScreen()),
+              ),
+            );
+          } else {
+            Utility.notification("Profile Details Updated", context, true);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: ((context) => ProfileScreen()),
+              ),
+            );
+          }
+        } else {
+          return Utility.notification(
+              "Something Went Wrong Please Try Again!", context, false);
+        }
+      } else {
+        return Utility.notification("Verification Failed", context, false);
+      }
     } else {
-      return Utility.notification("Verification Failed", context, false);
+      return Utility.notification(
+          "No Internet Connection Please try again!", context, false);
     }
   }
 }

@@ -311,7 +311,7 @@ class DatabaseHelper {
         headers: {'Content-Type': 'application/json'}, body: json.encode(data));
 
     List<dynamic> bookingData = json.decode(bookingResponse.body);
-
+    await db.rawDelete('DELETE FROM ${Booking.tblName}');
     await db.transaction((txn) async {
       for (var item in bookingData) {
         // Check if the item already exists
