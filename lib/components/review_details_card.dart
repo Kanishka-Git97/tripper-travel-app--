@@ -39,10 +39,10 @@ class ReviewDetailsCard extends StatelessWidget {
                   SizedBox(
                     height: 5,
                   ),
-                  Text(
-                    "12 July 2022",
-                    style: text,
-                  ),
+                  // Text(
+                  //   "12 July 2022",
+                  //   style: text,
+                  // ),
                 ],
               ),
               Spacer(),
