@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Base URL FOR EndPoints
-
-const String baseUrl = 'http://192.168.1.102/travelApp_API';
-
+const String baseUrl = 'http://192.168.8.101/travelApp_API';
 
 // Colors
 const Color primaryColor = Color(0xff2687A4);

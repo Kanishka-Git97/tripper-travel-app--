@@ -28,7 +28,7 @@ class AllCommentsScreen extends StatelessWidget {
           itemBuilder: ((context, index) {
             return Column(
               children: const [
-                ReviewDetailsCard(),
+                // ReviewDetailsCard(),
                 SizedBox(
                   height: 5,
                 ),

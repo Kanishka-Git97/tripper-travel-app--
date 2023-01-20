@@ -6,6 +6,7 @@ import 'package:travel_app_v1/constant/constant.dart';
 import 'package:travel_app_v1/models/booking.dart';
 
 import 'package:intl/intl.dart';
+import 'package:travel_app_v1/models/trip.dart';
 
 class HistoryCard extends StatelessWidget {
   const HistoryCard({Key? key, required this.ctx, required this.booking})
@@ -20,6 +21,7 @@ class HistoryCard extends StatelessWidget {
     String dateOnly = formater.format(date).toString();
     return dateOnly;
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,9 +34,11 @@ class HistoryCard extends StatelessWidget {
             children: [
               Text(
                 _dateFormatter(booking.date.toString()),
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert_outlined))
+              IconButton(
+                  onPressed: () {}, icon: const Icon(Icons.more_vert_outlined))
             ],
           ),
           Row(
@@ -85,7 +89,7 @@ class HistoryCard extends StatelessWidget {
                 bgColor: Colors.white,
                 radius: 50,
                 borderColor: primaryColor,
-                onPress: () => _showMyDialog(context),
+                onPress: () => _showMyDialog(context, booking.tripRef!),
               ))
             ],
           ),
@@ -97,17 +101,21 @@ class HistoryCard extends StatelessWidget {
     );
   }
 
-  openRating(BuildContext ctx) {
+  openRating(
+    BuildContext ctx,
+  ) {
     Navigator.of(ctx).pushNamed('/reviews');
   }
 
-  Future<void> _showMyDialog(BuildContext context) async {
+  Future<void> _showMyDialog(BuildContext context, Trip trip) async {
     return showDialog<void>(
         context: context,
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
-          return const Dialog(
-            child: RatingView(),
+          return Dialog(
+            child: RatingView(
+              trip: trip.id,
+            ),
           );
         });
   }
