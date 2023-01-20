@@ -88,6 +88,7 @@ flutter:
     - assets/images/img-5d.jpeg
     - assets/images/no_internet.png
     - assets/images/travel.png
+    - assets/images/no-comments.png
    
 
   # An image asset can refer to one or more resolution-specific "variants", see
