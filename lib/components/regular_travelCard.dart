@@ -16,6 +16,7 @@ class RegularTravelCard extends StatefulWidget {
 class _RegularTravelCardState extends State<RegularTravelCard> {
   bool _isFavorited = false;
   bool _wishListCheck = false;
+  String? _finalStatus;
 
   void _toggleFavorite() {
     setState(() {
@@ -26,6 +27,17 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
   @override
   Widget build(BuildContext context) {
     int tripId = widget.travelData.id!;
+    String travelLocation = widget.travelData.title!;
+    print(tripId);
+    print(travelLocation);
+    Future<String> status = Provider.of<TripProvider>(context, listen: false)
+        .checkWishListAvailability(tripId);
+    status.then(
+      (value) {
+        _finalStatus = value;
+      },
+    );
+    print(_finalStatus);
     // Future<int> wishlistAvailability =
     //     context.read<TripProvider>().checkWishListAvailability(tripId);
     // wishlistAvailability.then(
@@ -37,7 +49,7 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
     // Provider.of<TripProvider>(context, listen: true)
     //     .checkWishListAvailability(tripId);
 
-    context.read<TripProvider>().checkWishListAvailability(tripId);
+    //context.read<TripProvider>().checkWishListAvailability(tripId);
 
     return GestureDetector(
       onTap: () {

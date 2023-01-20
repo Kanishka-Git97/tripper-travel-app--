@@ -17,11 +17,17 @@ class DiscoverScreen extends StatefulWidget {
 class _DiscoverScreenState extends State<DiscoverScreen> {
   final searchController = TextEditingController();
   String searchText = "";
+  String searchCategory = "All";
 
   @override
   Widget build(BuildContext context) {
     Future<List<Trip>> tripData =
         context.watch<TripProvider>().searchTrips(searchText);
+
+    if (searchCategory == "All") {}
+    Future<List<Trip>> dataCat =
+        context.watch<TripProvider>().tripsByCategory(searchCategory);
+    dataCat.then((value) => print(value));
 
     var size = MediaQuery.of(context).size;
     final double itemHeight = (size.height) / 2;
@@ -101,59 +107,80 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
-                        Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                          width: 70,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color.fromARGB(28, 0, 0, 0),
-                                    spreadRadius: 1),
-                              ]),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [Icon(Icons.apps), Text('All')]),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              searchCategory = "All";
+                            });
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 5),
+                            width: 70,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Color.fromARGB(28, 0, 0, 0),
+                                      spreadRadius: 1),
+                                ]),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [Icon(Icons.apps), Text('All')]),
+                          ),
                         ),
-                        Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                          width: 100,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color.fromARGB(28, 0, 0, 0),
-                                    spreadRadius: 1),
-                              ]),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.star_border_outlined),
-                                Text('Popular')
-                              ]),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              searchCategory = "Beach";
+                            });
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 5),
+                            width: 100,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Color.fromARGB(28, 0, 0, 0),
+                                      spreadRadius: 1),
+                                ]),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.star_border_outlined),
+                                  Text('Beach')
+                                ]),
+                          ),
                         ),
-                        Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                          width: 170,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color.fromARGB(28, 0, 0, 0),
-                                    spreadRadius: 1),
-                              ]),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.favorite_outline),
-                                Text('Recommendation')
-                              ]),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              searchCategory = "Up Country";
+                            });
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 5),
+                            width: 170,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Color.fromARGB(28, 0, 0, 0),
+                                      spreadRadius: 1),
+                                ]),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.favorite_outline),
+                                  Text('Up Country')
+                                ]),
+                          ),
                         )
                       ],
                     ),
@@ -161,7 +188,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   Container(
                     height: 500,
                     child: FutureBuilder<List<Trip>>(
-                      future: tripData,
+                      future: searchText == "" ? dataCat : tripData,
                       builder: (BuildContext context,
                           AsyncSnapshot<List<Trip>> snapshot) {
                         if (snapshot.hasData) {

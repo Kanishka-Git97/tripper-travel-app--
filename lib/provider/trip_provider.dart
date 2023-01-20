@@ -33,23 +33,23 @@ class TripProvider with ChangeNotifier {
   }
 
   /*----check wishlist availability for each trip----*/
-  Future<void> checkWishListAvailability(int tripId) async {
-    _dbHelper.checkTrip(tripId);
-    notifyListeners();
+  Future<String> checkWishListAvailability(int tripId) async {
+    return _dbHelper.checkTrip(tripId);
+
     // wishlistcheck = data;
   }
 
   /*---------------------- */
   Future<List<Trip>> searchTrips(String searchPara) async {
     return await _dbHelper.searchTrips(searchPara);
-    // if (searchPara == "") {
-    //   _tripData_searchList = _tripData;
-    // } else {
-    //   _tripData_searchList = _tripData
-    //       .where((element) =>
-    //           element.title!.toLowerCase().indexOf(searchPara) != -1)
-    //       .toList();
-    //   print(_tripData_searchList.length);
-    // }
+  }
+
+  /*----get trips by category-----*/
+  Future<List<Trip>> tripsByCategory(String parameter) async {
+    if (parameter == "All") {
+      return await _dbHelper.queryAll();
+    }
+
+    return await _dbHelper.dataBycategory(parameter);
   }
 }
