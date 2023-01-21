@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travel_app_v1/controllers/blog_controller.dart';
+import 'package:travel_app_v1/models/blog.dart';
+import 'package:travel_app_v1/repositories/blog_repository.dart';
+import 'package:travel_app_v1/utility/database_helper.dart';
 //import 'package:travelapp/widgets/hotel_carousel.dart';
 import 'package:travel_app_v1/widgets/hotel_carousel.dart';
 
@@ -23,6 +27,22 @@ class _BlogHomeScreenState extends State<BlogHomeScreen> {
     FontAwesomeIcons.ship,
     FontAwesomeIcons.bicycle,
   ];
+
+  var _blogController = BlogController(BlogRepository());
+  List<Blog> _blogs = [];
+  _dataload() async {
+    List<Blog> temp = await _blogController.getBlogs();
+    setState(() {
+      _blogs = temp;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _dataload();
+  }
 
   Widget _buildIcon(int index) {
     return GestureDetector(

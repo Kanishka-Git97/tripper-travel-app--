@@ -48,7 +48,6 @@ class User with ChangeNotifier {
         // todo: implement error message handling
         Utility.notification(
             "Password and Email Did not Matched!", context, false);
-
         print("no user");
       } else {
         // Update Local Database

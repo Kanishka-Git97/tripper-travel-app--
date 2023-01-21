@@ -90,7 +90,8 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
                 children: [
                   Text(
                     widget.travelData.title.toString(),
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                   Row(
                     children: [
@@ -108,13 +109,13 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
                 margin: EdgeInsets.symmetric(horizontal: 15),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(widget.travelData!.category.toString()),
+                  child: Text(widget.travelData.category.toString()),
                 )),
             Container(
                 margin: EdgeInsets.symmetric(horizontal: 15),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('${widget.travelData!.price.toString()} /Person'),
+                  child: Text('${widget.travelData.price.toString()} /Person'),
                 )),
           ],
         ),
