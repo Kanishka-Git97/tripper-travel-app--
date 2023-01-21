@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:travel_app_v1/controllers/customer_controller.dart';
+import 'package:travel_app_v1/provider/trip_provider.dart';
 import 'package:travel_app_v1/screens/home-screen/home_screen.dart';
 import 'package:travel_app_v1/screens/main-screen/main_screen.dart';
 import 'package:travel_app_v1/utility/utility_helper.dart';
@@ -38,7 +39,8 @@ class User with ChangeNotifier {
     bool connection = await Utility.connectionChecker();
     if (connection) {
       print("connection have");
-      _dbHelper.syncData();
+      await _dbHelper.syncData();
+      context.read<TripProvider>().getAllData();
       // Online DataFlow
       // get user data from server
       Customer customer = await _customerController.login(email, password);
@@ -78,6 +80,7 @@ class User with ChangeNotifier {
       Customer customer = Customer.fromJson(response[0]);
       _user = customer;
       _authStat = AuthState.Success;
+      context.read<TripProvider>().getAllData();
       context.read<BookingProvider>().setBookings();
     } else {
       _authStat = AuthState.Error;
