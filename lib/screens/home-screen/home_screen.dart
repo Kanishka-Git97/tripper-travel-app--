@@ -118,7 +118,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const Text(
-                'Frequesntly Visited',
+                'Top Trips',
                 style: TextStyle(fontSize: 18),
               ),
               Container(

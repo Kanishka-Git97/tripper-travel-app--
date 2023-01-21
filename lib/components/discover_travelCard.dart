@@ -86,35 +86,35 @@ class DiscoverTravelCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(travelData!.title.toString()),
+                  Text(travelData!.title.toString(),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
                   Row(
-                    children: [
-                      Icon(
-                        Icons.favorite,
-                        color: Colors.amber,
-                      )
-                    ],
+                    children: [Text(travelData!.category.toString())],
                   )
                 ],
               ),
+            ),
+            SizedBox(
+              height: 10,
             ),
             Container(
                 margin: EdgeInsets.symmetric(horizontal: 15),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Location Name'),
+                  child: Text(
+                    '${travelData!.description.toString().substring(0, 60)}...',
+                    style: TextStyle(color: Colors.grey[500]),
+                  ),
                 )),
+            SizedBox(
+              height: 10,
+            ),
             Container(
                 margin: EdgeInsets.symmetric(horizontal: 15),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Location'),
-                )),
-            Container(
-                margin: EdgeInsets.symmetric(horizontal: 15),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text('230/Person'),
+                  child: Text('${travelData!.price.toString()}/Person'),
                 )),
           ],
         ),

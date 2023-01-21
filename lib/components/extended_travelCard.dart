@@ -57,15 +57,15 @@ class ExtendedTravelCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(travelData!.price.toString()),
-                    Text('3 days, 2 nights'),
-                    Row(
-                      children: [Icon(Icons.add_location), Text('Greece')],
-                    ),
+                    Text(travelData!.title.toString(),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600)),
+                    Text(
+                        '${travelData!.description.toString().substring(0, 60)}...'),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('250 person'),
+                        Text(travelData!.category.toString()),
                         Row(
                           children: [
                             Text('4.7'),

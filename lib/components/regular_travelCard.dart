@@ -40,18 +40,7 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
       },
     );
     print(_finalStatus);
-    // Future<int> wishlistAvailability =
-    //     context.read<TripProvider>().checkWishListAvailability(tripId);
-    // wishlistAvailability.then(
-    //   (value) {
-    //     print(value);
-    //   },
-    // );
-
-    // Provider.of<TripProvider>(context, listen: true)
-    //     .checkWishListAvailability(tripId);
-
-    //context.read<TripProvider>().checkWishListAvailability(tripId);
+    context.read<TripProvider>().checkWishListAvailability(tripId);
 
     return GestureDetector(
       onTap: () {
@@ -82,7 +71,7 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.black12,
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                             color: Color.fromARGB(28, 0, 0, 0),
                             spreadRadius: 2),
@@ -92,17 +81,6 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                Positioned(
-                  top: 5,
-                  right: 5,
-                  child: IconButton(
-                    icon: _isFavorited
-                        ? Icon(Icons.favorite)
-                        : Icon(Icons.favorite_border),
-                    onPressed: _toggleFavorite,
-                    color: _isFavorited ? Colors.amber : null,
-                  ),
-                ),
               ],
             ),
             Container(
@@ -110,7 +88,10 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(widget.travelData.title.toString()),
+                  Text(
+                    widget.travelData.title.toString(),
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
                   Row(
                     children: [
                       Text('4.9'),
@@ -127,19 +108,13 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
                 margin: EdgeInsets.symmetric(horizontal: 15),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Location Name'),
+                  child: Text(widget.travelData!.category.toString()),
                 )),
             Container(
                 margin: EdgeInsets.symmetric(horizontal: 15),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Location'),
-                )),
-            Container(
-                margin: EdgeInsets.symmetric(horizontal: 15),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text('230/Person'),
+                  child: Text('${widget.travelData!.price.toString()} /Person'),
                 )),
           ],
         ),
