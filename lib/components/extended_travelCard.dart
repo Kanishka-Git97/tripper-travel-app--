@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import '../models/trip.dart';
@@ -35,8 +37,8 @@ class ExtendedTravelCard extends StatelessWidget {
                 height: 120,
                 width: 120,
                 child: Container(
-                    child: Image.network(
-                      travelData!.image.toString(),
+                    child: Image.memory(
+                      Base64Decoder().convert(travelData!.image.toString()),
                       fit: BoxFit.cover,
                     ),
                     decoration: BoxDecoration(

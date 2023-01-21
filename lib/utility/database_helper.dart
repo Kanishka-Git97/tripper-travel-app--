@@ -428,8 +428,8 @@ class DatabaseHelper {
     Database? db = await instance.database;
     List<Trip> data = [];
     print(searchPara);
-    var results = await db!
-        .rawQuery('SELECT * FROM trip WHERE title LIKE "$searchPara%"');
+    var results =
+        await db.rawQuery('SELECT * FROM trip WHERE title LIKE "$searchPara%"');
 
     for (var i = 0; i < results.length; i++) {
       var tempTripId = results[i]['id'];
@@ -489,7 +489,7 @@ class DatabaseHelper {
     List<Trip> data = [];
 
     var results =
-        await db!.rawQuery('SELECT * FROM trip WHERE category = "$searchPara"');
+        await db.rawQuery('SELECT * FROM trip WHERE category = "$searchPara"');
     for (var i = 0; i < results.length; i++) {
       var tempTripId = results[i]['id'];
       /*----Add trip data to Trip model----------*/

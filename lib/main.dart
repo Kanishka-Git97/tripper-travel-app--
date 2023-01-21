@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const MainScreen(),
         // '/map': (context) => MapScreen(),
         '/reviews': (context) => const AllCommentsScreen(),
-        '/image': (context) => ImageViewScreen(),
+        // '/image': (context) => ImageViewScreen(),
         // '/payments': (context) => const PaymentScreen(),
         '/splash': (context) => SplashScreen(),
         '/register': (context) => RegisterScreen(),

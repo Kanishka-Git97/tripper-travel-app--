@@ -59,7 +59,7 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  CurrentBookingDetailsScreen(trip: widget.travelData!)),
+                  CurrentBookingDetailsScreen(trip: widget.travelData)),
         );
       },
       child: Container(
@@ -88,8 +88,7 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
                             spreadRadius: 2),
                       ]),
                   child: Image.memory(
-                    Base64Decoder()
-                        .convert(widget.travelData!.image.toString()),
+                    Base64Decoder().convert(widget.travelData.image.toString()),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -111,7 +110,7 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(widget.travelData!.title.toString()),
+                  Text(widget.travelData.title.toString()),
                   Row(
                     children: [
                       Text('4.9'),

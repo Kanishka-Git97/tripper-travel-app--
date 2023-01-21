@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import '../models/trip.dart';
@@ -37,12 +39,18 @@ class DiscoverTravelCard extends StatelessWidget {
                   margin: EdgeInsets.all(10),
                   width: 170,
                   height: 152,
+                  clipBehavior: Clip.antiAlias,
+                  child: Image.memory(
+                    Base64Decoder().convert(travelData!.image.toString()),
+                    fit: BoxFit.cover,
+                  ),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [],
-                      image: DecorationImage(
-                          image: NetworkImage(travelData!.image.toString()),
-                          fit: BoxFit.cover)),
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [],
+                    // image: DecorationImage(
+                    //     image: NetworkImage(travelData!.image.toString()),
+                    //     fit: BoxFit.cover),
+                  ),
                 ),
                 Positioned(
                     top: 10,

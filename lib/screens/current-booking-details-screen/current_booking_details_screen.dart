@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:travel_app_v1/components/error_card.dart';
 import 'package:travel_app_v1/components/map_box.dart';
@@ -13,6 +15,7 @@ import 'package:travel_app_v1/screens/map-screen/map_screen.dart';
 import 'package:travel_app_v1/screens/payment-screen/payment_screen.dart';
 import 'package:travel_app_v1/screens/review-screen/review_screen.dart';
 import 'package:travel_app_v1/utility/rating_helper.dart';
+import 'package:travel_app_v1/utility/utility_helper.dart';
 
 class CurrentBookingDetailsScreen extends StatefulWidget {
   CurrentBookingDetailsScreen({Key? key, required this.trip}) : super(key: key);
@@ -90,14 +93,19 @@ class _CurrentBookingDetailsScreenState
                     elevation: 3,
                     backgroundColor: Colors.white,
                     expandedHeight: 400,
-                    flexibleSpace: const FlexibleSpaceBar(
-                      background: Image(
-                        image: NetworkImage(
-                            'https://charlieswanderings.com/wp-content/uploads/2020/05/BEAUTIFUL-CASTLES-IN-GERMANY-26-scaled.jpg'),
-                        width: double.maxFinite,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                    flexibleSpace: FlexibleSpaceBar(
+                        background: Image.memory(
+                      Base64Decoder().convert(widget.trip.image.toString()),
+                      fit: BoxFit.cover,
+                      width: double.maxFinite,
+                    )
+                        // Image(
+                        //   image: NetworkImage(
+                        //       'https://charlieswanderings.com/wp-content/uploads/2020/05/BEAUTIFUL-CASTLES-IN-GERMANY-26-scaled.jpg'),
+                        //   width: double.maxFinite,
+                        //   fit: BoxFit.cover,
+                        // ),
+                        ),
                     bottom: PreferredSize(
                       preferredSize: const Size.fromHeight(0),
                       child: Container(
@@ -288,18 +296,27 @@ class _CurrentBookingDetailsScreenState
                                             context,
                                             MaterialPageRoute(
                                               builder: ((context) =>
-                                                  ImageViewScreen()),
+                                                  ImageViewScreen(
+                                                    location: widget
+                                                        .trip.locations![index],
+                                                  )),
                                             ),
                                           );
                                         }),
                                         child: Container(
                                           margin:
                                               const EdgeInsets.only(right: 5),
-                                          child: Image(
-                                            image: NetworkImage(
-                                                '${widget.trip.locations![index].image.toString()}'),
+                                          child: Image.memory(
+                                            Base64Decoder().convert(widget
+                                                .trip.locations![index].image
+                                                .toString()),
                                             fit: BoxFit.cover,
                                           ),
+                                          // Image(
+                                          //   image: NetworkImage(
+                                          //       '${widget.trip.locations![index].image.toString()}'),
+                                          //   fit: BoxFit.cover,
+                                          // ),
                                           width: 150,
                                           height: 100,
                                           decoration: const BoxDecoration(
@@ -409,14 +426,23 @@ class _CurrentBookingDetailsScreenState
                     ),
                     const Spacer(),
                     InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PaymentScreen(
-                                    trip: widget.trip,
-                                  )),
-                        );
+                      onTap: () async {
+                        bool isInternetAvailble =
+                            await Utility.connectionChecker();
+                        if (isInternetAvailble) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PaymentScreen(
+                                      trip: widget.trip,
+                                    )),
+                          );
+                        } else {
+                          Utility.notification(
+                              "No Internet Connection Please Try Again!",
+                              context,
+                              false);
+                        }
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
