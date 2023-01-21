@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:travel_app_v1/models/trip.dart';
 import 'package:travel_app_v1/screens/current-booking-details-screen/current_booking_details_screen.dart';
@@ -56,8 +58,9 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
                             color: Color.fromARGB(28, 0, 0, 0),
                             spreadRadius: 2),
                       ]),
-                  child: Image.network(
-                    widget.travelData!.image.toString(),
+                  child: Image.memory(
+                    Base64Decoder()
+                        .convert(widget.travelData!.image.toString()),
                     fit: BoxFit.cover,
                   ),
                 ),

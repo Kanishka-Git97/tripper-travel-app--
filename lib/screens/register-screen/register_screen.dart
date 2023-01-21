@@ -33,8 +33,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   // Depedancy Injection
   var _customerController = CustomerController(CustomerRepository());
 
-  String imgString =
-      sampleUser;
+  String imgString = sampleUser;
 
   @override
   Widget build(BuildContext context) {
@@ -205,6 +204,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     String output;
     ImagePicker().pickImage(source: ImageSource.gallery).then((img) async {
       output = Utility.base64String(await img!.readAsBytes());
+      
       setState(() {
         imgString = output;
       });
@@ -212,7 +212,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   _signUp(BuildContext context) async {
-    // todo: should check all fields are filled
     // confirm Password
     if (_passwordController.text != _confirmPasswordController.text)
       return Utility.notification("Password Does not Matched!", context, false);
