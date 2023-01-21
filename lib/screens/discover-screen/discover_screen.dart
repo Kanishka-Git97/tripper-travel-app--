@@ -1,17 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app_v1/components/discover_travelCard.dart';
+import 'dart:convert';
+import 'dart:io';
 
 import '../../models/trip.dart';
 import '../../provider/trip_provider.dart';
 
-class DiscoverScreen extends StatelessWidget {
+class DiscoverScreen extends StatefulWidget {
   const DiscoverScreen({super.key});
 
   @override
+  State<DiscoverScreen> createState() => _DiscoverScreenState();
+}
+
+class _DiscoverScreenState extends State<DiscoverScreen> {
+  final searchController = TextEditingController();
+  String searchText = "";
+  String searchCategory = "All";
+
+  @override
   Widget build(BuildContext context) {
-    List<Trip> tripData =
-        Provider.of<TripProvider>(context, listen: false).tripData;
+    Future<List<Trip>> tripData =
+        context.watch<TripProvider>().searchTrips(searchText);
+
+    if (searchCategory == "All") {}
+    Future<List<Trip>> dataCat =
+        context.watch<TripProvider>().tripsByCategory(searchCategory);
+    dataCat.then((value) => print(value));
+
     var size = MediaQuery.of(context).size;
     final double itemHeight = (size.height) / 2;
     final double itemWidth = size.width / 2;
@@ -61,6 +78,11 @@ class DiscoverScreen extends StatelessWidget {
                         width: 300,
                         height: 40,
                         child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              searchText = value;
+                            });
+                          },
                           textAlignVertical: TextAlignVertical.center,
                           decoration: InputDecoration(
                               prefixIcon: Icon(Icons.search),
@@ -85,78 +107,111 @@ class DiscoverScreen extends StatelessWidget {
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
-                        Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                          width: 70,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color.fromARGB(28, 0, 0, 0),
-                                    spreadRadius: 1),
-                              ]),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [Icon(Icons.apps), Text('All')]),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              searchCategory = "All";
+                            });
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 5),
+                            width: 70,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Color.fromARGB(28, 0, 0, 0),
+                                      spreadRadius: 1),
+                                ]),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [Icon(Icons.apps), Text('All')]),
+                          ),
                         ),
-                        Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                          width: 100,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color.fromARGB(28, 0, 0, 0),
-                                    spreadRadius: 1),
-                              ]),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.star_border_outlined),
-                                Text('Popular')
-                              ]),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              searchCategory = "Beach";
+                            });
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 5),
+                            width: 100,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Color.fromARGB(28, 0, 0, 0),
+                                      spreadRadius: 1),
+                                ]),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.star_border_outlined),
+                                  Text('Beach')
+                                ]),
+                          ),
                         ),
-                        Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                          width: 170,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color.fromARGB(28, 0, 0, 0),
-                                    spreadRadius: 1),
-                              ]),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.favorite_outline),
-                                Text('Recommendation')
-                              ]),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              searchCategory = "Up Country";
+                            });
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 5),
+                            width: 170,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Color.fromARGB(28, 0, 0, 0),
+                                      spreadRadius: 1),
+                                ]),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.favorite_outline),
+                                  Text('Up Country')
+                                ]),
+                          ),
                         )
                       ],
                     ),
                   ),
                   Container(
                     height: 500,
-                    child: GridView.builder(
-                      itemCount: tripData.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 20,
-                          mainAxisSpacing: 20,
-                          mainAxisExtent: 300),
-                      itemBuilder: (BuildContext context, int index) {
-                        return GridTile(
-                          child: DiscoverTravelCard(
-                            travelData: tripData[index],
-                          ),
-                        );
+                    child: FutureBuilder<List<Trip>>(
+                      future: searchText == "" ? dataCat : tripData,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<Trip>> snapshot) {
+                        if (snapshot.hasData) {
+                          return GridView.builder(
+                            itemCount: snapshot.data!.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 20,
+                                    mainAxisSpacing: 20,
+                                    mainAxisExtent: 300),
+                            itemBuilder: (BuildContext context, int index) {
+                              return GridTile(
+                                child: DiscoverTravelCard(
+                                  travelData: snapshot.data![index],
+                                ),
+                              );
+                            },
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text("Error: ${snapshot.error}");
+                        }
+                        return CircularProgressIndicator();
                       },
                     ),
                   )

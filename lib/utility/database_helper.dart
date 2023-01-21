@@ -407,22 +407,138 @@ class DatabaseHelper {
   }
 
 /*-----fetch all data from wishlist-----*/
-  Future<List<Map<String, Object?>>> fetchAllWishList(int customerId) async {
+  Future<String> checkTrip(int tripId) async {
     Database? db = await instance.database;
+    String status = 'not available';
     String sql = '''
-                  SELECT * FROM trip 
-                  LEFT JOIN wishlist ON trip.id=wishlist.trip_ref
+                  SELECT COUNT(*) AS num FROM wishlist 
+                  WHERE id=${tripId}
                 ''';
     final result = await db.rawQuery(sql);
+    int tempData = int.parse(result[0]['num'].toString());
+    if (tempData == 1) {
+      status = 'available';
+    }
+    return status;
+    // return temData;
+  }
 
-    // List<Map> results = await db.query('wishlist');
-    // List<WishList> data = [];
-    // for (var i = 0; i < results.length; i++) {
-    //   data.add(WishList(
-    //       id: int.parse(results[i]["id"].toString()),
-    //       customer_ref: int.parse(results[i]["customer_ref"].toString()),
-    //       trip_ref: int.parse(results[i]["trip_ref"].toString())));
-    // }
-    return result;
+  /*--------search Data-------- */
+  Future<List<Trip>> searchTrips(String searchPara) async {
+    Database? db = await instance.database;
+    List<Trip> data = [];
+    print(searchPara);
+    var results = await db!
+        .rawQuery('SELECT * FROM trip WHERE title LIKE "$searchPara%"');
+
+    for (var i = 0; i < results.length; i++) {
+      var tempTripId = results[i]['id'];
+      /*----Add trip data to Trip model----------*/
+      data.add(Trip(
+          id: int.parse(results[i]['id'].toString()),
+          title: results[i]['title'].toString(),
+          category: results[i]['category'].toString(),
+          image: results[i]['image'].toString(),
+          description: results[i]['description'].toString(),
+          price: double.parse(results[i]['price'].toString()),
+          locations: [],
+          schedule: [],
+          review: []));
+      /**---fetch data from location table--------- */
+      var resultLocation =
+          await db.rawQuery('SELECT * FROM location WHERE trip=$tempTripId');
+      for (var j = 0; j < resultLocation.length; j++) {
+        data[i].locations!.add(Location(
+            id: int.parse(resultLocation[j]['id'].toString()),
+            image: resultLocation[j]['image'].toString(),
+            title: resultLocation[j]['title'].toString(),
+            longitude: double.parse(resultLocation[j]['longitude'].toString()),
+            latitude: double.parse(resultLocation[j]['latitude'].toString()),
+            trip: int.parse(resultLocation[j]['trip'].toString())));
+      }
+
+      /**----fetch data from schedule table--------- */
+      var resultSchedule =
+          await db.rawQuery('SELECT * FROM schedule WHERE trip=$tempTripId');
+      for (var k = 0; k < resultSchedule.length; k++) {
+        data[i].schedule!.add(Schedule(
+            id: int.parse(resultSchedule[k]['id'].toString()),
+            trip: int.parse(resultSchedule[k]['trip'].toString()),
+            start: resultSchedule[k]['start'].toString(),
+            end: resultSchedule[k]['end'].toString()));
+      }
+
+      /**----fetch trip reviews--------- */
+      var resultReviews =
+          await db.rawQuery('SELECT * FROM reviews WHERE trip_ref=$tempTripId');
+      for (var l = 0; l < resultReviews.length; l++) {
+        data[i].review!.add(Review(
+            id: int.parse(resultReviews[l]['id'].toString()),
+            cusRef: int.parse(resultReviews[l]['cus_ref'].toString()),
+            tripRef: int.parse(resultReviews[l]['trip_ref'].toString()),
+            rate: int.parse(resultReviews[l]['rate'].toString()),
+            review: resultReviews[l]['review'].toString()));
+      }
+    }
+    return data;
+  }
+
+  /*----get data by Id-------*/
+  Future<List<Trip>> dataBycategory(String searchPara) async {
+    Database? db = await instance.database;
+    List<Trip> data = [];
+
+    var results =
+        await db!.rawQuery('SELECT * FROM trip WHERE category = "$searchPara"');
+    for (var i = 0; i < results.length; i++) {
+      var tempTripId = results[i]['id'];
+      /*----Add trip data to Trip model----------*/
+      data.add(Trip(
+          id: int.parse(results[i]['id'].toString()),
+          title: results[i]['title'].toString(),
+          category: results[i]['category'].toString(),
+          image: results[i]['image'].toString(),
+          description: results[i]['description'].toString(),
+          price: double.parse(results[i]['price'].toString()),
+          locations: [],
+          schedule: [],
+          review: []));
+      /**---fetch data from location table--------- */
+      var resultLocation =
+          await db.rawQuery('SELECT * FROM location WHERE trip=$tempTripId');
+      for (var j = 0; j < resultLocation.length; j++) {
+        data[i].locations!.add(Location(
+            id: int.parse(resultLocation[j]['id'].toString()),
+            image: resultLocation[j]['image'].toString(),
+            title: resultLocation[j]['title'].toString(),
+            longitude: double.parse(resultLocation[j]['longitude'].toString()),
+            latitude: double.parse(resultLocation[j]['latitude'].toString()),
+            trip: int.parse(resultLocation[j]['trip'].toString())));
+      }
+
+      /**----fetch data from schedule table--------- */
+      var resultSchedule =
+          await db.rawQuery('SELECT * FROM schedule WHERE trip=$tempTripId');
+      for (var k = 0; k < resultSchedule.length; k++) {
+        data[i].schedule!.add(Schedule(
+            id: int.parse(resultSchedule[k]['id'].toString()),
+            trip: int.parse(resultSchedule[k]['trip'].toString()),
+            start: resultSchedule[k]['start'].toString(),
+            end: resultSchedule[k]['end'].toString()));
+      }
+
+      /**----fetch trip reviews--------- */
+      var resultReviews =
+          await db.rawQuery('SELECT * FROM reviews WHERE trip_ref=$tempTripId');
+      for (var l = 0; l < resultReviews.length; l++) {
+        data[i].review!.add(Review(
+            id: int.parse(resultReviews[l]['id'].toString()),
+            cusRef: int.parse(resultReviews[l]['cus_ref'].toString()),
+            tripRef: int.parse(resultReviews[l]['trip_ref'].toString()),
+            rate: int.parse(resultReviews[l]['rate'].toString()),
+            review: resultReviews[l]['review'].toString()));
+      }
+    }
+    return data;
   }
 }
