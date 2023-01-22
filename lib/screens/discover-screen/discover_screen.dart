@@ -211,7 +211,13 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                         } else if (snapshot.hasError) {
                           return Text("Error: ${snapshot.error}");
                         }
-                        return CircularProgressIndicator();
+                        return const Center(
+                          child: SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
                       },
                     ),
                   )

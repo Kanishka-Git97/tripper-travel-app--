@@ -116,14 +116,23 @@ class DatabaseHelper {
     ''');
   }
 
+  // // Logout
+  // Future<bool> logout() async {
+  //   Database db = await database;
+  //   await db.rawDelete('DELETE FROM ${Customer.tblName}');
+  //   return true;
+  // }
+
   // Inserting Customer Details
   Future<bool> insertCustomer(Customer customer) async {
     Database db = await database;
     // Validate the Customer
     final List<Map<String, dynamic>> result = await db.query(Customer.tblName);
     if (result.length > 0) {
-      await db.update(Customer.tblName, customer.toJson(),
-          where: '${Customer.colId}=?', whereArgs: [customer.id]);
+      await db.rawDelete('DELETE FROM ${Customer.tblName}');
+      await db.insert(Customer.tblName, customer.toJson());
+      // await db.update(Customer.tblName, customer.toJson(),
+      //     where: '${Customer.colId}=?', whereArgs: [customer.id]);
       return true;
     } else {
       await db.insert(Customer.tblName, customer.toJson());
@@ -139,6 +148,7 @@ class DatabaseHelper {
 
   // Asynchronous from server to client
   Future<void> syncData() async {
+    print("Data Synced");
     var response = await http.get(Uri.parse('$baseUrl/trips.php'));
     List<dynamic> tripData = json.decode(response.body);
     print(tripData.length);
@@ -428,8 +438,8 @@ class DatabaseHelper {
     Database? db = await instance.database;
     List<Trip> data = [];
     print(searchPara);
-    var results = await db!
-        .rawQuery('SELECT * FROM trip WHERE title LIKE "$searchPara%"');
+    var results =
+        await db.rawQuery('SELECT * FROM trip WHERE title LIKE "$searchPara%"');
 
     for (var i = 0; i < results.length; i++) {
       var tempTripId = results[i]['id'];
@@ -489,7 +499,7 @@ class DatabaseHelper {
     List<Trip> data = [];
 
     var results =
-        await db!.rawQuery('SELECT * FROM trip WHERE category = "$searchPara"');
+        await db.rawQuery('SELECT * FROM trip WHERE category = "$searchPara"');
     for (var i = 0; i < results.length; i++) {
       var tempTripId = results[i]['id'];
       /*----Add trip data to Trip model----------*/

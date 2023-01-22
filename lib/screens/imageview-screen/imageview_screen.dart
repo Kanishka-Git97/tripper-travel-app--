@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:travel_app_v1/components/floating_back_btn.dart';
+import 'package:travel_app_v1/models/location.dart';
 
 class ImageViewScreen extends StatefulWidget {
-  ImageViewScreen({Key? key}) : super(key: key);
-
+  ImageViewScreen({Key? key, required this.location}) : super(key: key);
+  final Location location;
   @override
   State<ImageViewScreen> createState() => _ImageViewScreenState();
 }
@@ -17,12 +20,17 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
         backgroundColor: Colors.black87,
         body: Stack(children: [
           Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage(
-                      "https://www.boredpanda.com/blog/wp-content/uuuploads/unbelievable-places/unbelievable-places-8.jpg"),
-                  fit: _zoom ? BoxFit.cover : BoxFit.fitWidth),
+            height: double.infinity,
+            child: Image.memory(
+              Base64Decoder().convert(widget.location.image.toString()),
+              fit: _zoom ? BoxFit.cover : BoxFit.fitWidth,
             ),
+            decoration: BoxDecoration(
+                // image: DecorationImage(
+                //     image: NetworkImage(
+                //         "https://www.boredpanda.com/blog/wp-content/uuuploads/unbelievable-places/unbelievable-places-8.jpg"),
+                //     fit: _zoom ? BoxFit.cover : BoxFit.fitWidth),
+                ),
           ),
           FloatingBackBtn(),
           Positioned(
@@ -56,7 +64,7 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
                   children: [
                     Icon(Icons.location_on, color: Colors.white),
                     Text(
-                      "Teffon Place",
+                      widget.location.title.toString(),
                       style: TextStyle(fontSize: 14, color: Colors.white),
                     ),
                   ],

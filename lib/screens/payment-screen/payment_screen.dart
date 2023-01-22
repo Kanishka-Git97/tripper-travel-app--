@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -70,12 +72,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     Container(
                       height: 100,
                       width: 100,
+                      clipBehavior: Clip.antiAlias,
+                      child: Image.memory(
+                        Base64Decoder().convert(widget.trip.image.toString()),
+                        fit: BoxFit.cover,
+                      ),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          image: const DecorationImage(
-                              image: NetworkImage(
-                                  "https://www.actual-adventure.com/public/uploads/srilankasirigya.jpg"),
-                              fit: BoxFit.cover)),
+                        borderRadius: BorderRadius.circular(10.0),
+                        // image: DecorationImage(
+                        //     image: NetworkImage(
+                        //         "https://www.actual-adventure.com/public/uploads/srilankasirigya.jpg"),
+                        //     fit: BoxFit.cover),
+                      ),
                     ),
                     const SizedBox(
                       width: 20,

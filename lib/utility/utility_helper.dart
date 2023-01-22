@@ -39,4 +39,16 @@ class Utility {
     // todo: need to implement synchronization method
     return false;
   }
+
+  static String convertorHelper(String base64) {
+    String _stringImg = base64;
+    int mod = _stringImg.length % 4;
+    if (mod != 0) {
+      int padding = 4 - mod;
+      String paddingString = "".padRight(padding, '=');
+      _stringImg += paddingString;
+      return _stringImg;
+    }
+    return _stringImg;
+  }
 }

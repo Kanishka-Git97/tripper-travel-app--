@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:travel_app_v1/components/custom_btn.dart';
 import 'package:travel_app_v1/components/rating_panel.dart';
@@ -52,11 +54,17 @@ class BookedCard extends StatelessWidget {
                 margin: EdgeInsets.all(10.0),
                 height: 100,
                 width: 100,
+                clipBehavior: Clip.antiAlias,
+                child: Image.memory(
+                  Base64Decoder().convert(booking.tripRef!.image.toString()),
+                  fit: BoxFit.cover,
+                ),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.greenAccent,
-                    image: DecorationImage(
-                        image: NetworkImage(""), fit: BoxFit.cover)),
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: Colors.greenAccent,
+                  // image: DecorationImage(
+                  //     image: NetworkImage(""), fit: BoxFit.cover),
+                ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app_v1/models/trip.dart';
@@ -46,7 +48,7 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  CurrentBookingDetailsScreen(trip: widget.travelData!)),
+                  CurrentBookingDetailsScreen(trip: widget.travelData)),
         );
       },
       child: Container(
@@ -69,13 +71,13 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.black12,
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                             color: Color.fromARGB(28, 0, 0, 0),
                             spreadRadius: 2),
                       ]),
-                  child: Image.network(
-                    widget.travelData!.image.toString(),
+                  child: Image.memory(
+                    Base64Decoder().convert(widget.travelData.image.toString()),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -87,8 +89,9 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.travelData!.title.toString(),
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    widget.travelData.title.toString(),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                   Row(
                     children: [
@@ -106,13 +109,13 @@ class _RegularTravelCardState extends State<RegularTravelCard> {
                 margin: EdgeInsets.symmetric(horizontal: 15),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(widget.travelData!.category.toString()),
+                  child: Text(widget.travelData.category.toString()),
                 )),
             Container(
                 margin: EdgeInsets.symmetric(horizontal: 15),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('${widget.travelData!.price.toString()} /Person'),
+                  child: Text('${widget.travelData.price.toString()} /Person'),
                 )),
           ],
         ),

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:travel_app_v1/components/custom_btn.dart';
 import 'package:travel_app_v1/components/rating_panel.dart';
@@ -27,13 +29,18 @@ class LocationCard extends StatelessWidget {
             Container(
               height: 130,
               width: 130,
+              clipBehavior: Clip.antiAlias,
+              child: Image.memory(
+                Base64Decoder().convert(location.image.toString()),
+                fit: BoxFit.cover,
+              ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 color: Colors.redAccent,
-                image: DecorationImage(
-                  image: NetworkImage(location.image.toString()),
-                  fit: BoxFit.cover,
-                ),
+                // image: DecorationImage(
+                //   image: NetworkImage(location.image.toString()),
+                //   fit: BoxFit.cover,
+                // ),
               ),
             ),
             Padding(
